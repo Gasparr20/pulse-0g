@@ -102,6 +102,8 @@ Check: the video plays with the audio muted and the story is still complete.
 | T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | a1202a0 |
 | T15 | Contract checks: intents, verifier, journal, case package | S3, S4, S12, S14, S15 | inline | e4e4e62 |
 | T7 | 18 evidence cards, quoted and hashed (owner's partner) | S10 | parallel, separate files | — |
+| T16 | Card loader: a valid threshold card replaces the provisional chip | S10, S4 | inline | this |
+| T17 | `tools/check_cards.py` gate: structure, quote-first rule, config cross-check | S10 | inline | this |
 | T8 | Query intents, tag retrieval, deterministic templates | S11 | inline | — |
 | T9 | Claim verifier and rejection log | S12, S13 | inline | — |
 | T10 | Append-only comment thread into case package | S14 | inline | e4e4e62 |

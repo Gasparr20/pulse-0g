@@ -25,6 +25,7 @@ export interface CasePackage {
     refSource: string;
     flags: string[];
     evidenceCardId: string | null;
+    provisional: boolean;
   }>;
   dataQuality: string[];
   comments: Array<{
@@ -76,6 +77,7 @@ export function buildCasePackage(at: number | null): CasePackage {
       refSource: ind.refSource,
       flags: ind.flags,
       evidenceCardId: ind.evidenceCardId,
+      provisional: ind.provisional,
     }));
 
   const dataQuality = [
@@ -122,7 +124,8 @@ export function buildCasePackage(at: number | null): CasePackage {
     lines.push(`    regla:   ${i.reason}`);
     lines.push(`    rango:   ${range} (${i.refSource})`);
     if (i.action) lines.push(`    acción:  ${i.action}`);
-    if (i.evidenceCardId === "PENDING") lines.push("    evidencia: pendiente");
+    if (i.provisional) lines.push("    evidencia: umbral provisional, sin cita verificada");
+    else if (i.evidenceCardId) lines.push(`    evidencia: ${i.evidenceCardId}`);
   }
   lines.push("");
   lines.push("CALIDAD DE DATOS");

@@ -40,6 +40,19 @@ PASAJE:
 
 **5. Guardá el archivo.** Un archivo JSON por tarjeta, en `evidence/cards/`, copiando `_TEMPLATE.json`. Nombre: `EVD-<AREA>-<NNN>.json`.
 
+## Antes de dar una tarjeta por terminada, pasala por el validador
+
+```bash
+python3 tools/check_cards.py
+```
+
+Es offline, no necesita nada corriendo, y dice exactamente qué está mal. Corta con
+error si falta un campo, si el `id` no coincide con el nombre del archivo, si el
+resumen agrega un número que la cita no tiene, o si una tarjeta `threshold` choca
+con el umbral que usa el sistema. Avisa —sin bloquear— cuando la URL parece un
+índice en vez del pasaje, cuando el `sha256` es un marcador, o cuando falta quién
+verificó la cita.
+
 ## Los cuatro tipos
 
 | `kind` | Qué contiene | Quién la valida |

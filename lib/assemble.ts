@@ -1,6 +1,7 @@
 import bandsJson from "@/config/bands.json";
 import { all, one } from "./db";
 import { classify, worst, type ThresholdConfig } from "./bands";
+import { citationFor } from "./cards";
 import type {
   Dashboard,
   IndicatorView,
@@ -122,6 +123,14 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
     baseline,
     config: cfg,
   });
+
+  // A threshold card turns a provisional rule into a cited one. The chip on
+  // screen is driven by this, so dropping a JSON file changes the interface.
+  const cited = verdict.provisional ? citationFor(last.variable) : null;
+  if (cited) {
+    verdict.provisional = false;
+    verdict.evidenceCardId = cited.id;
+  }
   const series: SeriesPoint[] = ordered.map((r) => ({
     label: r.time_label,
     sortKey: r.sort_key,
