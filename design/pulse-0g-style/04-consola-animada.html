@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Pulse-0G · consola animada</title>
+<style>
+  :root{
+    --ink:#0b0b0c; --panel:#101012; --surface2:#17171a;
+    --rule:#3a3a3f; --rule-hi:#5a5a62;
+    --text:#f2eee6; --text2:#9d9789; --dim:#5b574f;
+    --amber:#ffb020; --red:#ff5347;
+    /* Pantone 286, the field of the NASA insignia, plus a lighter companion
+       because the pure value disappears against a near-black background. */
+    --nasa:#0b3d91; --nasa-hi:#3b7bd4;
+    --sans: ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", "IBM Plex Mono", monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; height:1000px; overflow:hidden; background:var(--ink); color:var(--text);
+    font:16px/1.45 var(--sans); -webkit-font-smoothing:antialiased;
+  }
+  /* Neobrutalist type: heavier weights, tighter tracking, zero radius, thick rules. */
+  .cap{font:800 11px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--text2)}
+  .num{font:800 var(--mono); font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+
+  .shell{display:grid; grid-template-rows:60px 46px 1fr; height:100%}
+
+  header{display:flex; align-items:center; gap:14px; padding:0 20px; border-bottom:3px solid var(--nasa-hi)}
+  .brand{font:800 21px/1 var(--mono); letter-spacing:.1em}
+  .brand em{font-style:normal; color:var(--amber)}
+  .tag{font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--text);
+    background:var(--nasa); border:2px solid var(--nasa-hi); padding:4px 8px}
+  .grow{flex:1}
+  .clock{display:flex; border:2px solid var(--rule)}
+  .clock span{padding:5px 11px; border-right:2px solid var(--rule); color:var(--text2)}
+  .clock .step{display:flex; flex-direction:column; gap:2px}
+  .clock .step b{font:800 13px/1 var(--mono); letter-spacing:.04em}
+  .clock .step i{font:800 10px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; font-style:normal; color:var(--text2)}
+  .clock span:last-child{border-right:0}
+  .clock span[aria-current]{background:var(--text); color:var(--ink)}
+  .clock span[aria-current] i{color:#4a4a50}
+  .dose{display:flex; align-items:center; gap:9px; font:800 13px/1 var(--mono); color:var(--text2)}
+  .dose b{color:var(--text)}
+  .track{width:120px; height:9px; border:2px solid var(--rule); position:relative}
+  .track i{position:absolute; inset:0 auto 0 0; width:12%; background:var(--text)}
+
+  nav{display:flex; align-items:center; gap:0; padding:0 20px; border-bottom:2px solid var(--rule)}
+  nav b{font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; padding:8px 0; margin-right:18px; border-bottom:3px solid var(--text)}
+  nav span{font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--dim); padding:8px 0; margin-right:18px}
+
+  main{display:grid; grid-template-columns:340px 1fr; min-height:0}
+  .map{border-right:2px solid var(--rule); padding:14px 18px; display:flex; flex-direction:column}
+  .map svg{width:100%; max-height:420px; margin-top:8px}
+  .legend{margin-top:14px; display:grid; gap:9px; font:800 12px/1.2 var(--mono); color:var(--text2); letter-spacing:.04em}
+  .legend i{display:inline-block; width:12px; height:12px; border:2px solid var(--rule-hi); margin-right:8px; vertical-align:-1px}
+  .note{margin-top:auto; padding-top:12px; border-top:2px solid var(--rule); font:800 12px/1.5 var(--mono); color:var(--dim)}
+
+  .panel{padding:14px 22px; min-height:0; overflow:hidden}
+  .rowhead{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px}
+  table{width:100%; border-collapse:collapse; font:800 15px/1.3 var(--sans)}
+  th{font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--text2);
+    text-align:left; padding:0 10px 8px; border-bottom:2px solid var(--rule)}
+  th.n,td.n{text-align:right; font-family:var(--mono)}
+  td{padding:9px 10px; border-bottom:2px solid #1e1e22}
+  tr[aria-selected="true"] td{background:var(--surface2)}
+  tr[aria-selected="true"] td:first-child{box-shadow:inset 5px 0 0 var(--red)}
+  .band{font:800 12px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; white-space:nowrap}
+  .band::before{content:""; display:inline-block; width:9px; height:9px; margin-right:8px; background:currentColor; vertical-align:0}
+  .band.red{color:var(--red)}
+  .band.amber{color:var(--amber)}
+  .band.amber::before{transform:rotate(45deg)}
+
+  .card{border:2px solid var(--rule); padding:14px 16px; margin-top:12px}
+  .cardhead{display:flex; align-items:center; gap:10px}
+  .dot{width:11px; height:11px; background:var(--red); display:inline-block}
+  .value{font:800 62px/1 var(--mono); letter-spacing:-.03em; margin:6px 0 4px; font-variant-numeric:tabular-nums}
+  .value small{font-size:24px; color:var(--text2); margin-left:8px; letter-spacing:0}
+  .meta{font:800 12.5px/1.3 var(--mono); color:var(--text2); display:flex; gap:14px; flex-wrap:wrap}
+  .spark{width:100%; height:70px; display:block; margin-top:10px}
+
+  .alarm{margin-top:12px; background:var(--red); color:var(--ink); padding:12px 16px 13px;
+    border:2px solid #000; box-shadow:6px 6px 0 #000}
+  .alarm .k{font:800 11px/1 var(--mono); letter-spacing:.2em; text-transform:uppercase; color:#4c0f0a}
+  .alarm .v{font:800 20px/1.25 var(--sans); letter-spacing:-.01em; margin-top:3px}
+  .alarm .r{font:800 12px/1.3 var(--mono); color:#5c1610; margin-top:4px}
+
+  /* ---------------------------------------------------------- verifier */
+  .verifier{margin-top:12px; border:2px solid var(--rule); padding:14px 16px}
+  .vhead{display:flex; align-items:center; gap:10px; margin-bottom:12px}
+  .arc{width:16px; height:16px; flex:none}
+  .arc circle{fill:none; stroke-width:3}
+  .verdict{font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin-left:auto; color:var(--text2)}
+  .verdict.bad{color:var(--red)}
+  .verdict.good{color:var(--text)}
+
+  .claim{position:relative; font:800 16px/1.4 var(--mono); padding:7px 0; display:flex; gap:10px; align-items:baseline}
+  .claim .txt{position:relative; display:inline-block}
+  .claim .txt::after{
+    content:""; position:absolute; left:-2px; right:-2px; top:52%; height:3px; background:var(--red);
+    transform:scaleX(0); transform-origin:left center;
+  }
+  .claim.struck .txt{color:var(--dim)}
+  .claim.struck .txt::after{transform:scaleX(1); transition:transform 320ms cubic-bezier(.2,.8,.2,1)}
+  .claim .why{font:800 11px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--red); opacity:0}
+  .claim.struck .why{opacity:1; transition:opacity 200ms ease 260ms}
+  .claim.anchored .check{opacity:1; transform:none}
+  .check{opacity:0; transform:translateX(-4px); transition:opacity 200ms ease, transform 200ms ease; color:var(--text)}
+
+  /* ------------------------------------------------------- controls */
+  .controls{position:fixed; right:16px; bottom:16px; display:flex; gap:8px}
+  .controls button{
+    font:800 11px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase;
+    background:var(--text); color:var(--ink); border:2px solid #000; box-shadow:4px 4px 0 #000;
+    padding:10px 14px; cursor:pointer;
+  }
+  .controls button:active{transform:translate(2px,2px); box-shadow:2px 2px 0 #000}
+  .controls button.off{background:transparent; color:var(--text2); border-color:var(--rule); box-shadow:none}
+  button:focus-visible, a:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+
+  /* ------------------------------------------------------ motion */
+  @keyframes bandflash{
+    0%{fill-opacity:.55; stroke-width:4}
+    100%{fill-opacity:.16; stroke-width:2.6}
+  }
+  @keyframes arcspin{to{transform:rotate(360deg)}}
+  @keyframes alarmin{
+    0%{transform:translate(0,0); box-shadow:0 0 0 #000}
+    35%{transform:translate(-2px,-2px); box-shadow:9px 9px 0 #000}
+    100%{transform:translate(0,0); box-shadow:6px 6px 0 #000}
+  }
+  .animate .head{animation:bandflash 900ms ease-out 1 both}
+  .animate .arc{animation:arcspin 800ms linear 2}
+  .animate .alarm{animation:alarmin 500ms ease-out 1 both}
+
+  @media (prefers-reduced-motion: reduce){
+    .animate .head,.animate .arc,.animate .alarm{animation:none !important}
+    .claim.struck .txt::after{transition:none}
+  }
+</style></head><body class="animate">
+<div class="shell">
+
+  <header>
+    <div class="brand">PULSE<em>·</em>0G</div>
+    <div class="tag">consola de vuelo</div>
+    <div class="grow"></div>
+    <div class="clock" aria-label="Momento de la misión">
+      <span class="step"><b>FD0</b><i>despegue</i></span>
+      <span class="step"><b>FD90</b><i>mes 3</i></span>
+      <span class="step" aria-current="true"><b>FD180</b><i>mes 6</i></span>
+      <span class="step"><b>R+29</b><i>tierra</i></span>
+    </div>
+    <div class="dose"><span>dosis</span><b>76/620 mSv</b><span class="track"><i></i></span></div>
+  </header>
+
+  <nav><b>misión</b><span>datos reales</span><span>consultar</span></nav>
+
+  <main>
+    <section class="map">
+      <p class="cap">Estado por zona</p>
+      <svg viewBox="0 0 200 400" role="img" aria-label="Silueta: cabeza en acción, tórax en rango, piernas sin medición">
+        <g fill="none" stroke="#5a5a62" stroke-width="2">
+          <rect x="82" y="165" width="36" height="30" rx="0"/>
+          <rect x="82" y="191" width="16" height="178" rx="0" stroke-dasharray="5 3"/>
+          <rect x="102" y="191" width="16" height="178" rx="0" stroke-dasharray="5 3"/>
+          <rect x="72" y="367" width="24" height="11" rx="0" stroke-dasharray="5 3"/>
+          <rect x="104" y="367" width="24" height="11" rx="0" stroke-dasharray="5 3"/>
+          <path d="M70 104c0-10 9-16 20-16h20c11 0 20 6 20 16l-2 42c0 12-6 19-14 21H86c-8-2-14-9-14-21z"/>
+          <rect x="131" y="96" width="13" height="112" rx="0" transform="rotate(7 137.5 96)"/>
+          <rect x="56" y="96" width="13" height="112" rx="0" transform="rotate(-7 62.5 96)"/>
+          <rect x="92" y="76" width="16" height="14" rx="0"/>
+        </g>
+        <circle class="head" cx="100" cy="54" r="24" fill="#ff5347" fill-opacity=".16" stroke="#ff5347" stroke-width="2.6"/>
+        <ellipse cx="92" cy="50" rx="3" ry="2" fill="#5a5a62"/>
+        <ellipse cx="108" cy="50" rx="3" ry="2" fill="#5a5a62"/>
+      </svg>
+      <div class="legend">
+        <div><i style="background:#f2eee6; border-color:#f2eee6"></i>en rango</div>
+        <div><i style="background:#ffb020; border-color:#ffb020"></i>atención</div>
+        <div><i style="background:#ff5347; border-color:#ff5347"></i>acción</div>
+        <div><i style="border-style:dashed; border-color:#5b574f"></i>sin medición</div>
+      </div>
+      <p class="note">Indicadores medidos por zona. No es un diagnóstico por órgano.</p>
+    </section>
+
+    <aside class="panel">
+      <div class="rowhead">
+        <p class="cap">Indicadores · FD180 · 14 jul 2026</p>
+        <p class="cap" style="color:var(--amber)">animación de prueba</p>
+      </div>
+
+      <table>
+        <thead><tr>
+          <th>Indicador</th><th class="n">Valor</th><th class="n">Base</th><th class="n">Δ</th><th>Banda</th>
+        </tr></thead>
+        <tbody>
+          <tr aria-selected="true">
+            <td>Horas de sueño</td><td class="n">2.9 h</td><td class="n">7.3</td><td class="n">−60 %</td>
+            <td><span class="band red">acción</span></td>
+          </tr>
+          <tr>
+            <td>Estado de ánimo</td><td class="n">4.3</td><td class="n">7.4</td><td class="n">−42 %</td>
+            <td><span class="band amber">atención</span></td>
+          </tr>
+          <tr>
+            <td>Presión sistólica</td><td class="n">121.9</td><td class="n">110.6</td><td class="n">+10 %</td>
+            <td><span class="band" style="color:var(--text)">en rango</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card">
+        <div class="cardhead">
+          <span class="dot"></span>
+          <span class="cap" style="color:var(--text)">Horas de sueño</span>
+          <span class="cap" style="border:2px solid var(--rule); padding:3px 7px">sintético</span>
+        </div>
+        <div class="value"><span id="count">0.0</span><small>h</small></div>
+        <div class="meta"><span>FD180 06:40</span><span>base 7.3</span><span>−4.4 (−60 %)</span><span>rango 6–9 del escenario</span></div>
+        <svg class="spark" viewBox="0 0 900 70" preserveAspectRatio="none" role="img" aria-label="Serie de sueño descendiendo">
+          <polyline id="spark" points="0,26 40,22 80,28 120,20 160,26 200,18 240,26 280,17 320,27 360,21 400,28 440,19 480,27 520,22 560,30 600,26 640,34 680,30 720,40 760,36 800,46 840,42 880,50 900,54"
+            fill="none" stroke="#ff5347" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="alarm">
+        <div class="k">Acción requerida</div>
+        <div class="v">Revisar el ciclo de sueño con el flight surgeon y el control de iluminación.</div>
+        <div class="r">horas de sueño · 2.9 h contra una base de 7.3 h</div>
+      </div>
+
+      <div class="verifier">
+        <div class="vhead">
+          <svg class="arc" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6" stroke="#ffb020" stroke-dasharray="26 12" stroke-linecap="butt"/>
+          </svg>
+          <span class="cap" style="color:var(--text)">Verificador de afirmaciones</span>
+          <span class="verdict bad" id="verdict">verificando…</span>
+        </div>
+
+        <div class="claim" id="claim-bad">
+          <span class="txt">"Dormiste 9.2 h, así que el descanso está resuelto"</span>
+          <span class="why">cifra sin respaldo</span>
+        </div>
+        <div class="claim anchored" id="claim-good">
+          <span class="check">✓</span>
+          <span class="txt">"El sueño es 2.9 h, un 60 % por debajo de tu base"</span>
+          <span class="why" style="color:var(--text2)">anclada a 1 dato</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<div class="controls">
+  <button id="replay">repetir</button>
+  <button id="motion">movimiento: sí</button>
+</div>
+
+<script>
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var staticMode = new URLSearchParams(location.search).get('static') === '1';
+  var motionOn = !reduced && !staticMode;
+
+  function countUp(){
+    var el = document.getElementById('count');
+    var target = 2.9, start = null, dur = 700;
+    if (!motionOn) { el.textContent = target.toFixed(1); return; }
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(1);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0.0';
+    requestAnimationFrame(step);
+  }
+
+  function drawSpark(){
+    var line = document.getElementById('spark');
+    var len = line.getTotalLength();
+    if (!motionOn) { line.style.strokeDasharray = 'none'; line.style.strokeDashoffset = '0'; return; }
+    line.style.transition = 'none';
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    void line.getBoundingClientRect();
+    line.style.transition = 'stroke-dashoffset 900ms cubic-bezier(.2,.8,.2,1) 120ms';
+    line.style.strokeDashoffset = '0';
+  }
+
+  function verify(){
+    var bad = document.getElementById('claim-bad');
+    var verdict = document.getElementById('verdict');
+    bad.classList.remove('struck');
+    verdict.textContent = 'verificando…';
+    verdict.className = 'verdict bad';
+    var t1 = motionOn ? 900 : 60;
+    setTimeout(function(){
+      bad.classList.add('struck');
+      verdict.textContent = '1 frase tachada · 1 respaldada';
+      verdict.className = 'verdict bad';
+    }, t1);
+  }
+
+  function play(){
+    document.body.classList.remove('animate');
+    void document.body.offsetWidth;
+    if (motionOn) document.body.classList.add('animate');
+    countUp(); drawSpark(); verify();
+  }
+
+  document.getElementById('replay').addEventListener('click', play);
+  document.getElementById('motion').addEventListener('click', function(){
+    motionOn = !motionOn;
+    this.textContent = 'movimiento: ' + (motionOn ? 'sí' : 'no');
+    this.classList.toggle('off', !motionOn);
+    if (!motionOn) document.body.classList.remove('animate');
+    play();
+  });
+
+  play();
+</script>
+</body></html>

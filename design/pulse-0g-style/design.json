@@ -23,6 +23,13 @@
       "tradeoff": "La jerarquía más clara: un número manda y el resto acompaña. Pierde la lectura de conjunto — hay que navegar para ver las cinco zonas — y el blanco pleno es discutible en una cabina oscura.",
       "width": 1440,
       "height": 900
+    },
+    {
+      "file": "04-consola-animada.html",
+      "title": "Consola animada · tipografía pesada",
+      "tradeoff": "Muestra los cuatro efectos sobre la consola real y la tipografía neobrutalista: más presencia y mejor lectura de los números, a costa del aire que tenía la 01 y de competir con los datos cuando la pantalla es chica.",
+      "width": 1440,
+      "height": 1000
     }
   ]
 }
