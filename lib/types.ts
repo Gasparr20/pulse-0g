@@ -1,0 +1,136 @@
+export type Phase = "preflight" | "inflight" | "postflight";
+
+export type OriginType =
+  | "observed_real"
+  | "replayed"
+  | "injected_fault"
+  | "synthetic";
+
+/** Four states only. A missing threshold and a missing value are both "no_data",
+ *  distinguished by the reason string so the UI can teach the difference. */
+export type Band = "green" | "amber" | "red" | "no_data";
+
+export type RefSource =
+  | "dataset_file"
+  | "demo_parameter"
+  | "evidence_card"
+  | "absent";
+
+export type ZoneId = "head" | "thorax" | "arm" | "legs" | "eyes";
+
+export interface MeasurementRow {
+  id: number;
+  dataset_id: string;
+  subject_id: string;
+  scenario_id: string | null;
+  variable: string;
+  value: number | null;
+  unit: string | null;
+  ref_min: number | null;
+  ref_max: number | null;
+  ref_source: RefSource;
+  raw_value: string | null;
+  time_label: string;
+  phase: Phase;
+  offset_days: number;
+  sort_key: number;
+  origin_type: OriginType;
+  hazard: string | null;
+  source_file: string;
+  source_row: number | null;
+  missing_token: string | null;
+  quality_flags: string;
+}
+
+export interface SeriesPoint {
+  label: string;
+  sortKey: number;
+  value: number | null;
+}
+
+export interface IndicatorView {
+  variable: string;
+  label: string;
+  unit: string | null;
+  value: number | null;
+  display: string;
+  band: Band;
+  bandReason: string;
+  provisional: boolean;
+  evidenceCardId: string | null;
+  refMin: number | null;
+  refMax: number | null;
+  refSource: RefSource;
+  baseline: number | null;
+  delta: number | null;
+  deltaPct: number | null;
+  baselineShifted: boolean;
+  origin: OriginType;
+  hazard: string | null;
+  latestLabel: string;
+  action: string | null;
+  flags: string[];
+  series: SeriesPoint[];
+  missingCount: number;
+}
+
+export type ZoneState = "measured" | "no_data" | "measurement_site";
+
+export interface ZoneView {
+  id: ZoneId;
+  label: string;
+  sublabel: string;
+  state: ZoneState;
+  band: Band;
+  indicators: IndicatorView[];
+  note: string | null;
+  teaching: string | null;
+}
+
+export interface RadiationView {
+  value: number | null;
+  unit: string;
+  max: number | null;
+  band: Band;
+  action: string | null;
+  provisional: boolean;
+  label: string;
+}
+
+export interface RealAnalyte {
+  variable: string;
+  unit: string | null;
+  refMin: number | null;
+  refMax: number | null;
+  series: SeriesPoint[];
+  missing: number;
+  outOfRange: number;
+}
+
+export interface RealPanel {
+  datasetId: string;
+  title: string;
+  license: string;
+  sourceUrl: string;
+  sha256: string | null;
+  retrievedAt: string | null;
+  subjectId: string | null;
+  timepoints: string[];
+  analytes: RealAnalyte[];
+  pending: number;
+  mismatch: boolean;
+  note: string;
+}
+
+export interface Dashboard {
+  hero: {
+    subjectLabel: string;
+    subjectId: string;
+    scenarioId: string;
+    originType: OriginType;
+    zones: ZoneView[];
+    radiation: RadiationView;
+  };
+  real: RealPanel;
+  generatedAt: string;
+}

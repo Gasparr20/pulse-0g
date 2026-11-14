@@ -1,0 +1,103 @@
+{
+  "scenario_id": "SCN-MARS-180",
+  "seed": 20261114,
+  "generator": "tools/build_db.py",
+  "generator_version": "1.0.0",
+  "subject": "SYNTH:ASTRO-01",
+  "fictional": true,
+  "days": {
+    "preflight": 90,
+    "inflight": 180,
+    "postflight": 30
+  },
+  "parameters": {
+    "systolic": {
+      "baseline": 112,
+      "drift_per_day": 0.06,
+      "sd": 4.0,
+      "demo_range": [
+        95,
+        130
+      ],
+      "hazard": "hazard:gravity"
+    },
+    "diastolic": {
+      "baseline": 70,
+      "drift_per_day": 0.04,
+      "sd": 3.0,
+      "demo_range": [
+        60,
+        85
+      ],
+      "hazard": "hazard:gravity"
+    },
+    "resting_hr": {
+      "baseline": 58,
+      "drift_per_day": 0.05,
+      "sd": 3.0,
+      "demo_range": [
+        45,
+        85
+      ],
+      "hazard": "hazard:gravity"
+    },
+    "glucose": {
+      "baseline": 88,
+      "drift_per_day": 0.0,
+      "sd": 6.0,
+      "demo_range": [
+        65,
+        99
+      ],
+      "hazard": "hazard:environment"
+    },
+    "temperature": {
+      "baseline": 36.6,
+      "drift_per_day": 0.0,
+      "sd": 0.15,
+      "demo_range": [
+        36.0,
+        37.5
+      ],
+      "hazard": "hazard:environment"
+    },
+    "sleep_hours": {
+      "baseline": 7.4,
+      "drift_per_day": -0.012,
+      "sd": 0.7,
+      "demo_range": [
+        6.0,
+        9.0
+      ],
+      "hazard": "hazard:isolation"
+    },
+    "mood": {
+      "baseline": 7.5,
+      "drift_per_day": -0.011,
+      "sd": 0.6,
+      "demo_range": [
+        5.0,
+        10.0
+      ],
+      "hazard": "hazard:isolation"
+    }
+  },
+  "events": [
+    {
+      "day": 30,
+      "event": "duplicate",
+      "detail": "systolic emitted twice on FD30"
+    },
+    {
+      "day": 61,
+      "event": "gap",
+      "detail": "sleep_hours not recorded on FD61-FD64"
+    },
+    {
+      "day": 120,
+      "event": "artifact",
+      "detail": "single temperature reading injected at 38.4 C"
+    }
+  ],
+  "warning": "Demo parameters, not clinical thresholds. Never present as NASA data."
+}

@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# builds
+.next/
+dist/
+build/
+out/
+
+# runtime state
+data/generated/
+*.sqlite-wal
+*.sqlite-shm
+instance/
+
+# editor and os
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# media drafts
+*.mp4
+!docs/deliverables/*.mp4

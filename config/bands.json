@@ -1,0 +1,75 @@
+{
+  "_note": "Thresholds for indicators the OSD-575 file does not cover. Every entry needs evidence_card_id before the provisional chip can be removed. Until then the UI labels the band as provisional and the value is a demo parameter, not a clinical threshold.",
+  "systolic": {
+    "label": "Presión sistólica",
+    "unit": "mmHg",
+    "direction": "above",
+    "amber": 130,
+    "red": 150,
+    "baseline_tolerance_pct": 10,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Repetir la toma en 30 min, brazo a la altura del corazón, y registrar el contexto.",
+    "action_red": "Notificar al flight surgeon y repetir la toma con el manguito verificado."
+  },
+  "diastolic": {
+    "label": "Presión diastólica",
+    "unit": "mmHg",
+    "direction": "above",
+    "amber": 85,
+    "red": 95,
+    "baseline_tolerance_pct": 10,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Repetir la toma en 30 min junto con la sistólica.",
+    "action_red": "Notificar al flight surgeon."
+  },
+  "resting_hr": {
+    "label": "Frecuencia cardíaca en reposo",
+    "unit": "bpm",
+    "direction": "above",
+    "amber": 85,
+    "red": 100,
+    "baseline_tolerance_pct": 15,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Registrar la tendencia de 7 días antes de concluir nada.",
+    "action_red": "Notificar al flight surgeon y revisar la adherencia al ejercicio."
+  },
+  "sleep_hours": {
+    "label": "Horas de sueño",
+    "unit": "h",
+    "direction": "below",
+    "amber": 6,
+    "red": 5,
+    "baseline_tolerance_pct": 15,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Registrar la rutina previa al descanso y proteger la ventana de sueño.",
+    "action_red": "Revisar el ciclo de sueño con el flight surgeon y el control de iluminación."
+  },
+  "mood": {
+    "label": "Estado de ánimo",
+    "unit": "score_0_10",
+    "direction": "below",
+    "amber": 5,
+    "red": 3,
+    "baseline_tolerance_pct": 20,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Registrar una nota de contexto y sostener el contacto con la tripulación.",
+    "action_red": "Notificar al flight surgeon y activar la rutina de apoyo conductual."
+  },
+  "radiation_dose_cumulative": {
+    "label": "Dosis acumulada",
+    "unit": "mSv",
+    "direction": "above",
+    "amber": 400,
+    "red": 600,
+    "baseline_tolerance_pct": 100,
+    "evidence_card_id": "PENDING",
+    "provisional": true,
+    "action_amber": "Revisar la proyección de dosis contra el límite de carrera.",
+    "action_red": "Notificar al flight surgeon y evaluar el blindaje del sector habitable."
+  }
+}

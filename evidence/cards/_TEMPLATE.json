@@ -1,0 +1,22 @@
+{
+  "id": "EVD-XXXX-000",
+  "kind": "threshold",
+  "title_es": "",
+  "summary_es": "",
+  "quote": "",
+  "source_label": "",
+  "url": "",
+  "retrieved_at": "YYYY-MM-DD",
+  "sha256": "",
+  "applies_to": [],
+  "thresholds": {
+    "variable": "",
+    "phase": "preflight | inflight | postflight | any",
+    "operator": ">=",
+    "value": 0,
+    "unit": ""
+  },
+  "license": "public_domain | attribution_required",
+  "verified_by": "",
+  "notes": ""
+}
