@@ -100,13 +100,13 @@ Check: the video plays with the audio muted and the story is still complete.
 | T4 | Band engine, two layers, cited thresholds | S4, S5 | inline | a1202a0 |
 | T5 | Body map SVG: 5 regions, radiation gauge | S6, S7 | inline | a1202a0 |
 | T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | a1202a0 |
-| T15 | Tests for the band engine and the importer (no framework yet) | S4, S3 | inline | — |
+| T15 | Contract checks: intents, verifier, journal, case package | S3, S4, S12, S14, S15 | inline | this |
 | T7 | 18 evidence cards, quoted and hashed (owner's partner) | S10 | parallel, separate files | — |
 | T8 | Query intents, tag retrieval, deterministic templates | S11 | inline | — |
 | T9 | Claim verifier and rejection log | S12, S13 | inline | — |
-| T10 | Append-only comment thread into case package | S14 | inline | — |
-| T11 | Case package export, JSON + readable report | S15 | inline | — |
-| T12 | Offline hardening and demo seeding | S16 | inline | — |
+| T10 | Append-only comment thread into case package | S14 | inline | this |
+| T11 | Case package export, JSON + readable report | S15 | inline | this |
+| T12 | Offline hardening and demo seeding | S16 | inline | a6ace3e |
 | T13 | 30 s video with burnt-in subtitles and 8-slide deck | S19 | inline | — |
 | T14 | Optional local model narrator, only if time remains | S17 | inline, droppable | — |
 

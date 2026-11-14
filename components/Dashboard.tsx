@@ -5,6 +5,8 @@ import BodyMap, { bandText } from "./BodyMap";
 import Sparkline from "./Sparkline";
 import AskPanel from "./AskPanel";
 import { BAND_ORDER } from "@/lib/bands";
+import Comments from "./Comments";
+import CasePackage from "./CasePackage";
 import type {
   Dashboard as DashboardData,
   IndicatorView,
@@ -16,7 +18,21 @@ function fmt(n: number | null, digits = 1): string {
   return String(Math.round(n * 10 ** digits) / 10 ** digits);
 }
 
-function IndicatorCard({ ind }: { ind: IndicatorView }) {
+function clockLabel(clock: number): string {
+  if (clock >= 1_000_000) return `R+${clock - 1_000_000}`;
+  if (clock < 0) return `L-${Math.abs(clock)}`;
+  return `FD${clock}`;
+}
+
+function IndicatorCard({
+  ind,
+  subjectId,
+  missionClock,
+}: {
+  ind: IndicatorView;
+  subjectId: string;
+  missionClock: string;
+}) {
   return (
     <article className="card">
       <div className="indicator-title">
@@ -82,11 +98,27 @@ function IndicatorCard({ ind }: { ind: IndicatorView }) {
           ))}
         </div>
       )}
+
+      <Comments
+        subjectId={subjectId}
+        targetId={`${ind.variable}@${ind.latestLabel}`}
+        missionClock={missionClock}
+      />
     </article>
   );
 }
 
-function ZonePanel({ zone, zones }: { zone: ZoneView; zones: ZoneView[] }) {
+function ZonePanel({
+  zone,
+  zones,
+  subjectId,
+  missionClock,
+}: {
+  zone: ZoneView;
+  zones: ZoneView[];
+  subjectId: string;
+  missionClock: string;
+}) {
   if (zone.state === "measured") {
     return (
       <>
@@ -97,7 +129,12 @@ function ZonePanel({ zone, zones }: { zone: ZoneView; zones: ZoneView[] }) {
         </div>
         <p className="panel-sub">{zone.sublabel}</p>
         {zone.indicators.map((ind) => (
-          <IndicatorCard key={ind.variable} ind={ind} />
+          <IndicatorCard
+            key={ind.variable}
+            ind={ind}
+            subjectId={subjectId}
+            missionClock={missionClock}
+          />
         ))}
       </>
     );
@@ -127,7 +164,7 @@ function ZonePanel({ zone, zones }: { zone: ZoneView; zones: ZoneView[] }) {
       {zone.state === "measurement_site" && systolic && (
         <>
           <h3 className="section">Última toma registrada en esta zona</h3>
-          <IndicatorCard ind={systolic} />
+          <IndicatorCard ind={systolic} subjectId={subjectId} missionClock={missionClock} />
         </>
       )}
       {zone.state === "no_data" && (
@@ -231,11 +268,13 @@ export default function Dashboard({
   initialTab = "mission",
   initialQuestion = null,
   clock = 180,
+  autoCase = false,
 }: {
   data: DashboardData;
   initialTab?: "mission" | "real" | "ask";
   initialQuestion?: string | null;
   clock?: number;
+  autoCase?: boolean;
 }) {
   const [tab, setTab] = useState<"mission" | "real" | "ask">(initialTab);
   const zones = data.hero.zones;
@@ -342,7 +381,23 @@ export default function Dashboard({
             </div>
           </section>
           <aside className="panel">
-            <ZonePanel zone={zone} zones={zones} />
+            <ZonePanel
+              zone={zone}
+              zones={zones}
+              subjectId={data.hero.subjectId}
+              missionClock={clockLabel(clock)}
+            />
+            <CasePackage
+              clock={clock}
+              autoOpen={autoCase}
+              onOpenComments={() => {
+                const first = document.querySelector<HTMLButtonElement>(
+                  "[data-comments-toggle]",
+                );
+                if (first && first.getAttribute("aria-expanded") !== "true") first.click();
+                first?.scrollIntoView({ block: "center", behavior: "smooth" });
+              }}
+            />
           </aside>
         </main>
       ) : tab === "real" ? (

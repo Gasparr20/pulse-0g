@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "db": "python3 tools/build_db.py"
+    "db": "python3 tools/build_db.py",
+    "check": "python3 tools/check_answers.py && python3 tools/check_case.py"
   },
   "dependencies": {
     "next": "^16.4.6",

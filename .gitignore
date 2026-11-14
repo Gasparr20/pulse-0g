@@ -26,3 +26,6 @@ instance/
 # media drafts
 *.mp4
 !docs/deliverables/*.mp4
+
+# runtime journal: operational state, never evidence
+db/journal.sqlite*

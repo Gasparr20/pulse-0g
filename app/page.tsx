@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; q?: string; at?: string }>;
+  searchParams: Promise<{ tab?: string; q?: string; at?: string; case?: string }>;
 }) {
-  const { tab, q, at } = await searchParams;
+  const { tab, q, at, case: caseParam } = await searchParams;
   const initialTab = tab === "real" || tab === "ask" ? tab : "mission";
   const parsed = Number(at);
   // Default to the last day of the flight: post-return samples are debrief data,
@@ -22,6 +22,7 @@ export default async function Page({
       initialTab={initialTab}
       initialQuestion={q ?? null}
       clock={clock}
+      autoCase={caseParam === "1"}
     />
   );
 }
