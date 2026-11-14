@@ -294,6 +294,19 @@ table.indicators th:last-child, table.indicators td:last-child { width: 1%; padd
 
 .flags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 
+/* the hazard this indicator is a proxy for: a citation, not decoration */
+.hazards { margin-top: 14px; border-top: 1px solid var(--hair); padding-top: 10px; display: grid; gap: 6px; }
+.hazards .k { font: 11px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2); }
+.hazards a {
+  font: 13.5px/1.45 var(--mono);
+  color: var(--text);
+  text-decoration: none;
+  border-left: 2px solid var(--hair-2);
+  padding-left: 10px;
+}
+.hazards a:hover { border-left-color: var(--amber); }
+.hazards a:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
 .spark { display: block; width: 100%; height: 62px; }
 .spark polyline { fill: none; stroke: var(--text-2); stroke-width: 1.8; stroke-linejoin: round; }
 .spark[data-band="amber"] polyline { stroke: var(--amber); }

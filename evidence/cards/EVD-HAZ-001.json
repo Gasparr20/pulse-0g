@@ -1,0 +1,18 @@
+{
+  "id": "EVD-HAZ-001",
+  "kind": "hazard",
+  "title_es": "Riesgo de carcinogénesis por radiación espacial",
+  "summary_es": "Debido a la exposición de la tripulación a la radiación del entorno espacial, existe la posibilidad de un aumento en la morbilidad o mortalidad por cáncer.",
+  "quote": "Given crew is exposed to radiation from the space environment, there is the possibility for increased cancer morbidity or mortality.",
+  "source_label": "NASA HRP Risks — Risk of Radiation Carcinogenesis (i=96), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=96",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "hazard:radiation",
+    "radiation_dose_cumulative"
+  ],
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "notes": "Verificada por búsqueda literal en la página el 2026-11-14. Nota de NASA: el riesgo está programado para actualizarse en el HSRB de 2025. State of Knowledge: los estudios terrestres muestran aumentos relacionados con la dosis en incidencia y mortalidad por cáncer a dosis relevantes para el espacio, pero no existen datos epidemiológicos de tripulaciones expuestas a radiación espacial. El entorno orbital difiere del terrestre por partículas de alta energía (protones, iones pesados, neutrones) que producen daño agrupado de difícil reparación; la evidencia en animales y células sugiere menor latencia y mayor malignidad que rayos X o gamma. La incertidumbre del REID es amplia, con límites superiores de confianza de 95 % entre 3 y 4 veces los valores centrales."
+}

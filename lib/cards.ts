@@ -76,6 +76,15 @@ export function citationFor(variable: string): EvidenceCard | null {
   );
 }
 
+/** Hazard cards that speak to a given hazard tag, for the "risk behind this
+ *  indicator" block. Ordered by id so the list is stable across requests. */
+export function hazardsFor(hazardTag: string | null): EvidenceCard[] {
+  if (!hazardTag) return [];
+  return loadCards()
+    .filter((c) => c.kind === "hazard" && c.applies_to?.includes(hazardTag))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export function cardsFor(variable: string): EvidenceCard[] {
   return loadCards().filter(
     (c) => c.applies_to?.includes(variable) || c.thresholds?.variable === variable,

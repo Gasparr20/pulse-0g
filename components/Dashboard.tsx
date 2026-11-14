@@ -194,6 +194,17 @@ function IndicatorCard({
         </div>
       )}
 
+      {ind.hazards.length > 0 && (
+        <div className="hazards">
+          <span className="k">Riesgo de referencia</span>
+          {ind.hazards.map((h) => (
+            <a key={h.id} href={h.url} target="_blank" rel="noreferrer" title={h.source}>
+              {h.id} · {h.title}
+            </a>
+          ))}
+        </div>
+      )}
+
       <Comments
         subjectId={subjectId}
         targetId={`${ind.variable}@${ind.latestLabel}`}

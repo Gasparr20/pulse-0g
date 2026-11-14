@@ -73,6 +73,7 @@ export interface IndicatorView {
   recordedAt: string | null;
   recordedAtDisplay: string | null;
   action: string | null;
+  hazards: Array<{ id: string; title: string; url: string; source: string }>;
   flags: string[];
   series: SeriesPoint[];
   missingCount: number;

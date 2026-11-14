@@ -1,7 +1,7 @@
 import bandsJson from "@/config/bands.json";
 import { all, one } from "./db";
 import { classify, worst, type ThresholdConfig } from "./bands";
-import { citationFor } from "./cards";
+import { citationFor, hazardsFor } from "./cards";
 import type {
   Dashboard,
   IndicatorView,
@@ -163,6 +163,12 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
     recordedAt: last.recorded_at,
     recordedAtDisplay: stamp(last.recorded_at),
     action: verdict.action,
+    hazards: hazardsFor(last.hazard).map((c) => ({
+      id: c.id,
+      title: c.title_es,
+      url: c.url,
+      source: c.source_label,
+    })),
     flags: flagsOf(last),
     series,
     missingCount: ordered.filter((r) => r.value === null).length,

@@ -1,0 +1,19 @@
+{
+  "id": "EVD-HAZ-002",
+  "kind": "hazard",
+  "title_es": "Riesgo de cambios cognitivos o conductuales adversos y trastornos psiquiátricos",
+  "summary_es": "Dado que las tripulaciones de misiones de exploración estarán expuestas a aislamiento y confinamiento prolongados, mayor distancia a la Tierra, más radiación y gravedad alterada, existe la posibilidad de que esos peligros, solos o combinados, provoquen cambios cognitivos o conductuales adversos que afecten la salud y el rendimiento durante la misión, trastornos psiquiátricos si no se detectan o mitigan a tiempo, y consecuencias a largo plazo.",
+  "quote": "Given that crews of future exploration missions will be exposed to extended duration of isolation and confinement, greater distances from Earth, as well as increased exposures to radiation and altered gravity, there is a possibility that these singular or combined hazards could lead to (a) adverse cognitive or behavioral changes affecting crew health and performance during the mission; (b) development of psychiatric disorders if adverse behavioral health changes are undetected or inadequately mitigated; and (c) long term health consequences, including late-emerging cognitive and behavioral changes.",
+  "source_label": "NASA HRP Risks — Risk of Adverse Cognitive or Behavioral Changes and Psychiatric Disorders (i=99), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=99",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "hazard:isolation",
+    "sleep_hours",
+    "mood"
+  ],
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "notes": "Verificada por búsqueda literal en la página el 2026-11-14. State of Knowledge: se reportaron condiciones de salud conductual subdiagnósticas en misiones largas (incidencia estimada en la ISS de 0,62 persona-año, probablemente subestimada; ≥4,5 % de trastornos psiquiátricos en análogos antárticos, con aumento no lineal tras 5-6 meses). Se observaron alteraciones cerebrales morfológicas y funcionales en astronautas de larga duración en la ISS y disminución de una neurotrofina clave en análogos terrestres, con implicancias cognitivas desconocidas. Hay reportes de deterioros cognitivos leves e inconsistentes en órbita baja y un caso con deterioro clínicamente significativo que persistió al menos 6 meses tras el aterrizaje."
+}
