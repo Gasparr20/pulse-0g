@@ -32,3 +32,6 @@ db/journal.sqlite*
 
 # intermediate segments of the storyboard cut
 docs/video/v2/*.mp4
+
+# canvas state: owned by the gentle-design canvas, never versioned
+design/**/comments.json
