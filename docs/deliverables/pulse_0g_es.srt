@@ -1,0 +1,24 @@
+1
+00:00:00,000 --> 00:00:03,000
+250 millones de millas. Sin médico a bordo.
+Un dato normal para cualquiera puede ser alerta para vos.
+
+2
+00:00:03,000 --> 00:00:08,000
+Tocá una zona del cuerpo. Cada región muestra tu valor, su banda y qué hacer, sin diagnosticar.
+
+3
+00:00:08,000 --> 00:00:13,000
+Tu medición contra tu propia base: 2.9 h de sueño (−60 % vs base 7.3 h), exponiendo los 4 huecos sin inventar.
+
+4
+00:00:13,000 --> 00:00:19,000
+Cada afirmación se rastrea o se tacha en rojo en pantalla si falta respaldo en los datos.
+
+5
+00:00:19,000 --> 00:00:25,000
+¿Fuera de banda? Exportá un paquete de caso trazable y listo para lectura médica en Tierra.
+
+6
+00:00:25,000 --> 00:00:28,000
+Pulse-0G. Sin diagnóstico. Cada afirmación respaldada.

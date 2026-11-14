@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "id": "03yelifk",
+      "file": "01-consola-de-vuelo.html",
+      "selector": "body > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "excerpt": "CALIDAD DE DATOS SUEÑO SIN VALOR 4 FD61 a FD64 OSD-575 SIN VALOR 23 N/A, NA y vacío SIN RANGO EN ARCHIVO 1 ratio BUN/creatinina DISCREPANCIA R+194 fuera de la narrativa",
+      "comment": "necesito que tenga mas texto para que sea mas entendible esta parte",
+      "createdAt": "2026-11-14T21:22:54.276Z",
+      "status": "resolved",
+      "sentAt": "2026-11-14T21:22:54.287Z",
+      "resolvedAt": "2026-11-14T21:24:51.705Z",
+      "resolution": "Calidad de datos: cada cifra ahora tiene una frase que explica qué falta y por qué se declara en vez de rellenarse. Acción: pasó a barra destacada con fondo y filete rojo, tipografía más grande y rótulo propio."
+    },
+    {
+      "id": "isewt069",
+      "file": "01-consola-de-vuelo.html",
+      "selector": "body > main > section:nth-of-type(2) > div:nth-of-type(1)",
+      "excerpt": "ACCIÓN Revisar el ciclo de sueño con el flight surgeon y el control de iluminación.",
+      "comment": "la accion tiene que ser un poco mas llamativa para que se entienda que es mas importante",
+      "createdAt": "2026-11-14T21:23:24.828Z",
+      "status": "resolved",
+      "sentAt": "2026-11-14T21:23:24.839Z",
+      "resolvedAt": "2026-11-14T21:24:51.705Z",
+      "resolution": "Calidad de datos: cada cifra ahora tiene una frase que explica qué falta y por qué se declara en vez de rellenarse. Acción: pasó a barra destacada con fondo y filete rojo, tipografía más grande y rótulo propio."
+    }
+  ]
+}

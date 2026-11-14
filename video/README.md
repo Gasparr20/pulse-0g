@@ -1,27 +1,29 @@
-# Pulse-0G Video Pipeline
+# Pulse-0G Video Pipeline (V2)
 
-Reproducible 2D motion-graphics pipeline (PyCairo + Pillow + NumPy + FFmpeg) for the **Pulse-0G** NASA Space Apps Challenge 2026 pitch/launch video (`1920x1080`, `30 fps`, `23.0 s`, H.264 MP4).
+Pipeline reproducible de motion graphics 2D (PyCairo + Pillow + NumPy + FFmpeg) para **Pulse-0G** (NASA Space Apps Challenge 2026), en **español** y en dos formatos nativos (`1920×1080` y `1080×1920`, 30 fps, 28.0 s, H.264 MP4).
 
-## Requirements
+## Requisitos
 
-- Python 3 with `pycairo`, `Pillow`, `numpy`
+- Python 3 con `pycairo`, `Pillow`, `numpy`
 - `ffmpeg`
-- System fonts in `/usr/share/fonts/TTF/`: `OpenSans-*.ttf` and `MesloLGLNerdFontMono-*.ttf`
+- Fuentes del sistema en `/usr/share/fonts/TTF/`: `OpenSans-*.ttf` y `MesloLGLNerdFontMono-*.ttf`
 
-## Regenerate
+## Regenerar
 
 ```bash
-python3 video/generate_audio.py
-python3 video/generate_video.py
+python3 video/generate_video.py --all
 ```
 
-Outputs are written to `docs/deliverables/`:
+O por formato individual (`--1080p` o `--vertical`). Los entregables se escriben en `docs/deliverables/`:
 
-- `pulse_0g_1080p.mp4` — 1920x1080 H.264 master with procedural telemetry audio
-- `pulse_0g_en.srt` — English subtitle track
-- `still_01_baseline_metric.png`, `still_02_claim_struck.png`, `still_03_every_claim_traced.png` — keyframe stills
+- `pulse_0g_1080p.mp4` — Master horizontal `1920×1080`
+- `pulse_0g_vertical_1080x1920.mp4` — Master vertical `1080×1920`
+- `pulse_0g_es.srt` — Subtítulos en español
+- `still_01_mapa_corporal.png`, `still_02_base_propia.png`, `still_03_verificador_tachado.png` — Cuadros clave
 
-## Key Constraints Enforced
+## Decisiones de dirección (V2)
 
-- Zero webpage screenshots, zero stock photos, zero 3D renders.
-- Strict honesty rules: no diagnosis/disease prediction claims, explicit `SYNTHETIC` badges on demo scenario numbers, and only approved metrics (`2.9 h`, `-60%`, `4.3 / 10`, `76 / 600 mSv`, `2`, `4`, `7`, `19`).
+- **Problema → Solución → Cómo queda** en 6 bloques en español.
+- **Zoom real** sobre la UI vectorial del producto (≥60 % del cuadro), con banda inferior dedicada para leyendas.
+- **Todo número con su objeto** (`2.9 h de sueño`, `−60 % contra tu propia base`, `base previa 7.3 h`) y cero código en pantalla.
+- **Honestidad estricta:** rótulo `SINTÉTICO` visible, sin diagnóstico, 4 huecos reales sin interpolar en la serie y frase sin respaldo tachada en rojo en el Verificador durante >3 s.
