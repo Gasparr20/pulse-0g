@@ -210,3 +210,36 @@ table.real span.bad { color: var(--amber); }
 .provenance b { color: var(--text); font-weight: 500; }
 
 h3.section { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-2); margin: 22px 0 8px; font-weight: 500; }
+
+/* -------------------------------------------------------- mission clock */
+.clock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.clock-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  margin-right: 6px;
+}
+.clock-step {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--hair);
+  color: var(--text-2);
+  text-decoration: none;
+}
+.clock-step:hover { color: var(--text); border-color: var(--text-2); }
+.clock-step[aria-current="true"] {
+  color: var(--bg);
+  background: var(--teal);
+  border-color: var(--teal);
+  font-weight: 600;
+}

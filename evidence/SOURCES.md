@@ -55,13 +55,13 @@ Estas cinco hacen que el chip "UMBRAL PROVISIONAL" desaparezca de la pantalla.
 
 Estas son las más fáciles: cada una es un párrafo de contexto.
 
-| ID | Hazard | Buscar | Dónde |
-|---|---|---|---|
-| `EVD-HAZ-001` | Radiación espacial | `space radiation`, `GCR`, `solar particle event` | HRP Risks |
-| `EVD-HAZ-002` | Aislamiento y confinamiento | `isolation and confinement`, `behavioral health` | HRP Risks |
-| `EVD-HAZ-003` | Campos gravitatorios | `bone loss`, `muscle atrophy`, `fluid shift` | HRP Risks |
-| `EVD-HAZ-004` | Distancia a la Tierra | `communication delay`, `autonomy`, `medical operations Mars` | HRP Risks |
-| `EVD-HAZ-005` | Ambiente cerrado hostil | `closed environment`, `CO2`, `air quality` | HRP Risks |
+| ID            | Hazard                      | Buscar                                                       | Dónde     |
+| ------------- | --------------------------- | ------------------------------------------------------------ | --------- |
+| `EVD-HAZ-001` | Radiación espacial          | `space radiation`, `GCR`, `solar particle event`             | HRP Risks |
+| `EVD-HAZ-002` | Aislamiento y confinamiento | `isolation and confinement`, `behavioral health`             | HRP Risks |
+| `EVD-HAZ-003` | Campos gravitatorios        | `bone loss`, `muscle atrophy`, `fluid shift`                 | HRP Risks |
+| `EVD-HAZ-004` | Distancia a la Tierra       | `communication delay`, `autonomy`, `medical operations Mars` | HRP Risks |
+| `EVD-HAZ-005` | Ambiente cerrado hostil     | `closed environment`, `CO2`, `air quality`                   | HRP Risks |
 
 ## Paso 3 — Cómo se hace una, en cuatro gestos
 

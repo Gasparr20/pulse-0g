@@ -160,10 +160,12 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
   };
 }
 
-function heroZones(): ZoneView[] {
+function heroZones(at: number | null): ZoneView[] {
   const rows = all<MeasurementRow>(
-    "SELECT * FROM measurement WHERE subject_id = ? ORDER BY sort_key",
-    HERO_SUBJECT,
+    at === null
+      ? "SELECT * FROM measurement WHERE subject_id = ? ORDER BY sort_key"
+      : "SELECT * FROM measurement WHERE subject_id = ? AND sort_key <= ? ORDER BY sort_key",
+    ...(at === null ? [HERO_SUBJECT] : [HERO_SUBJECT, at]),
   );
   const byVariable = new Map<string, MeasurementRow[]>();
   for (const r of rows) {
@@ -190,10 +192,12 @@ function heroZones(): ZoneView[] {
   });
 }
 
-function radiation(): Dashboard["hero"]["radiation"] {
+function radiation(at: number | null): Dashboard["hero"]["radiation"] {
   const rows = all<MeasurementRow>(
-    "SELECT * FROM measurement WHERE subject_id = ? AND variable = 'radiation_dose_cumulative' ORDER BY sort_key",
-    HERO_SUBJECT,
+    at === null
+      ? "SELECT * FROM measurement WHERE subject_id = ? AND variable = 'radiation_dose_cumulative' ORDER BY sort_key"
+      : "SELECT * FROM measurement WHERE subject_id = ? AND variable = 'radiation_dose_cumulative' AND sort_key <= ? ORDER BY sort_key",
+    ...(at === null ? [HERO_SUBJECT] : [HERO_SUBJECT, at]),
   );
   if (rows.length === 0) {
     return {
@@ -306,17 +310,18 @@ function realPanel(): RealPanel {
   };
 }
 
-export function assemble(): Dashboard {
+export function assemble(at: number | null = null): Dashboard {
   return {
     hero: {
       subjectLabel: "ASTRO-01",
       subjectId: HERO_SUBJECT,
       scenarioId: "SCN-MARS-180",
       originType: "synthetic" as OriginType,
-      zones: heroZones(),
-      radiation: radiation(),
+      zones: heroZones(at),
+      radiation: radiation(at),
     },
     real: realPanel(),
+    missionClock: at,
     generatedAt: new Date().toISOString(),
   };
 }

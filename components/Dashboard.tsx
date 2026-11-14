@@ -3,6 +3,8 @@
 import { useState } from "react";
 import BodyMap, { bandText } from "./BodyMap";
 import Sparkline from "./Sparkline";
+import AskPanel from "./AskPanel";
+import { BAND_ORDER } from "@/lib/bands";
 import type {
   Dashboard as DashboardData,
   IndicatorView,
@@ -224,10 +226,30 @@ function RealPanel({ data }: { data: DashboardData }) {
   );
 }
 
-export default function Dashboard({ data }: { data: DashboardData }) {
-  const [tab, setTab] = useState<"mission" | "real">("mission");
-  const [selected, setSelected] = useState<string>("thorax");
+export default function Dashboard({
+  data,
+  initialTab = "mission",
+  initialQuestion = null,
+  clock = 180,
+}: {
+  data: DashboardData;
+  initialTab?: "mission" | "real" | "ask";
+  initialQuestion?: string | null;
+  clock?: number;
+}) {
+  const [tab, setTab] = useState<"mission" | "real" | "ask">(initialTab);
   const zones = data.hero.zones;
+  // Open on whatever needs attention, not on a fixed region: at FD180 that is the
+  // head, at FD30 nothing is flagged and the thorax stays as a neutral default.
+  const [selected, setSelected] = useState<string>(() => {
+    const ranked = [...zones]
+      .filter((z) => z.state === "measured")
+      .sort((a, b) => BAND_ORDER[a.band] - BAND_ORDER[b.band]);
+    if (!ranked[0] || ranked[0].band === "green" || ranked[0].band === "no_data") {
+      return "thorax";
+    }
+    return ranked[0].id;
+  });
   const zone = zones.find((z) => z.id === selected) ?? zones[0];
   const rad = data.hero.radiation;
   const radMax = rad.max ?? 600;
@@ -267,11 +289,34 @@ export default function Dashboard({ data }: { data: DashboardData }) {
         <button role="tab" aria-selected={tab === "real"} onClick={() => setTab("real")}>
           Datos reales NASA
         </button>
+        <button role="tab" aria-selected={tab === "ask"} onClick={() => setTab("ask")}>
+          Consultar
+        </button>
       </nav>
 
       {tab === "mission" ? (
         <main>
           <section className="map">
+            <div className="clock">
+              <span className="clock-label">reloj de misión</span>
+              {[
+                { at: 0, label: "FD0" },
+                { at: 30, label: "FD30" },
+                { at: 90, label: "FD90" },
+                { at: 120, label: "FD120" },
+                { at: 180, label: "FD180" },
+                { at: 1000029, label: "R+29" },
+              ].map((step) => (
+                <a
+                  key={step.at}
+                  href={`/?tab=mission&at=${step.at}`}
+                  className="clock-step"
+                  aria-current={clock === step.at ? "true" : undefined}
+                >
+                  {step.label}
+                </a>
+              ))}
+            </div>
             <BodyMap zones={zones} selected={selected} onSelect={setSelected} />
             <p className="microcopy">
               Este mapa muestra indicadores medidos por zona. No es un diagnóstico
@@ -300,7 +345,7 @@ export default function Dashboard({ data }: { data: DashboardData }) {
             <ZonePanel zone={zone} zones={zones} />
           </aside>
         </main>
-      ) : (
+      ) : tab === "real" ? (
         <main>
           <section className="map">
             <p className="microcopy" style={{ marginTop: 24 }}>
@@ -310,6 +355,18 @@ export default function Dashboard({ data }: { data: DashboardData }) {
           </section>
           <aside className="panel">
             <RealPanel data={data} />
+          </aside>
+        </main>
+      ) : (
+        <main>
+          <section className="map">
+            <p className="microcopy" style={{ marginTop: 24 }}>
+              Cada frase de la respuesta tiene que apoyarse en un dato o en una
+              tarjeta. La que no puede, se tacha.
+            </p>
+          </section>
+          <aside className="panel">
+            <AskPanel initialQuestion={initialQuestion} clock={clock} />
           </aside>
         </main>
       )}

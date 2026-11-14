@@ -136,5 +136,36 @@ export interface Dashboard {
     radiation: RadiationView;
   };
   real: RealPanel;
+  missionClock: number | null;
   generatedAt: string;
+}
+
+/* ------------------------------------------------------------------ answers */
+
+export type AnchorKind = "measurement" | "aggregate" | "card" | "policy";
+
+export interface Anchor {
+  kind: AnchorKind;
+  ref: string;
+  label: string;
+  /** Every numeric value the anchor can legitimise. The verifier compares the
+   *  numbers inside the sentence against this pool. */
+  values: number[];
+}
+
+export interface Sentence {
+  text: string;
+  anchors: Anchor[];
+  struck?: boolean;
+  struckReason?: string;
+}
+
+export interface Answer {
+  intent: string;
+  question: string;
+  title: string;
+  sentences: Sentence[];
+  cards: string[];
+  refused: boolean;
+  note: string | null;
 }
