@@ -1,27 +1,129 @@
 "use client";
 
 import { useState } from "react";
-import BodyMap, { bandText } from "./BodyMap";
+import BodyMap from "./BodyMap";
 import Sparkline from "./Sparkline";
 import AskPanel from "./AskPanel";
-import { BAND_ORDER } from "@/lib/bands";
-import Comments from "./Comments";
 import CasePackage from "./CasePackage";
+import Comments from "./Comments";
+import { BAND_ORDER } from "@/lib/bands";
 import type {
   Dashboard as DashboardData,
   IndicatorView,
+  QualityItem,
   ZoneView,
 } from "@/lib/types";
+
+const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+const STEPS = [
+  { at: 0, label: "despegue" },
+  { at: 30, label: "mes 1" },
+  { at: 90, label: "mes 3" },
+  { at: 120, label: "mes 4" },
+  { at: 180, label: "mes 6" },
+  { at: 1000029, label: "tierra" },
+];
+
+function clockLabel(clock: number): string {
+  if (clock >= 1_000_000) return `R+${clock - 1_000_000}`;
+  if (clock < 0) return `L-${Math.abs(clock)}`;
+  return `FD${clock}`;
+}
 
 function fmt(n: number | null, digits = 1): string {
   if (n === null) return "—";
   return String(Math.round(n * 10 ** digits) / 10 ** digits);
 }
 
-function clockLabel(clock: number): string {
-  if (clock >= 1_000_000) return `R+${clock - 1_000_000}`;
-  if (clock < 0) return `L-${Math.abs(clock)}`;
-  return `FD${clock}`;
+function dateOf(ind: IndicatorView | undefined): string {
+  const iso = ind?.recordedAt;
+  if (!iso) return "";
+  const [y, m, d] = iso.split("T")[0].split("-");
+  return `${d} ${MONTHS[Number(m) - 1]} ${y}`;
+}
+
+/** The row's second line answers "where does this number come from", not
+ *  "which internal flags were set". */
+function rowDetail(ind: IndicatorView): string {
+  const parts: string[] = [];
+  if (ind.refMin !== null || ind.refMax !== null) {
+    parts.push(
+      `rango ${fmt(ind.refMin)}–${fmt(ind.refMax)} ${ind.refSource === "dataset_file" ? "del archivo" : "del escenario"}`,
+    );
+  } else {
+    parts.push("sin rango en el archivo");
+  }
+  if (ind.missingCount > 0) parts.push(`${ind.missingCount} sin valor`);
+  else parts.push(`${ind.series.length} muestras`);
+  return parts.join(" · ");
+}
+
+function bandLabel(band: IndicatorView["band"]): string {
+  if (band === "red") return "acción";
+  if (band === "amber") return "atención";
+  if (band === "no_data") return "sin dato";
+  return "en rango";
+}
+
+/* ------------------------------------------------------------------ pieces */
+
+function Quality({ items }: { items: QualityItem[] }) {
+  return (
+    <div className="quality">
+      <p className="panel-title" style={{ margin: "0 0 8px" }}>
+        Calidad de datos
+      </p>
+      <p className="intro">
+        Qué encontró el importador en los archivos originales y qué hizo con eso. Nada se corrige
+        en silencio.
+      </p>
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>
+            <span className="k">{item.label}</span>
+            <b>{item.value}</b>
+            <span className="d">{item.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function ActionBar({ indicator, zone }: { indicator: IndicatorView | null; zone: ZoneView }) {
+  const fallback = zone.indicators
+    .filter((i) => i.action)
+    .sort((a, b) => BAND_ORDER[a.band] - BAND_ORDER[b.band])[0];
+  const source = indicator?.action ? indicator : fallback;
+
+  if (!source?.action) {
+    return (
+      <div
+        className="actionbar"
+        style={{ background: "transparent", border: "1px solid var(--hair-2)", color: "var(--text-2)" }}
+      >
+        <span className="k" style={{ color: "var(--text-2)" }}>
+          Sin acción requerida
+        </span>
+        <span className="v" style={{ color: "var(--text)", fontSize: 18 }}>
+          Nada fuera de banda en {zone.label.toLowerCase()}. La serie se sigue registrando.
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="actionbar" data-band={source.band === "amber" ? "amber" : "red"} role="note">
+      <span className="k">Acción requerida</span>
+      <span className="v">{source.action}</span>
+      <span className="ref">
+        {source.label.toLowerCase()} · {fmt(source.value)} {source.unit ?? ""} contra una base de{" "}
+        {fmt(source.baseline)} {source.unit ?? ""}
+        {source.provisional ? " · umbral provisional" : ""}
+      </span>
+    </div>
+  );
 }
 
 function IndicatorCard({
@@ -48,7 +150,7 @@ function IndicatorCard({
 
       <div className="indicator-value">
         {ind.value === null ? (
-          <span style={{ fontSize: 17, color: "var(--nodata)" }}>sin medición</span>
+          <span style={{ fontSize: 20, color: "var(--dim)" }}>sin medición</span>
         ) : (
           <>
             {fmt(ind.value)}
@@ -64,8 +166,7 @@ function IndicatorCard({
         {ind.delta !== null && (
           <span style={{ color: ind.baselineShifted ? "var(--amber)" : "var(--text-2)" }}>
             {ind.delta > 0 ? "+" : ""}
-            {fmt(ind.delta)} ({ind.deltaPct! > 0 ? "+" : ""}
-            {fmt(ind.deltaPct, 0)}%)
+            {fmt(ind.delta)} ({fmt(ind.deltaPct, 0)} %)
           </span>
         )}
         {ind.refMin !== null || ind.refMax !== null ? (
@@ -83,17 +184,11 @@ function IndicatorCard({
 
       <p className="indicator-reason">{ind.bandReason}</p>
 
-      {ind.action && (
-        <div className="action" data-band={ind.band}>
-          {ind.action}
-        </div>
-      )}
-
       {ind.flags.length > 0 && (
         <div className="flags">
-          {ind.flags.map((f) => (
-            <span className="pill" key={f}>
-              {f}
+          {ind.flags.map((flag) => (
+            <span className="pill" key={flag}>
+              {flag}
             </span>
           ))}
         </div>
@@ -108,74 +203,44 @@ function IndicatorCard({
   );
 }
 
-function ZonePanel({
+function ZoneDetail({
   zone,
-  zones,
   subjectId,
   missionClock,
 }: {
   zone: ZoneView;
-  zones: ZoneView[];
   subjectId: string;
   missionClock: string;
 }) {
   if (zone.state === "measured") {
     return (
       <>
-        <div className="panel-head">
-          <h2>{zone.label}</h2>
-          <span className="dot" data-band={zone.band} />
-          <span className="chip">{bandText(zone.band)}</span>
-        </div>
-        <p className="panel-sub">{zone.sublabel}</p>
         {zone.indicators.map((ind) => (
-          <IndicatorCard
-            key={ind.variable}
-            ind={ind}
-            subjectId={subjectId}
-            missionClock={missionClock}
-          />
+          <IndicatorCard key={ind.variable} ind={ind} subjectId={subjectId} missionClock={missionClock} />
         ))}
       </>
     );
   }
-
-  const systolic = zones
-    .find((z) => z.id === "thorax")
-    ?.indicators.find((i) => i.variable === "systolic");
-
   return (
-    <>
-      <div className="panel-head">
-        <h2>{zone.label}</h2>
-        {zone.state === "measurement_site" ? (
-          <span className="chip" style={{ color: "#cbd5e1", borderColor: "#cbd5e1" }}>
-            sitio de medición
-          </span>
-        ) : (
-          <span className="chip">sin medición</span>
-        )}
+    <article className="card">
+      <div className="indicator-title">
+        <span className="dot" data-band="no_data" />
+        <span>{zone.label}</span>
+        <span className="pill">
+          {zone.state === "measurement_site" ? "sitio de medición" : "sin medición"}
+        </span>
       </div>
-      <p className="panel-sub">{zone.sublabel}</p>
-      <article className="card">
-        <p className="teaching">{zone.teaching}</p>
-        {zone.note && <p className="teaching-note">{zone.note}</p>}
-      </article>
-      {zone.state === "measurement_site" && systolic && (
-        <>
-          <h3 className="section">Última toma registrada en esta zona</h3>
-          <IndicatorCard ind={systolic} subjectId={subjectId} missionClock={missionClock} />
-        </>
-      )}
+      <p className="teaching" style={{ marginTop: 10 }}>
+        {zone.teaching}
+      </p>
+      {zone.note && <p className="teaching-note">{zone.note}</p>}
       {zone.state === "no_data" && (
-        <article className="card">
-          <p className="teaching-note">
-            Esta zona no muestra valores a propósito. Un número inventado sería peor
-            que un hueco visible.
-          </p>
-        </article>
+        <p className="teaching-note" style={{ marginTop: 8 }}>
+          Esta zona no muestra valores a propósito. Un número inventado sería peor que un hueco
+          visible.
+        </p>
       )}
-    </>
+    </article>
   );
 }
 
@@ -202,17 +267,13 @@ function RealPanel({ data }: { data: DashboardData }) {
           <b>tiempos</b> {r.timepoints.join(" → ")}
         </p>
         <div className="flags" style={{ marginTop: 12 }}>
-          {r.pending > 0 && (
-            <span className="pill provisional">
-              {r.pending} valor sin rango en el archivo
-            </span>
-          )}
+          {r.pending > 0 && <span className="pill provisional">{r.pending} valor sin rango en el archivo</span>}
           {r.mismatch && <span className="pill provisional">R+194 fuera de la narrativa</span>}
           <span className="pill">N/A, NA y vacío → faltante</span>
         </div>
       </article>
 
-      <h3 className="section">Panel metabólico, siete muestras por analito</h3>
+      <h3 className="section">Panel metabólico · siete muestras por analito</h3>
       <div className="card" style={{ padding: 0 }}>
         <table className="real">
           <thead>
@@ -228,21 +289,13 @@ function RealPanel({ data }: { data: DashboardData }) {
               <tr key={a.variable}>
                 <td>
                   {a.variable.replace(/_/g, " ")}
-                  {a.unit && (
-                    <span style={{ color: "var(--text-2)", fontSize: 11 }}> {a.unit}</span>
-                  )}
+                  {a.unit && <span style={{ color: "var(--text-2)", fontSize: 12 }}> {a.unit}</span>}
                 </td>
-                <td style={{ width: 120 }}>
-                  <Sparkline
-                    series={a.series}
-                    band={a.outOfRange > 0 ? "amber" : "green"}
-                    height={26}
-                  />
+                <td style={{ width: 130 }}>
+                  <Sparkline series={a.series} band={a.outOfRange > 0 ? "amber" : "green"} height={26} />
                 </td>
                 <td className="num">
-                  {a.refMin === null && a.refMax === null
-                    ? "—"
-                    : `${fmt(a.refMin)}–${fmt(a.refMax)}`}
+                  {a.refMin === null && a.refMax === null ? "—" : `${fmt(a.refMin)}–${fmt(a.refMax)}`}
                 </td>
                 <td className="num">
                   {a.outOfRange > 0 ? (
@@ -256,12 +309,12 @@ function RealPanel({ data }: { data: DashboardData }) {
           </tbody>
         </table>
       </div>
-      <p className="teaching-note">
-        Las series se dibujan con los huecos reales del archivo. Nada se interpola.
-      </p>
+      <p className="teaching-note">Las series se dibujan con los huecos reales del archivo. Nada se interpola.</p>
     </>
   );
 }
+
+/* ------------------------------------------------------------------- shell */
 
 export default function Dashboard({
   data,
@@ -278,51 +331,67 @@ export default function Dashboard({
 }) {
   const [tab, setTab] = useState<"mission" | "real" | "ask">(initialTab);
   const zones = data.hero.zones;
-  // Open on whatever needs attention, not on a fixed region: at FD180 that is the
-  // head, at FD30 nothing is flagged and the thorax stays as a neutral default.
-  const [selected, setSelected] = useState<string>(() => {
-    const ranked = [...zones]
-      .filter((z) => z.state === "measured")
-      .sort((a, b) => BAND_ORDER[a.band] - BAND_ORDER[b.band]);
-    if (!ranked[0] || ranked[0].band === "green" || ranked[0].band === "no_data") {
-      return "thorax";
-    }
-    return ranked[0].id;
-  });
-  const zone = zones.find((z) => z.id === selected) ?? zones[0];
+
+  const allIndicators = zones.flatMap((z) => z.indicators);
+  const worst = [...allIndicators]
+    .filter((i) => i.band !== "no_data")
+    .sort((a, b) => BAND_ORDER[a.band] - BAND_ORDER[b.band])[0];
+
+  const zoneOf = (variable: string): ZoneView =>
+    zones.find((z) => z.indicators.some((i) => i.variable === variable)) ?? zones[0];
+
+  const [selected, setSelected] = useState<string | null>(worst?.variable ?? null);
+  const [zoneId, setZoneId] = useState<string>(worst ? zoneOf(worst.variable).id : "thorax");
+
+  function choose(variable: string) {
+    setSelected(variable);
+    setZoneId(zoneOf(variable).id);
+  }
+
+  const zone = zones.find((z) => z.id === zoneId) ?? zones[0];
+  const indicator = selected ? allIndicators.find((i) => i.variable === selected) ?? null : null;
+
   const rad = data.hero.radiation;
   const radMax = rad.max ?? 600;
   const radPct = rad.value === null ? 0 : Math.min(100, (rad.value / radMax) * 100);
+  const flagged = allIndicators.filter((i) => i.band === "amber" || i.band === "red");
+  const missingTotal = data.quality.find((q) => q.id === "sleep_missing")?.value ?? "0";
 
   return (
     <div className="shell">
       <header className="top">
-        <div className="brand">
-          Pulse-0G<span>autoevaluación con evidencia</span>
-        </div>
-        <span className="chip synthetic">escenario sintético</span>
+        <div className="brand">PULSE·0G</div>
         <span className="chip">
           {data.hero.subjectLabel} · {data.hero.scenarioId}
         </span>
         <span className="spacer" />
+        <nav className="clock" aria-label="Momento de la misión">
+          <span className="clock-label">momento</span>
+          {STEPS.map((step) => (
+            <a
+              key={step.at}
+              href={`/?tab=mission&at=${step.at}`}
+              className="clock-step"
+              aria-current={clock === step.at ? "true" : undefined}
+            >
+              <b>{clockLabel(step.at)}</b>
+              <i>{step.label}</i>
+            </a>
+          ))}
+        </nav>
         <div className="radiation" title={`Límite de carrera usado: ${radMax} ${rad.unit}`}>
-          <span style={{ color: "var(--text-2)" }}>{rad.label}</span>
+          <span>dosis</span>
           <b>
-            {rad.value === null ? "—" : fmt(rad.value, 0)} / {radMax} {rad.unit}
+            {rad.value === null ? "—" : fmt(rad.value, 0)}/{radMax} {rad.unit}
           </b>
           <span className="bar">
             <i data-band={rad.band} style={{ width: `${radPct}%` }} />
           </span>
-          {rad.provisional && <span className="pill provisional">provisional</span>}
         </div>
       </header>
 
       <nav className="tabs" role="tablist">
-        <button
-          role="tab"
-          aria-selected={tab === "mission"}
-          onClick={() => setTab("mission")}
-        >
+        <button role="tab" aria-selected={tab === "mission"} onClick={() => setTab("mission")}>
           Misión
         </button>
         <button role="tab" aria-selected={tab === "real"} onClick={() => setTab("real")}>
@@ -336,64 +405,109 @@ export default function Dashboard({
       {tab === "mission" ? (
         <main>
           <section className="map">
-            <div className="clock">
-              <span className="clock-label">reloj de misión</span>
-              {[
-                { at: 0, label: "FD0" },
-                { at: 30, label: "FD30" },
-                { at: 90, label: "FD90" },
-                { at: 120, label: "FD120" },
-                { at: 180, label: "FD180" },
-                { at: 1000029, label: "R+29" },
-              ].map((step) => (
-                <a
-                  key={step.at}
-                  href={`/?tab=mission&at=${step.at}`}
-                  className="clock-step"
-                  aria-current={clock === step.at ? "true" : undefined}
-                >
-                  {step.label}
-                </a>
-              ))}
-            </div>
-            <BodyMap zones={zones} selected={selected} onSelect={setSelected} />
-            <p className="microcopy">
-              Este mapa muestra indicadores medidos por zona. No es un diagnóstico
-              por órgano.
-            </p>
+            <h2>Estado por zona</h2>
+            <BodyMap
+              zones={zones}
+              selected={zone.id}
+              onSelect={(id) => {
+                setZoneId(id);
+                setSelected(null);
+              }}
+            />
             <div className="legend">
               <div>
-                <i style={{ background: "var(--green)" }} /> en rango
+                <i style={{ background: "var(--text)", borderColor: "var(--text)" }} /> en rango
               </div>
               <div>
-                <i style={{ background: "var(--amber)" }} /> requiere atención
+                <i
+                  style={{
+                    background: "var(--amber)",
+                    borderColor: "var(--amber)",
+                    transform: "rotate(45deg)",
+                  }}
+                />{" "}
+                atención
               </div>
               <div>
-                <i style={{ background: "var(--red)" }} /> requiere acción
+                <i style={{ background: "var(--red)", borderColor: "var(--red)" }} /> acción
               </div>
               <div>
-                <i style={{ background: "var(--nodata)", border: "1px dashed var(--hair)" }} />
-                sin medición / sin umbral
-              </div>
-              <div>
-                <i style={{ background: "#cbd5e1" }} /> sitio de medición
+                <i style={{ borderStyle: "dashed", borderColor: "var(--dim)" }} /> sin medición
               </div>
             </div>
+            <p className="microcopy">
+              Indicadores medidos por zona. No es un diagnóstico por órgano. El escenario es
+              sintético; los datos reales viven en su propia pestaña.
+            </p>
           </section>
+
           <aside className="panel">
-            <ZonePanel
-              zone={zone}
-              zones={zones}
+            <p className="panel-title">
+              Indicadores · {data.hero.clockLabel}
+              {indicator?.recordedAt ? ` · ${dateOf(indicator)}` : ""}
+            </p>
+
+            <table className="indicators">
+              <thead>
+                <tr>
+                  <th>Indicador</th>
+                  <th className="n">Valor</th>
+                  <th className="n">Base</th>
+                  <th className="n">Δ</th>
+                  <th>Banda</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allIndicators.map((ind) => (
+                  <tr
+                    key={ind.variable}
+                    tabIndex={0}
+                    aria-selected={selected === ind.variable}
+                    onClick={() => choose(ind.variable)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        choose(ind.variable);
+                      }
+                    }}
+                  >
+                    <td>
+                      {ind.label}
+                      <span className="why">{rowDetail(ind)}</span>
+                    </td>
+                    <td className="n">{ind.display}</td>
+                    <td className="n">{ind.baseline === null ? "—" : fmt(ind.baseline)}</td>
+                    <td className="n">
+                      {ind.deltaPct === null
+                        ? "—"
+                        : `${ind.deltaPct > 0 ? "+" : ""}${fmt(ind.deltaPct, 0)} %`}
+                    </td>
+                    <td>
+                      <span className="band" data-band={ind.band}>
+                        {bandLabel(ind.band)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <ActionBar indicator={indicator} zone={zone} />
+
+            <ZoneDetail
+              key={`${zone.id}-${selected ?? "zone"}`}
+              zone={indicator ? zoneOf(indicator.variable) : zone}
               subjectId={data.hero.subjectId}
-              missionClock={clockLabel(clock)}
+              missionClock={data.hero.clockLabel}
             />
+
+            <Quality items={data.quality} />
+
             <CasePackage
               clock={clock}
               autoOpen={autoCase}
               onOpenComments={() => {
-                const first = document.querySelector<HTMLButtonElement>(
-                  "[data-comments-toggle]",
-                );
+                const first = document.querySelector<HTMLButtonElement>("[data-comments-toggle]");
                 if (first && first.getAttribute("aria-expanded") !== "true") first.click();
                 first?.scrollIntoView({ block: "center", behavior: "smooth" });
               }}
@@ -403,9 +517,10 @@ export default function Dashboard({
       ) : tab === "real" ? (
         <main>
           <section className="map">
-            <p className="microcopy" style={{ marginTop: 24 }}>
-              Los datos reales viven en una pestaña aparte y nunca comparten eje con
-              el escenario sintético.
+            <h2>Procedencia</h2>
+            <p className="microcopy" style={{ marginTop: 0 }}>
+              Los datos reales viven en una pestaña aparte y nunca comparten eje con el escenario
+              sintético.
             </p>
           </section>
           <aside className="panel">
@@ -415,9 +530,10 @@ export default function Dashboard({
       ) : (
         <main>
           <section className="map">
-            <p className="microcopy" style={{ marginTop: 24 }}>
-              Cada frase de la respuesta tiene que apoyarse en un dato o en una
-              tarjeta. La que no puede, se tacha.
+            <h2>Consultar</h2>
+            <p className="microcopy" style={{ marginTop: 0 }}>
+              Cada frase de la respuesta se apoya en un dato o en una tarjeta. La que no puede, se
+              tacha.
             </p>
           </section>
           <aside className="panel">
@@ -425,6 +541,18 @@ export default function Dashboard({
           </aside>
         </main>
       )}
+
+      <footer className="console">
+        <span>
+          <i className="sq" /> <b>{flagged.length}</b> indicadores fuera de banda ·{" "}
+          <b>{missingTotal}</b> datos faltantes
+        </span>
+        <span className="spacer" />
+        <span style={{ color: "var(--text-2)", fontSize: 14, fontFamily: "var(--mono)" }}>
+          {data.hero.originType === "synthetic" ? "escenario sintético" : data.hero.originType} ·{" "}
+          {data.hero.scenarioId}
+        </span>
+      </footer>
     </div>
   );
 }

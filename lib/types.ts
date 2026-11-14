@@ -126,9 +126,18 @@ export interface RealPanel {
   note: string;
 }
 
+export interface QualityItem {
+  id: string;
+  label: string;
+  value: string;
+  detail: string;
+}
+
 export interface Dashboard {
+  quality: QualityItem[];
   hero: {
     subjectLabel: string;
+    clockLabel: string;
     subjectId: string;
     scenarioId: string;
     originType: OriginType;

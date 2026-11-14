@@ -319,9 +319,73 @@ function realPanel(): RealPanel {
   };
 }
 
+const MONTHS_SHORT = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+function clockLabelOf(at: number | null): string {
+  if (at === null) return "—";
+  if (at >= 1_000_000) return `R+${at - 1_000_000}`;
+  if (at < 0) return `L-${Math.abs(at)}`;
+  return `FD${at}`;
+}
+
+/** The four figures the console prints about its own data handling. Every number
+ *  is counted from the database, never typed into the component. */
+function quality(at: number | null): Dashboard["quality"] {
+  const sleepMissing =
+    one<{ c: number }>(
+      "SELECT COUNT(*) AS c FROM measurement WHERE subject_id = ? AND variable = 'sleep_hours' AND value IS NULL",
+      HERO_SUBJECT,
+    )?.c ?? 0;
+  const osdMissing =
+    one<{ c: number }>(
+      "SELECT COUNT(*) AS c FROM measurement WHERE dataset_id = 'OSD-575' AND value IS NULL",
+    )?.c ?? 0;
+  const absentRef =
+    one<{ c: number }>(
+      "SELECT COUNT(*) AS c FROM measurement WHERE ref_source = 'absent'",
+    )?.c ?? 0;
+  const r194 =
+    (one<{ c: number }>(
+      "SELECT COUNT(*) AS c FROM measurement WHERE dataset_id = 'OSD-575' AND time_label = 'R+194'",
+    )?.c ?? 0) > 0;
+
+  return [
+    {
+      id: "sleep_missing",
+      label: "Noches sin registro",
+      value: String(sleepMissing),
+      detail:
+        "El sensor de muñeca no se usó entre el día 61 y el 64 de vuelo, así que esas cuatro noches no existen como medición. En la serie se ven como un hueco punteado, y el sistema no interpola ni completa el valor.",
+    },
+    {
+      id: "osd_missing",
+      label: "Analitos sin valor · OSD-575",
+      value: String(osdMissing),
+      detail:
+        "El archivo real de NASA escribe los faltantes de tres maneras distintas: «N/A», «NA» y la celda vacía. Convertirlos a cero falsearía cualquier promedio. El importador guarda las tres como ausencia y registra cuál apareció en cada celda.",
+    },
+    {
+      id: "absent_ref",
+      label: "Valores sin rango publicado",
+      value: String(absentRef),
+      detail:
+        "El estudio no publica rango de referencia para el cociente BUN/creatinina en la muestra R+82. Sin rango no hay banda posible, así que se muestra el valor y se declara «sin rango en el archivo» en lugar de inventar un límite.",
+    },
+    {
+      id: "r194",
+      label: "Fuente que se contradice",
+      value: r194 ? "R+194" : "—",
+      detail:
+        "El archivo incluye una muestra tomada 194 días después del regreso, pero la descripción narrativa del estudio solo enumera tiempos hasta R+82. En lugar de borrar la fila, se conserva y se marca la discrepancia con su origen.",
+    },
+  ];
+}
+
 export function assemble(at: number | null = null): Dashboard {
   return {
+    quality: quality(at),
     hero: {
+      clockLabel: clockLabelOf(at),
       subjectLabel: "ASTRO-01",
       subjectId: HERO_SUBJECT,
       scenarioId: "SCN-MARS-180",

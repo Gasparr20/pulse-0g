@@ -101,6 +101,7 @@ Check: the video plays with the audio muted and the story is still complete.
 | T5 | Body map SVG: 5 regions, radiation gauge | S6, S7 | inline | a1202a0 |
 | T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | a1202a0 |
 | T15 | Contract checks: intents, verifier, journal, case package | S3, S4, S12, S14, S15 | inline | e4e4e62 |
+| T18 | Implement the console artboard in the real stack: table of indicators, alarm block, data-quality block, plain-language clock | S5, S6, S8, S16 | inline | — |
 | T7 | 18 evidence cards, quoted and hashed (owner's partner) | S10 | parallel, separate files | — |
 | T16 | Card loader: a valid threshold card replaces the provisional chip | S10, S4 | inline | dcdcdde |
 | T17 | `tools/check_cards.py` gate: structure, quote-first rule, config cross-check | S10 | inline | dcdcdde |
@@ -133,3 +134,6 @@ Chosen: `/home/gaspar_22/dev/crewcheck`, independent git repo, ignored by the en
 
 **L6 — three visual directions for the product shell.**
 `design/pulse-0g-style/` holds three artboards over the same FD180 data: `01-consola-de-vuelo.html` (MOCR instrument console, amber on warm black), `02-plano-tecnico.html` (engineering sheet with numbered callouts and hatched no-data zones), `03-manual-identidad.html` (1975 graphics-standards discipline: one hero number, red accent, white space). They differ in structure, not colour: rows, callouts, and editorial respectively. `design/system.md` syncs the current tokens from `app/globals.css` so each direction departs from it deliberately. No NASA mark is reproduced in any artboard: typography and grid discipline only, because implying endorsement is not available to this project.
+
+**L7 — handoff: artboard 01 (consola de vuelo) implemented in the stack.**
+`design/pulse-0g-style/01-consola-de-vuelo.html` is now the product shell, not a picture. What changed in `components/Dashboard.tsx` and `app/globals.css`: the per-indicator card stack became a selectable table (Indicador · Valor · Base · Δ · Banda) whose rows drive the alarm block and the detail card; the palette moved off teal to warm black with phosphor amber, so nominal is the quiet default and colour only appears when something needs a decision; the mission clock prints plain language (despegue, mes 1 … tierra) with the FD/R code kept for the technical reader; the action became a filled master-caution block; and the four data-quality figures now come from SQL counts in `lib/assemble.ts` instead of being typed into the component. Verified by build, by the two contract suites (`tools/check_answers.py`, `tools/check_case.py`), and by rendering at 1440x1024.
