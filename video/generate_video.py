@@ -359,8 +359,8 @@ def draw_caption_band(
 
     is_vert = H > W
     pad_x = 64 if is_vert else 88
-    h_size = 44 if is_vert else 42
-    s_size = 24 if is_vert else 22
+    h_size = 36 if is_vert else 42
+    s_size = 22 if is_vert else 22
 
     # Accent vertical tick on left of caption
     ctx.save()
@@ -1047,7 +1047,7 @@ def render_block_5_casefile(ctx: cairo.Context, W: int, H: int, t: float, band_h
     lines = [
         ("PULSE-0G — PAQUETE PARA FLIGHT SURGEON (TIERRA)", TEAL),
         ("Origen escenario: SINTÉTICO (FD180)  ·  Base real: NASA OSDR OSD-575", TEXT2),
-        ("─────────────────────────────────────────────────────────────────────", HAIR),
+        ("__RULE__", HAIR),
         ("■ Sueño: 2.9 h de sueño  (banda roja · −60 % contra base 7.3 h)", RED),
         ("◆ Ánimo: 4.3 / 10 ánimo  (banda ámbar · requiere atención)", AMBER),
         ("● Radiación acumulada: 76 mSv de un límite de 600 mSv", TEXT),
@@ -1058,7 +1058,7 @@ def render_block_5_casefile(ctx: cairo.Context, W: int, H: int, t: float, band_h
         lines = [
             ("PULSE-0G — PAQUETE PARA TIERRA", TEAL),
             ("Escenario SINTÉTICO (FD180) · OSD-575", TEXT2),
-            ("──────────────────────────────────────", HAIR),
+            ("__RULE__", HAIR),
             ("■ Sueño: 2.9 h (−60 % vs base 7.3 h)", RED),
             ("◆ Ánimo: 4.3 / 10 (banda ámbar)", AMBER),
             ("● Dosis: 76 mSv (límite 600 mSv)", TEXT),
@@ -1075,7 +1075,16 @@ def render_block_5_casefile(ctx: cairo.Context, W: int, H: int, t: float, band_h
     for idx in range(min(len(lines), shown_lines)):
         ltxt, lcol = lines[idx]
         la = ease_out_cubic(progress(t, 19.35 + idx * 0.30, 19.65 + idx * 0.30))
-        draw_text(ctx, ltxt, x0 + pad + 24, ly + idx * lh, "mono_regular", lsz, lcol, alpha=la)
+        if ltxt == "__RULE__":
+            ctx.save()
+            ctx.set_source_rgba(HAIR[0] * 1.6, HAIR[1] * 1.6, HAIR[2] * 1.6, la)
+            ctx.set_line_width(1.4)
+            ctx.move_to(x0 + pad + 24, ly + idx * lh + 12)
+            ctx.line_to(x0 + cw - pad - 24, ly + idx * lh + 12)
+            ctx.stroke()
+            ctx.restore()
+        else:
+            draw_text(ctx, ltxt, x0 + pad + 24, ly + idx * lh, "mono_regular", lsz, lcol, alpha=la)
 
     # Bottom export confirmation pill
     ready_p = ease_out_cubic(progress(t, 22.25, 22.75))
