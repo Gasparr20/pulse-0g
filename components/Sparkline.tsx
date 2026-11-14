@@ -26,16 +26,35 @@ export default function Sparkline({
     if (!svg) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const lines = Array.from(svg.querySelectorAll<SVGPolylineElement>("polyline"));
+    if (reduced) {
+      for (const line of lines) {
+        line.style.strokeDasharray = "none";
+        line.style.strokeDashoffset = "0";
+      }
+      return;
+    }
     for (const line of lines) {
       const len = line.getTotalLength();
+      if (!len) continue;
       line.style.transition = "none";
       line.style.strokeDasharray = String(len);
-      line.style.strokeDashoffset = reduced ? "0" : String(len);
-      if (reduced) continue;
+      line.style.strokeDashoffset = String(len);
       void line.getBoundingClientRect();
       line.style.transition = "stroke-dashoffset 900ms cubic-bezier(.2,.8,.2,1) 120ms";
       line.style.strokeDashoffset = "0";
     }
+
+    // The drawing is decoration; the data is not. Whatever happens to the
+    // transition, the line must end up visible: a chart that can stay hidden is
+    // a bug, not an animation.
+    const settle = window.setTimeout(() => {
+      for (const line of lines) {
+        line.style.transition = "none";
+        line.style.strokeDasharray = "none";
+        line.style.strokeDashoffset = "0";
+      }
+    }, 1200);
+    return () => window.clearTimeout(settle);
   }, [shouldDraw, series]);
   const values = series
     .map((p) => p.value)
