@@ -8,7 +8,7 @@
       "title": "Consola de vuelo (MOCR)",
       "tradeoff": "Máxima densidad y confianza: se lee como un puesto de control real y todo entra en una pantalla. Más frío y menos humano; puede parecer retro en lugar de contemporáneo.",
       "width": 1440,
-      "height": 900
+      "height": 1024
     },
     {
       "file": "02-plano-tecnico.html",

@@ -8,56 +8,56 @@
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);height:900px;
-    font:13.5px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+    font:15.5px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
     display:flex;flex-direction:column;padding:18px}
   .frame{flex:1;border:1.5px solid var(--ink);display:flex;flex-direction:column;position:relative}
   header{display:flex;align-items:flex-end;gap:16px;padding:14px 18px 10px;border-bottom:1px solid var(--rule)}
-  h1{margin:0;font:600 15px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase}
-  .sub{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+  h1{margin:0;font:600 17px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .sub{font:12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
   .grow{flex:1}
-  .chip{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--ink);
+  .chip{font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--ink);
     padding:3px 7px;color:var(--ink)}
   .chip.alert{color:var(--alert);border-color:var(--alert)}
 
   .body{flex:1;display:grid;grid-template-columns:660px 1fr;min-height:0}
   .drawing{border-right:1px solid var(--rule);position:relative;display:flex;align-items:center;justify-content:center}
   .drawing svg{width:600px;height:100%}
-  .drawing .scale{position:absolute;left:14px;bottom:10px;font:10px var(--mono);letter-spacing:.1em;
+  .drawing .scale{position:absolute;left:14px;bottom:10px;font:11px var(--mono);letter-spacing:.1em;
     text-transform:uppercase;color:var(--ink-2)}
 
   .side{padding:16px 20px;display:flex;flex-direction:column;min-height:0}
-  h2{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);
+  h2{font:11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);
     margin:0 0 10px;font-weight:500}
   ol{list-style:none;margin:0;padding:0;display:grid;gap:0}
-  li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:baseline;
-    padding:9px 0;border-bottom:1px solid var(--rule-soft)}
-  li .n{font:600 12px var(--mono);border:1px solid var(--ink);border-radius:50%;width:19px;height:19px;
+  li{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:baseline;
+    padding:11px 0;border-bottom:1px solid var(--rule-soft)}
+  li .n{font:600 13px var(--mono);border:1px solid var(--ink);border-radius:50%;width:22px;height:22px;
     display:flex;align-items:center;justify-content:center;line-height:1}
   li .name{font-weight:600}
-  li .meta{display:block;font:11px var(--mono);color:var(--ink-2);margin-top:1px}
-  li .val{font:600 15px var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-  li .val small{display:block;font:10px var(--mono);font-weight:400;color:var(--ink-2);letter-spacing:.06em}
+  li .meta{display:block;font:12px var(--mono);color:var(--ink-2);margin-top:1px}
+  li .val{font:600 18px var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  li .val small{display:block;font:11px var(--mono);font-weight:400;color:var(--ink-2);letter-spacing:.06em}
   li.act .val{color:var(--alert)}
   li.nod .val{color:var(--ink-2)}
 
   .callout{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--alert);
     padding:9px 11px;margin-top:14px}
-  .callout .k{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--alert);flex:none;padding-top:2px}
-  .callout .v{font-size:13px}
+  .callout .k{font:11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--alert);flex:none;padding-top:2px}
+  .callout .v{font-size:15px;line-height:1.45}
 
-  .trace{margin-top:16px;border:1px solid var(--rule-soft);padding:10px 12px;display:grid;gap:4px;
-    font:11px var(--mono);color:var(--ink-2)}
+  .trace{margin-top:18px;border:1px solid var(--rule-soft);padding:11px 13px;display:grid;gap:5px;
+    font:12px var(--mono);color:var(--ink-2)}
   .trace span b{color:var(--ink);font-weight:600}
-  .trace .h{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+  .trace .h{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
 
   .notes{margin-top:auto;border-top:1px solid var(--rule);padding-top:10px;display:grid;gap:5px;
-    font:11px/1.5 var(--mono);color:var(--ink-2)}
+    font:12.5px/1.55 var(--mono);color:var(--ink-2)}
   .notes b{color:var(--ink)}
 
-  .titleblock{border-top:1.5px solid var(--ink);display:grid;grid-template-columns:repeat(6,1fr);font:11px var(--mono)}
-  .titleblock div{padding:7px 10px;border-right:1px solid var(--rule-soft)}
+  .titleblock{border-top:1.5px solid var(--ink);display:grid;grid-template-columns:repeat(6,1fr);font:12px var(--mono)}
+  .titleblock div{padding:8px 11px;border-right:1px solid var(--rule-soft)}
   .titleblock div:last-child{border-right:0}
-  .titleblock dt{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 2px}
+  .titleblock dt{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 2px}
   .titleblock dd{margin:0;font-weight:600}
   a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   @media (prefers-reduced-motion:no-preference){li{transition:background .12s} li:hover{background:rgba(31,78,121,.05)}}
