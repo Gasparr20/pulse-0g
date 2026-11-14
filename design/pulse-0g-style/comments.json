@@ -8,10 +8,9 @@
       "excerpt": "CALIDAD DE DATOS SUEÑO SIN VALOR 4 FD61 a FD64 OSD-575 SIN VALOR 23 N/A, NA y vacío SIN RANGO EN ARCHIVO 1 ratio BUN/creatinina DISCREPANCIA R+194 fuera de la narrativa",
       "comment": "necesito que tenga mas texto para que sea mas entendible esta parte",
       "createdAt": "2026-11-14T21:22:54.276Z",
-      "status": "resolved",
+      "status": "open",
       "sentAt": "2026-11-14T21:22:54.287Z",
-      "resolvedAt": "2026-11-14T21:24:51.705Z",
-      "resolution": "Calidad de datos: cada cifra ahora tiene una frase que explica qué falta y por qué se declara en vez de rellenarse. Acción: pasó a barra destacada con fondo y filete rojo, tipografía más grande y rótulo propio."
+      "resolvedAt": null
     },
     {
       "id": "isewt069",
@@ -20,10 +19,20 @@
       "excerpt": "ACCIÓN Revisar el ciclo de sueño con el flight surgeon y el control de iluminación.",
       "comment": "la accion tiene que ser un poco mas llamativa para que se entienda que es mas importante",
       "createdAt": "2026-11-14T21:23:24.828Z",
-      "status": "resolved",
+      "status": "open",
       "sentAt": "2026-11-14T21:23:24.839Z",
-      "resolvedAt": "2026-11-14T21:24:51.705Z",
-      "resolution": "Calidad de datos: cada cifra ahora tiene una frase que explica qué falta y por qué se declara en vez de rellenarse. Acción: pasó a barra destacada con fondo y filete rojo, tipografía más grande y rótulo propio."
+      "resolvedAt": null
+    },
+    {
+      "id": "ax41kduq",
+      "file": "01-consola-de-vuelo.html",
+      "selector": "body > main > section:nth-of-type(2)",
+      "excerpt": "INDICADORES · FD180 · 14 JUL 2026 INDICADOR VALOR BASE Δ BANDA Horas de sueño 4 muestras sin valor · sensor no usado 2.9 h 7.3 h −60 % ACCIÓN Estado de ánimo escala 0–10 · autoregistro 4.3 7.4 −42 % ATENCIÓN Presión sistólica rango del escenario 95–130 121.9 110.6 +10 % EN RANGO Presión diastólica 7",
+      "comment": "necesito que se vea mas grande, esta muy chiquito todo, lo mismo con las otras partes de este diseño",
+      "createdAt": "2026-11-14T21:26:12.479Z",
+      "status": "open",
+      "sentAt": "2026-11-14T21:26:12.490Z",
+      "resolvedAt": null
     }
   ]
 }
