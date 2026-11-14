@@ -43,6 +43,12 @@ CREATE TABLE IF NOT EXISTS measurement (
   ref_source   TEXT NOT NULL CHECK (ref_source IN ('dataset_file','demo_parameter','evidence_card','absent')),
   raw_value    TEXT,
   time_label   TEXT NOT NULL,
+  -- Absolute timestamp, present only when the source defines an anchor.
+  -- OSD-575 records L-92 / R+1 and never publishes a calendar date, so the
+  -- column stays NULL there: inventing one would be a fabrication.
+  recorded_at  TEXT,
+  recorded_at_source TEXT NOT NULL
+    CHECK (recorded_at_source IN ('scenario_anchor','absent')),
   phase        TEXT NOT NULL CHECK (phase IN ('preflight','inflight','postflight')),
   offset_days  REAL NOT NULL,
   sort_key     REAL NOT NULL,

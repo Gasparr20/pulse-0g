@@ -18,7 +18,7 @@ import json
 import random
 import sqlite3
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -29,6 +29,22 @@ SCHEMA = ROOT / "db" / "schema.sql"
 CMP_FILE = "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv"
 OSD575_URL = "https://osdr.nasa.gov/osdr/data/osd/files/575"
 RETRIEVED_AT = "2026-11-14"
+
+# Notional launch instant for the demonstration scenario. It is a scenario
+# parameter, not a real mission date.
+SCENARIO_ANCHOR = datetime(2026, 1, 15, 8, 0, 0)
+# Each indicator is captured at a plausible local hour, deterministically.
+CAPTURE_HOUR = {
+    "sleep_hours": (6, 40), "mood": (20, 15), "temperature": (7, 20),
+    "resting_hr": (7, 5), "systolic": (7, 10), "diastolic": (7, 12),
+    "radiation_dose_cumulative": (23, 50),
+}
+
+
+def recorded_at(variable: str, offset_days: float) -> str:
+    hour, minute = CAPTURE_HOUR.get(variable, (8, 0))
+    moment = SCENARIO_ANCHOR + timedelta(days=offset_days, hours=hour - 8, minutes=minute)
+    return moment.isoformat(timespec="seconds")
 
 # Units as they appear in the OSD-575 header (including the file's own typo
 # "millimol") mapped to one canonical display unit.
@@ -201,10 +217,11 @@ class Build:
                 self.con.execute(
                     """INSERT INTO measurement
                        (dataset_id, subject_id, scenario_id, variable, value, unit,
-                        ref_min, ref_max, ref_source, raw_value, time_label, phase,
-                        offset_days, sort_key, origin_type, hazard, source_file,
-                        source_row, source_column, missing_token, quality_flags)
-                       VALUES (?,?,NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                        ref_min, ref_max, ref_source, raw_value, time_label,
+                        recorded_at, recorded_at_source, phase, offset_days,
+                        sort_key, origin_type, hazard, source_file, source_row,
+                        source_column, missing_token, quality_flags)
+                       VALUES (?,?,NULL,?,?,?,?,?,?,?,?,NULL,'absent',?,?,?,?,?,?,?,?,?,?)""",
                     (ds_id, subject_id, analyte, value, unit, ref_min, ref_max,
                      ref_source, raw, time_label, phase, offset,
                      self.sort_key(phase, offset), "observed_real",
@@ -254,7 +271,8 @@ class Build:
             rows.append((ds_id, subject_id, scenario_id, variable, value, unit,
                          ref[0], ref[1], "demo_parameter",
                          raw if raw is not None else ("" if value is None else f"{value:.2f}"),
-                         label, phase, offset, self.sort_key(phase, offset),
+                         label, recorded_at(variable, offset), "scenario_anchor",
+                         phase, offset, self.sort_key(phase, offset),
                          "synthetic", hazard, "scenario:SCN-MARS-180", None,
                          None, "NOT_RECORDED" if value is None else None,
                          json.dumps(flags)))
@@ -326,10 +344,11 @@ class Build:
         self.con.executemany(
             """INSERT INTO measurement
                (dataset_id, subject_id, scenario_id, variable, value, unit,
-                ref_min, ref_max, ref_source, raw_value, time_label, phase,
-                offset_days, sort_key, origin_type, hazard, source_file,
-                source_row, source_column, missing_token, quality_flags)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", rows)
+                ref_min, ref_max, ref_source, raw_value, time_label,
+                recorded_at, recorded_at_source, phase, offset_days, sort_key,
+                origin_type, hazard, source_file, source_row, source_column,
+                missing_token, quality_flags)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", rows)
         print(f"synthetic: {len(rows)} measurements, {len(events)} documented events")
 
     # ------------------------------------------------------------------ run

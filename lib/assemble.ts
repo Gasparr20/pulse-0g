@@ -82,6 +82,17 @@ function median(values: number[]): number | null {
   return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
 }
 
+const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+/** Formats an ISO stamp without touching the timezone: the stored value is
+ *  already mission-local and must be shown exactly as recorded. */
+function stamp(iso: string | null): string | null {
+  if (!iso) return null;
+  const [date, time] = iso.split("T");
+  const [y, m, d] = date.split("-");
+  return `${d} ${MONTHS[Number(m) - 1]} ${y} · ${time.slice(0, 5)}`;
+}
+
 function round(n: number, digits = 1): number {
   const f = 10 ** digits;
   return Math.round(n * f) / f;
@@ -140,6 +151,8 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
     origin: last.origin_type,
     hazard: last.hazard,
     latestLabel: last.time_label,
+    recordedAt: last.recorded_at,
+    recordedAtDisplay: stamp(last.recorded_at),
     action: verdict.action,
     flags: flagsOf(last),
     series,
@@ -289,7 +302,7 @@ function realPanel(): RealPanel {
     pending,
     mismatch,
     note:
-      "Cuatro tripulantes, siete muestras puntuales. No es una señal continua: no hay pulso, sueño ni ánimo en este archivo.",
+      "Cuatro tripulantes, siete muestras puntuales. No es una señal continua: no hay pulso, sueño ni ánimo en este archivo. El estudio publica tiempos relativos (L-92, R+1) y ninguna fecha calendario, así que acá no se inventa una.",
   };
 }
 

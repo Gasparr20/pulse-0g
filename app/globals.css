@@ -122,9 +122,12 @@ section.map {
 .body-svg .region[data-band="red"] { fill: color-mix(in srgb, var(--red) 20%, var(--surface-2)); stroke: var(--red); }
 .body-svg .region[data-band="no_data"] { fill: #121a25; stroke: var(--nodata); stroke-dasharray: 4 3; }
 .body-svg .region[data-selected="true"] { stroke-width: 2.6; }
+/* A measurement site is not a health status, so it must not borrow a status
+   colour. Neutral light slate reads as structural, next to green/amber/red. */
 .body-svg .region[data-state="measurement_site"] {
-  fill: color-mix(in srgb, var(--teal) 14%, var(--surface-2));
-  stroke: var(--teal);
+  fill: #151e2b;
+  stroke: #cbd5e1;
+  stroke-width: 1.6;
   stroke-dasharray: none;
 }
 

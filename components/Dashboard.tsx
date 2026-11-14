@@ -41,6 +41,7 @@ function IndicatorCard({ ind }: { ind: IndicatorView }) {
 
       <div className="indicator-meta">
         <span>{ind.latestLabel}</span>
+        {ind.recordedAtDisplay && <span>{ind.recordedAtDisplay}</span>}
         {ind.baseline !== null && <span>base {fmt(ind.baseline)}</span>}
         {ind.delta !== null && (
           <span style={{ color: ind.baselineShifted ? "var(--amber)" : "var(--text-2)" }}>
@@ -109,7 +110,7 @@ function ZonePanel({ zone, zones }: { zone: ZoneView; zones: ZoneView[] }) {
       <div className="panel-head">
         <h2>{zone.label}</h2>
         {zone.state === "measurement_site" ? (
-          <span className="chip" style={{ color: "var(--teal)", borderColor: "var(--teal)" }}>
+          <span className="chip" style={{ color: "#cbd5e1", borderColor: "#cbd5e1" }}>
             sitio de medición
           </span>
         ) : (
@@ -291,7 +292,7 @@ export default function Dashboard({ data }: { data: DashboardData }) {
                 sin medición / sin umbral
               </div>
               <div>
-                <i style={{ background: "var(--teal)" }} /> sitio de medición
+                <i style={{ background: "#cbd5e1" }} /> sitio de medición
               </div>
             </div>
           </section>

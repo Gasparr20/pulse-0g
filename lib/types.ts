@@ -31,6 +31,8 @@ export interface MeasurementRow {
   ref_source: RefSource;
   raw_value: string | null;
   time_label: string;
+  recorded_at: string | null;
+  recorded_at_source: string;
   phase: Phase;
   offset_days: number;
   sort_key: number;
@@ -68,6 +70,8 @@ export interface IndicatorView {
   origin: OriginType;
   hazard: string | null;
   latestLabel: string;
+  recordedAt: string | null;
+  recordedAtDisplay: string | null;
   action: string | null;
   flags: string[];
   series: SeriesPoint[];
