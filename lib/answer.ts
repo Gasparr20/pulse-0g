@@ -9,8 +9,9 @@ import type {
   ZoneView,
 } from "./types";
 
-/** Twelve fixed intents. The model never turns a question into SQL, and there is
- *  no free-form query path: an unmatched question is refused, not guessed. */
+/** 8 answerable intents plus an explicit refusal. The model never turns a
+ *  question into SQL, and there is no free-form query path: an unmatched
+ *  question is refused, not guessed. */
 
 const fmt = (n: number | null, digits = 1): string =>
   n === null ? "—" : String(Math.round(n * 10 ** digits) / 10 ** digits);

@@ -54,8 +54,9 @@ export default function AskPanel({
         <span className="chip">plantillas determinísticas</span>
       </div>
       <p className="panel-sub">
-        Doce consultas fijas sobre los datos cargados. No hay traducción libre a
-        SQL ni ejecución de código: lo que no está cubierto se rechaza.
+        8 consultas fijas sobre los datos cargados, más una abstención explícita. No
+        hay traducción libre a SQL ni ejecución de código: lo que no está cubierto
+        se rechaza.
       </p>
 
       <div className="flags" style={{ marginBottom: 14 }}>

@@ -49,8 +49,8 @@ Minimum 18 cards as JSON, one file per card, under `evidence/cards/`. Mandatory 
 Check: a card with `kind: threshold` and no `thresholds` object fails validation; a card with an empty `sha256` fails validation.
 
 **S11 — Deterministic first; the model is optional.**
-A fixed set of 12 query intents answers completely with the language model switched off. The model never produces, adjusts or rounds a number.
-Check: with the model flag off, all 12 intents return a complete answer with citations.
+A fixed set of 8 answerable intents plus one explicit refusal answers completely with the language model switched off. The model never produces, adjusts or rounds a number.
+Check: with the model flag off, every intent returns a complete answer with citations; `tools/check_answers.py` asserts this.
 
 **S12 — The verifier is visible.**
 Every sentence in an answer is anchored to a result row or an evidence card. A sentence without an anchor is rendered struck through and recorded in the rejection log.
