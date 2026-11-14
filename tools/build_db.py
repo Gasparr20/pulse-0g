@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the seeded CrewCheck database from raw sources.
+"""Build the seeded Pulse-0G database from raw sources.
 
 Two adapters, one schema:
   * OSD-575  — real NASA OSDR data, defects preserved verbatim.
@@ -245,7 +245,7 @@ class Build:
 
         self.con.execute(
             "INSERT INTO dataset VALUES (?,?,?,?,?,?,?)",
-            (ds_id, "CrewCheck demonstration scenario", gen_version,
+            (ds_id, "Pulse-0G demonstration scenario", gen_version,
              "generated", "local", None, self.now))
         self.con.execute(
             "INSERT INTO subject VALUES (?,?,?,?)",

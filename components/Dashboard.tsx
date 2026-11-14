@@ -298,7 +298,7 @@ export default function Dashboard({
     <div className="shell">
       <header className="top">
         <div className="brand">
-          CrewCheck<span>autoevaluación con evidencia</span>
+          Pulse-0G<span>autoevaluación con evidencia</span>
         </div>
         <span className="chip synthetic">escenario sintético</span>
         <span className="chip">

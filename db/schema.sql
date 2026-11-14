@@ -1,4 +1,4 @@
--- CrewCheck schema. One database, seeded at build time, committed to the repo.
+-- Pulse-0G schema. One database, seeded at build time, committed to the repo.
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS dataset (

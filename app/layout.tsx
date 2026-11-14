@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CrewCheck",
+  title: "Pulse-0G",
   description:
     "Autoevaluación de salud en misión, con cada afirmación atada a su fuente.",
 };

@@ -103,7 +103,7 @@ export function buildCasePackage(at: number | null): CasePackage {
 
   const lines: string[] = [];
   const clock = clockLabel(at);
-  lines.push("CREWCHECK — PAQUETE DE CASO");
+  lines.push("PULSE-0G — PAQUETE DE CASO");
   lines.push("===========================");
   lines.push(`Tripulante: ${dash.hero.subjectLabel} (${dash.hero.subjectId})`);
   lines.push(`Escenario:  ${dash.hero.scenarioId} · origen: ${dash.hero.originType}`);
