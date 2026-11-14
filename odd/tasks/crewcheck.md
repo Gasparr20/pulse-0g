@@ -94,12 +94,13 @@ Check: the video plays with the audio muted and the story is still complete.
 
 | ID | Task | Specs | Route | Commit |
 |---|---|---|---|---|
-| T1 | Freeze stack decision, create project skeleton, seeded DB schema | S2, S16 | inline | — |
-| T2 | Synthetic mission scenario generator with manifest and labels | S18, S1 | inline | — |
-| T3 | OSD-575 importer with traps and rejection log | S3, S2 | inline | — |
-| T4 | Band engine, two layers, 8 cited thresholds | S4, S5 | inline | — |
-| T5 | Body map SVG: 5 regions, blood chip, radiation gauge | S6, S7 | inline | — |
-| T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | — |
+| T1 | Freeze stack decision, create project skeleton, seeded DB schema | S2, S16 | inline | a1202a0 |
+| T2 | Synthetic mission scenario generator with manifest and labels | S18, S1 | inline | a1202a0 |
+| T3 | OSD-575 importer with traps and rejection log | S3, S2 | inline | a1202a0 |
+| T4 | Band engine, two layers, cited thresholds | S4, S5 | inline | a1202a0 |
+| T5 | Body map SVG: 5 regions, radiation gauge | S6, S7 | inline | a1202a0 |
+| T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | a1202a0 |
+| T15 | Tests for the band engine and the importer (no framework yet) | S4, S3 | inline | — |
 | T7 | 18 evidence cards, quoted and hashed (owner's partner) | S10 | parallel, separate files | — |
 | T8 | Query intents, tag retrieval, deterministic templates | S11 | inline | — |
 | T9 | Claim verifier and rejection log | S12, S13 | inline | — |
