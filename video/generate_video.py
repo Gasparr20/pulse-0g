@@ -746,7 +746,7 @@ def render_scene_7_cards_and_verifier(ctx: cairo.Context, t: float) -> None:
         if back_alpha > 0.01:
             for idx, (title, badge, bcol, val, acol, fill_r) in enumerate(cards):
                 depth = 3 - idx  # 3, 2, 1
-                cy = H / 2.0 + 50 - depth * 66 * (1.0 - stack_flatten * 0.45) + (1.0 - enter_p) * 90
+                cy = H / 2.0 + 80 - depth * 78 * (1.0 - stack_flatten * 0.55) + (1.0 - enter_p) * 90
                 sc = 1.0 - depth * 0.055
                 draw_metric_card(
                     ctx,
@@ -767,11 +767,11 @@ def render_scene_7_cards_and_verifier(ctx: cairo.Context, t: float) -> None:
 
     # Front Hero Card geometry (interpolates from stack front -> center flat -> left side)
     card_w = 1040.0 - slide_left_p * 170.0  # 1040 -> 870
-    card_h = 260.0 + stack_flatten * 75.0   # transitions cleanly to 335px tall verifier card
+    card_h = 260.0 + stack_flatten * 80.0   # transitions cleanly to 340px tall verifier card
     if t >= 13.70:
         card_h = 340.0
     card_cx = W / 2.0 - slide_left_p * 425.0  # 960 -> 535
-    card_cy = H / 2.0 + 55.0 - stack_flatten * 15.0 + slide_left_p * 10.0
+    card_cy = H / 2.0 + 96.0 - stack_flatten * 56.0 + slide_left_p * 10.0
 
     # Double hairline outer frame (mirrors 00:11-00:12!)
     if t >= 12.90:
@@ -815,7 +815,7 @@ def render_scene_7_cards_and_verifier(ctx: cairo.Context, t: float) -> None:
     ctx.save()
     x0, y0 = card_cx - card_w / 2.0, card_cy - card_h / 2.0
     draw_rounded_rect(ctx, x0, y0, card_w, card_h, 10.0)
-    ctx.set_source_rgba(SURFACE[0], SURFACE[1], SURFACE[2], 0.97)
+    ctx.set_source_rgba(SURFACE[0], SURFACE[1], SURFACE[2], 1.0)
     ctx.fill_preserve()
     border_col = RED if strike_p > 0.35 else HAIR
     ctx.set_source_rgba(border_col[0], border_col[1], border_col[2], 0.85 if strike_p > 0.35 else 1.0)

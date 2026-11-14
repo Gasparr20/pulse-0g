@@ -1,0 +1,6 @@
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/01.mp4'
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/02.mp4'
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/03.mp4'
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/04.mp4'
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/05.mp4'
+file '/home/gaspar_22/dev/crewcheck/docs/video/v2/06.mp4'

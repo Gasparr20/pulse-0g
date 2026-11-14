@@ -29,3 +29,6 @@ instance/
 
 # runtime journal: operational state, never evidence
 db/journal.sqlite*
+
+# intermediate segments of the storyboard cut
+docs/video/v2/*.mp4
