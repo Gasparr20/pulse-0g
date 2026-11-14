@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BodyMap from "./BodyMap";
 import Sparkline from "./Sparkline";
 import AskPanel from "./AskPanel";
@@ -13,6 +13,43 @@ import type {
   QualityItem,
   ZoneView,
 } from "@/lib/types";
+
+/** Counts the big value up when it changes, so the eye follows the number instead
+ *  of finding it already in place. Falls back to the final value when motion is
+ *  off, and never runs longer than 700 ms. */
+function useCountUp(target: number | null): number | null {
+  const [shown, setShown] = useState<number | null>(target);
+  const from = useRef<number | null>(target);
+
+  useEffect(() => {
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (target === null || reduced) {
+      setShown(target);
+      from.current = target;
+      return;
+    }
+    const start = from.current ?? 0;
+    if (start === target) {
+      setShown(target);
+      return;
+    }
+    let frame = 0;
+    const t0 = performance.now();
+    const step = (now: number) => {
+      const p = Math.min((now - t0) / 700, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setShown(start + (target - start) * eased);
+      if (p < 1) frame = requestAnimationFrame(step);
+      else from.current = target;
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [target]);
+
+  return shown;
+}
 
 const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
@@ -135,6 +172,7 @@ function IndicatorCard({
   subjectId: string;
   missionClock: string;
 }) {
+  const counted = useCountUp(ind.value);
   return (
     <article className="card">
       <div className="indicator-title">
@@ -153,7 +191,7 @@ function IndicatorCard({
           <span style={{ fontSize: 20, color: "var(--dim)" }}>sin medición</span>
         ) : (
           <>
-            {fmt(ind.value)}
+            {fmt(counted)}
             {ind.unit && <small>{ind.unit}</small>}
           </>
         )}
@@ -418,6 +456,7 @@ export default function Dashboard({
           <section className="map">
             <h2>Estado por zona</h2>
             <BodyMap
+              key={data.hero.clockLabel}
               zones={zones}
               selected={zone.id}
               onSelect={(id) => {

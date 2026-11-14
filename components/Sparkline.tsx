@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { Band, SeriesPoint } from "@/lib/types";
 
 /** Draws the series exactly as recorded: a missing sample is a break in the
@@ -13,6 +14,29 @@ export default function Sparkline({
 }) {
   const width = 300;
   const pad = 6;
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  // Only the main chart draws itself; the nineteen rows of the real-data table
+  // stay still, because motion there would fight the scanning job.
+  const shouldDraw = height > 40;
+
+  useEffect(() => {
+    if (!shouldDraw) return;
+    const svg = svgRef.current;
+    if (!svg) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lines = Array.from(svg.querySelectorAll<SVGPolylineElement>("polyline"));
+    for (const line of lines) {
+      const len = line.getTotalLength();
+      line.style.transition = "none";
+      line.style.strokeDasharray = String(len);
+      line.style.strokeDashoffset = reduced ? "0" : String(len);
+      if (reduced) continue;
+      void line.getBoundingClientRect();
+      line.style.transition = "stroke-dashoffset 900ms cubic-bezier(.2,.8,.2,1) 120ms";
+      line.style.strokeDashoffset = "0";
+    }
+  }, [shouldDraw, series]);
   const values = series
     .map((p) => p.value)
     .filter((v): v is number => v !== null);
@@ -62,6 +86,7 @@ export default function Sparkline({
 
   return (
     <svg
+      ref={svgRef}
       className="spark"
       data-band={band}
       viewBox={`0 0 ${width} ${height}`}

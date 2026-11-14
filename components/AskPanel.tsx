@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SUGGESTED } from "@/lib/questions";
 import type { Answer } from "@/lib/types";
 
@@ -10,6 +10,77 @@ function AnchorChip({ anchor }: { anchor: Answer["sentences"][number]["anchors"]
     <span className={`pill ${tone}`} title={anchor.ref}>
       {anchor.kind === "card" ? "tarjeta" : "dato"} · {anchor.label}
     </span>
+  );
+}
+
+interface ProbeCase {
+  text: string;
+  why: string;
+  expected: string;
+  actual: string;
+  pass: boolean;
+  reason: string | null;
+}
+
+/** The verifier almost never rejects anything in normal use, because the templates
+ *  are written to anchor. That makes the most interesting behaviour in the product
+ *  invisible, so the probe cases that prove it can reject are shown on demand. */
+function VerifierProbe() {
+  const [cases, setCases] = useState<ProbeCase[] | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const load = useCallback(async () => {
+    setOpen(true);
+    const res = await fetch("/api/verify-probe");
+    setCases((await res.json()).results);
+  }, []);
+
+  // ?probe=1 opens it, so a demo or a recording can land straight on the proof.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("probe") === "1") void load();
+  }, [load]);
+
+  return (
+    <div style={{ marginTop: 18, borderTop: "2px solid var(--hair)", paddingTop: 12 }}>
+      <button
+        onClick={() => (open ? setOpen(false) : load())}
+        className="ghost"
+        aria-expanded={open}
+      >
+        {open ? "▾" : "▸"} Autoprueba del verificador
+      </button>
+
+      {open && (
+        <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
+          <p className="teaching-note">
+            Frases de control que el verificador tiene que aceptar o rechazar. Si alguna
+            falla, el sistema está mintiendo sobre su propia fiabilidad.
+          </p>
+          {!cases && <p className="teaching-note">Cargando…</p>}
+          {cases?.map((c) => (
+            <div key={c.text} style={{ display: "grid", gap: 4 }}>
+              <p
+                className={c.actual === "tachada" ? "teaching claim-struck" : "teaching"}
+                style={{
+                  margin: 0,
+                  fontSize: 15,
+                  color: c.actual === "tachada" ? "var(--dim)" : "var(--text)",
+                }}
+              >
+                {c.text}
+              </p>
+              <div className="flags" style={{ marginTop: 2 }}>
+                <span className="pill">{c.actual}</span>
+                <span className="pill" style={{ color: c.pass ? "var(--text)" : "var(--red)" }}>
+                  {c.pass ? "correcto" : "FALLA"}
+                </span>
+                <span className="pill">{c.why}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -133,20 +204,23 @@ export default function AskPanel({
             {result.sentences.map((s, i) => (
               <div key={i}>
                 <p
-                  className="teaching"
+                  className={s.struck ? "teaching claim-struck" : "teaching"}
                   style={{
                     margin: 0,
-                    textDecoration: s.struck ? "line-through" : "none",
-                    color: s.struck ? "var(--red)" : "var(--text)",
+                    color: s.struck ? "var(--dim)" : "var(--text)",
                   }}
                 >
                   {s.text}
                 </p>
                 <div className="flags" style={{ marginTop: 5 }}>
                   {s.struck ? (
-                    <span className="pill provisional">{s.struckReason}</span>
+                    <span className="pill provisional answer-chip">{s.struckReason}</span>
                   ) : (
-                    s.anchors.map((a) => <AnchorChip key={a.ref} anchor={a} />)
+                    s.anchors.map((a) => (
+                      <span className="answer-chip" key={a.ref}>
+                        <AnchorChip anchor={a} />
+                      </span>
+                    ))
                   )}
                 </div>
               </div>
@@ -169,6 +243,8 @@ export default function AskPanel({
               <span className="pill">sin tarjetas de evidencia cargadas</span>
             )}
           </div>
+
+          <VerifierProbe />
         </article>
       )}
     </>

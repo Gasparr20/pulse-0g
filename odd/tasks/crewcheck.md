@@ -102,6 +102,7 @@ Check: the video plays with the audio muted and the story is still complete.
 | T6 | Indicator panel: value, band, baseline delta, gapped trend, action | S8, S9 | inline | a1202a0 |
 | T15 | Contract checks: intents, verifier, journal, case package | S3, S4, S12, S14, S15 | inline | e4e4e62 |
 | T18 | Implement the console artboard in the real stack: table of indicators, alarm block, data-quality block, plain-language clock | S5, S6, S8, S16 | inline | — |
+| T19 | Implement artboard 04: weight 800, NASA blue, and the four movement effects | S5, S8, S16 | inline | — |
 | T7 | 18 evidence cards, quoted and hashed (owner's partner) | S10 | parallel, separate files | — |
 | T16 | Card loader: a valid threshold card replaces the provisional chip | S10, S4 | inline | dcdcdde |
 | T17 | `tools/check_cards.py` gate: structure, quote-first rule, config cross-check | S10 | inline | dcdcdde |
@@ -143,3 +144,8 @@ Every quote in the batch was searched literally on its own risk page: 21 of 21 f
 
 **L9 — first threshold card, and the finding that beats it.**
 `EVD-SLEEP-001` cites the HRP operational definition of sleep restriction ("total sleep time >0 and <6 hours per 24-hour period"), so the amber boundary at 6 h is now published rather than assumed. `EVD-BEHAV-001` records the opposite result: the same risk page states that behavioral-health thresholds still have to be set and normed to the astronaut population, so the mood rule keeps saying provisional and the card explains why. The band engine now compares strictly, matching the published "<6" (5.9 flags, 6.0 does not). A first version of the citation logic cleared the chip for the whole variable; it now clears only the boundary that fired, because citing the 6 h line does not license the 5 h line.
+
+**L10 — handoff: artboard 04 (consola animada) implemented.**
+`design/pulse-0g-style/04-consola-animada.html` is now the product. Type moved to weight 800 across labels, table, values and headings, with zero radius, 2px rules and a single hard shadow reserved for the alarm block. The header carries Pantone 286 (`#0B3D91`) from the NASA insignia on the identity chip and the 3px signature rule, with a lighter companion (`#3B7BD4`) because the pure value is invisible on near-black. Blue marks identity only; the dose gauge keeps its neutral frame because it reads status.
+Four effects are live, all under 900 ms and none looping: the value counts up on change, the series draws itself, the claim strike draws, and red or amber zones flash once when the clock moves. All of it sits behind `prefers-reduced-motion`, and the final state is identical to the static layout, so the contract suites are unaffected.
+Two decisions worth recording. The artboard's 900 ms "verificando" spinner was **not** implemented: the verification is instantaneous, and delaying it would fake work that already happened, so the effect only reveals the result. And the strike is almost never visible in production because the templates always anchor, so the verifier's own probe cases are now shown in the Consultar tab behind "Autoprueba del verificador" (`?probe=1` opens it): three sentences sustained and three struck, live.
