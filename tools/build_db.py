@@ -328,6 +328,11 @@ class Build:
             "scenario_id": scenario_id, "seed": seed, "generator": generator,
             "generator_version": gen_version, "subject": subject_id,
             "fictional": True, "days": {"preflight": 90, "inflight": 180, "postflight": 30},
+            "reference_astronaut": {
+                "age_years": 30,
+                "sex": "male",
+                "why": "The radiation career limit in EVD-RAD-002 depends on age and sex; 620 mSv is the published example for a 30-year-old male.",
+            },
             "parameters": {v: {"baseline": b, "drift_per_day": d, "sd": s,
                                "demo_range": [lo, hi], "hazard": h}
                            for v, _, b, d, s, h, lo, hi in spec},

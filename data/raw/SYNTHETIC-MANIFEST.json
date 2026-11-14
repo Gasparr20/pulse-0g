@@ -10,6 +10,11 @@
     "inflight": 180,
     "postflight": 30
   },
+  "reference_astronaut": {
+    "age_years": 30,
+    "sex": "male",
+    "why": "The radiation career limit in EVD-RAD-002 depends on age and sex; 620 mSv is the published example for a 30-year-old male."
+  },
   "parameters": {
     "systolic": {
       "baseline": 112,

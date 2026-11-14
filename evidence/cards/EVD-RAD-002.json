@@ -1,0 +1,25 @@
+{
+  "id": "EVD-RAD-002",
+  "kind": "threshold",
+  "title_es": "Límite de carrera por radiación: 3 % de riesgo de muerte inducida por exposición",
+  "summary_es": "NASA limita la exposición de carrera del astronauta a no superar el 3 % de riesgo de muerte inducida por exposición (REID) por cáncer fatal, y traduce ese límite a una dosis efectiva acumulada que depende de la edad y el sexo. Para el tripulante de referencia de este escenario —30 años— la tabla publicada da 620 mSv.",
+  "quote": "The astronaut career exposure to radiation is limited to not exceed 3% of the risk of exposure-induced death (REID) from fatal cancer. […] Table 4-1. Example Career Effective Dose Limits in Units of milli-Sievert (mSv) for 1-year Missions and Average Life-loss for an Exposure-induced Death for Radiation Carcinogensis (1 mSv = 0.1 rem) — E(mSv) for 3% REID — Age, yr 30: Males 620 (15.4), Females 470 (15.7).",
+  "source_label": "NASA HRP Evidence Book, Capítulo 4 «Risk of Radiation Carcinogenesis», sección Current NASA permissible exposure limits, Tabla 4-1",
+  "url": "https://humanresearchroadmap.nasa.gov/Evidence/reports/EvidenceBook.pdf",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "radiation_dose_cumulative",
+    "hazard:radiation"
+  ],
+  "thresholds": {
+    "variable": "radiation_dose_cumulative",
+    "phase": "any",
+    "operator": ">",
+    "value": 620,
+    "unit": "mSv"
+  },
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "notes": "Cita verificada en el texto del PDF el 2026-11-14. La segunda parte transcribe la Tabla 4-1, que en el original está maquetada en columnas: se copian la cabecera y la fila de 30 años; el corchete […] marca el salto entre la frase de política y la tabla. Tabla completa, dosis efectiva de carrera para REID=3 % en misiones de hasta 1 año, en mSv (hombres / mujeres): 25: 520/370; 30: 620/470; 35: 720/550; 40: 800/620; 45: 950/750; 50: 1.150/920; 55: 1.470/1.120. El escenario declara un tripulante de referencia de 30 años, sexo masculino, de donde sale el 620 mSv. La sección aclara que estos límites aplican a misiones en órbita baja de cualquier duración y a misiones lunares de menos de 180 días, y que para misiones más largas fuera de órbita baja hay que considerar riesgos de mortalidad no oncológicos y reducir la incertidumbre del modelo antes de poder asegurar la misión. La banda de seguimiento de 400 mSv es un parámetro del escenario y NO está cubierta por esta tarjeta."
+}

@@ -65,9 +65,9 @@
     "unit": "mSv",
     "direction": "above",
     "amber": 400,
-    "red": 600,
+    "red": 620,
     "baseline_tolerance_pct": 100,
-    "evidence_card_id": "PENDING",
+    "evidence_card_id": "EVD-RAD-002",
     "provisional": true,
     "action_amber": "Revisar la proyección de dosis contra el límite de carrera.",
     "action_red": "Notificar al flight surgeon y evaluar el blindaje del sector habitable."
