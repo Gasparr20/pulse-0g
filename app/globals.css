@@ -453,3 +453,33 @@ footer.console b { font-family: var(--mono); }
   .body-svg .region[data-band="amber"] { animation: none; }
   .actionbar { animation: none; }
 }
+
+/* ------------------------------------------------ system voice (consultar)
+   Blue marks the system describing itself: the panel's own explanation, the
+   catalogue of questions it knows how to answer, and the verifier's self-test.
+   Data and verdicts keep their status colours. */
+.ask-side h2 { border-bottom: 3px solid var(--nasa-hi); padding-bottom: 8px; }
+.ask-side .microcopy + .microcopy { margin-top: 14px; border-top: 1px solid var(--hair); padding-top: 14px; }
+
+.ask-lead {
+  margin: 0 0 10px;
+  padding-left: 12px;
+  border-left: 3px solid var(--nasa-hi);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.ask-note {
+  margin: 0 0 16px 15px;
+  font: 800 11.5px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.ask .pill {
+  border-color: var(--nasa-hi);
+  color: var(--text);
+  background: transparent;
+}
+.ask .pill:hover { background: var(--nasa); border-color: var(--nasa); }
+.ask .probe { margin-top: 18px; border-top: 3px solid var(--nasa-hi); padding-top: 12px; }

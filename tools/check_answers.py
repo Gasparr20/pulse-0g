@@ -51,6 +51,25 @@ def main() -> int:
         for s in struck:
             print(f"      tachada: {s['text'][:80]} -> {s.get('struckReason')}")
 
+    # The demo moment is FD180, where alerts actually fire. Testing only the
+    # default clock hid a struck sentence there, because at the end of the mission
+    # nothing is out of band and the alert branch never ran.
+    probe_at = {"q": "¿Qué está pidiendo atención?", "at": 180}
+    req = urllib.request.Request(
+        f"{BASE}/api/ask",
+        data=json.dumps(probe_at).encode(),
+        headers={"content-type": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=20) as r:
+        demo = json.load(r)
+    struck_demo = [s for s in demo["sentences"] if s.get("struck")]
+    print(f"\n{'ok  ' if not struck_demo else 'FAIL'} FD180 · alerts · "
+          f"{len(demo['sentences'])} frase(s) · {len(struck_demo)} tachada(s)")
+    for s in struck_demo:
+        print(f"      {s['text'][:70]} -> {s.get('struckReason')}")
+    if struck_demo:
+        failures += 1
+
     clinical = ask("¿Estoy deshidratado?")
     assert clinical["refused"] is True, "a clinical question must be refused"
     assert clinical["intent"] == "clinical_request", "clinical intent not detected"

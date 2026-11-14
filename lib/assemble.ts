@@ -171,6 +171,8 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
     recordedAt: last.recorded_at,
     recordedAtDisplay: stamp(last.recorded_at),
     action: verdict.action,
+    ruleAmber: cfg?.amber ?? null,
+    ruleRed: cfg?.red ?? null,
     hazards: hazardsFor(last.hazard).map((c) => ({
       id: c.id,
       title: c.title_es,

@@ -74,6 +74,10 @@ export interface IndicatorView {
   recordedAtDisplay: string | null;
   action: string | null;
   hazards: Array<{ id: string; title: string; url: string; source: string }>;
+  /** The rule boundaries that produced this verdict, so a sentence that prints
+   *  "2.9 < 5" can cite the 5 instead of being struck for it. */
+  ruleAmber: number | null;
+  ruleRed: number | null;
   flags: string[];
   series: SeriesPoint[];
   missingCount: number;

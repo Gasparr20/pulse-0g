@@ -39,6 +39,8 @@ function anchorFor(ind: IndicatorView): Anchor {
     ind.missingCount,
     ind.series.length,
     labelNumber(ind.latestLabel),
+    ind.ruleAmber,
+    ind.ruleRed,
   ].filter((v): v is number => v !== null && Number.isFinite(v));
   return {
     kind: "measurement",
@@ -443,7 +445,7 @@ export function answer(question: string, at: number | null = null): Answer {
 
   const fallback = refuse(
     "No tengo evidencia para responder esto",
-    "Ninguna de las doce consultas disponibles cubre esta pregunta.",
+    "Ninguna de las ocho consultas disponibles cubre esta pregunta.",
     "Prefiero abstenerme antes que producir una respuesta plausible sin respaldo.",
   );
   return {

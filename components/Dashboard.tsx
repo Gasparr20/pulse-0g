@@ -304,6 +304,12 @@ function RealPanel({ data }: { data: DashboardData }) {
       </div>
       <p className="panel-sub">{r.title}</p>
 
+      <p className="ask-lead">
+        Esta es la fuente real que usa el sistema: los análisis publicados por NASA para
+        la tripulación de Inspiration4. La pestaña Misión es un escenario sintético; esta
+        es la evidencia.
+      </p>
+
       <article className="card">
         <p className="teaching">{r.note}</p>
         <p className="provenance" style={{ marginTop: 10 }}>
@@ -579,11 +585,15 @@ export default function Dashboard({
         </main>
       ) : (
         <main>
-          <section className="map">
+          <section className="map ask-side">
             <h2>Consultar</h2>
             <p className="microcopy" style={{ marginTop: 0 }}>
-              Cada frase de la respuesta se apoya en un dato o en una tarjeta. La que no puede, se
-              tacha.
+              Cada frase de la respuesta se apoya en un dato o en una tarjeta. La que no
+              puede, se tacha en rojo con el motivo.
+            </p>
+            <p className="microcopy">
+              No hay un modelo generando texto libre: son ocho consultas fijas sobre la
+              base. Una pregunta que no entra en ninguna se rechaza.
             </p>
           </section>
           <aside className="panel">

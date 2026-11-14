@@ -41,7 +41,7 @@ function VerifierProbe() {
   }, [load]);
 
   return (
-    <div style={{ marginTop: 18, borderTop: "2px solid var(--hair)", paddingTop: 12 }}>
+    <div className="probe">
       <button
         onClick={() => (open ? setOpen(false) : load())}
         className="ghost"
@@ -119,15 +119,18 @@ export default function AskPanel({
   const struck = result?.sentences.filter((s) => s.struck).length ?? 0;
 
   return (
-    <>
+    <div className="ask">
       <div className="panel-head">
-        <h2>Consulta</h2>
-        <span className="chip">plantillas determinísticas</span>
+        <h2>Consultar</h2>
+        <span className="chip">respuestas con fuente</span>
       </div>
-      <p className="panel-sub">
-        8 consultas fijas sobre los datos cargados, más una abstención explícita. No
-        hay traducción libre a SQL ni ejecución de código: lo que no está cubierto
-        se rechaza.
+      <p className="ask-lead">
+        Preguntá en castellano. El sistema arma la respuesta con lo que hay en la base y
+        en las tarjetas de evidencia, y te muestra de dónde sale cada frase. Si algo no
+        se puede respaldar, lo dice en vez de inventarlo.
+      </p>
+      <p className="ask-note">
+        8 consultas cubiertas · 1 abstención explícita · sin ejecución de código
       </p>
 
       <div className="flags" style={{ marginBottom: 14 }}>
@@ -247,6 +250,6 @@ export default function AskPanel({
           <VerifierProbe />
         </article>
       )}
-    </>
+    </div>
   );
 }
