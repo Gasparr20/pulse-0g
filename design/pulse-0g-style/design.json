@@ -1,0 +1,28 @@
+{
+  "title": "Pulse-0G · tres direcciones visuales",
+  "brief": "Nuevo estilo para el tablero de salud de astronautas Pulse-0G: herencia NASA sin imitar marcas ni caer en el look genérico de producto de IA. Datos reales del escenario FD180 (2.9 h de sueño, -60 % contra la base propia).",
+  "feature": "odd/tasks/crewcheck.md",
+  "artboards": [
+    {
+      "file": "01-consola-de-vuelo.html",
+      "title": "Consola de vuelo (MOCR)",
+      "tradeoff": "Máxima densidad y confianza: se lee como un puesto de control real y todo entra en una pantalla. Más frío y menos humano; puede parecer retro en lugar de contemporáneo.",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "02-plano-tecnico.html",
+      "title": "Plano técnico",
+      "tradeoff": "La dirección más distintiva y la más verificable: cada zona numerada, cada hueco tramado, nada estimado. Peor para leer tendencias de un vistazo y arriesga sentirse como documentación, no como herramienta viva.",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "03-manual-identidad.html",
+      "title": "Manual de identidad",
+      "tradeoff": "La jerarquía más clara: un número manda y el resto acompaña. Pierde la lectura de conjunto — hay que navegar para ver las cinco zonas — y el blanco pleno es discutible en una cabina oscura.",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}

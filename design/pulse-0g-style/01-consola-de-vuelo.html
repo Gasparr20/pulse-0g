@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Pulse-0G · Consola de vuelo</title>
+<style>
+  :root{
+    --ink:#0b0b0c; --panel:#101012; --rule:#26262a; --rule-2:#3a3a3f;
+    --text:#ede9e2; --muted:#8c877e; --dim:#55514a;
+    --amber:#ffb020; --red:#ff5347;
+    --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--ink);color:var(--text);
+    font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+    display:grid;grid-template-rows:52px 1fr 68px;height:900px;overflow:hidden}
+  .bar{display:flex;align-items:center;gap:22px;padding:0 22px;border-bottom:1px solid var(--rule)}
+  .brand{font:600 15px var(--mono);letter-spacing:.14em}
+  .brand em{font-style:normal;color:var(--amber)}
+  .tag{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--rule-2);padding:3px 7px;border-radius:2px}
+  .grow{flex:1}
+  .clock{display:flex;gap:0;border:1px solid var(--rule-2);border-radius:2px;overflow:hidden}
+  .clock a{font:11px var(--mono);padding:5px 9px;color:var(--muted);text-decoration:none;border-right:1px solid var(--rule)}
+  .clock a:last-child{border-right:0}
+  .clock a[aria-current]{background:var(--text);color:var(--ink);font-weight:700}
+  .clock a:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .dose{display:flex;align-items:center;gap:9px;font:11px var(--mono);color:var(--muted)}
+  .dose b{color:var(--text);font-weight:600}
+  .dose .track{width:132px;height:5px;background:#1b1b1e;border:1px solid var(--rule);position:relative}
+  .dose .track i{position:absolute;inset:0 auto 0 0;width:12.7%;background:var(--text)}
+
+  main{display:grid;grid-template-columns:376px 1fr;min-height:0}
+  .schem{background:var(--panel);border-right:1px solid var(--rule);padding:18px 20px;display:flex;flex-direction:column;min-height:0}
+  .schem h2,.tableWrap h2{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    margin:0 0 12px;font-weight:500}
+  svg{width:100%;max-height:400px;display:block;margin:4px auto 0}
+  .legend{margin-top:14px;display:grid;gap:7px;font:11px/1.3 var(--mono);color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .swatch{width:11px;height:11px;border:1px solid var(--rule-2);flex:none}
+  .note{margin-top:auto;font:11px/1.5 var(--mono);color:var(--dim);border-top:1px solid var(--rule);padding-top:10px}
+
+  .tableWrap{padding:18px 22px;min-height:0;display:flex;flex-direction:column}
+  table{width:100%;border-collapse:collapse;font:13px/1.4 system-ui,sans-serif}
+  th{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    text-align:left;font-weight:500;padding:0 10px 8px;border-bottom:1px solid var(--rule-2)}
+  td{padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:baseline}
+  td.n,th.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+  tr.sel td{background:#151518}
+  tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--red)}
+  .band{font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  .band.act{color:var(--red)} .band.att{color:var(--amber)} .band.ok{color:var(--text)}
+  .band::before{content:"";display:inline-block;width:7px;height:7px;margin-right:6px;vertical-align:1px}
+  .band.ok::before{background:var(--text)} .band.att::before{background:var(--amber);transform:rotate(45deg)}
+  .band.act::before{background:var(--red)}
+  .why{color:var(--muted);font-size:11.5px;display:block;margin-top:2px;font-family:var(--mono)}
+  .act{display:flex;gap:10px;align-items:baseline;margin-top:14px;border-top:1px solid var(--rule-2);padding-top:12px}
+  .act .k{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex:none}
+  .act .v{font-size:15px}
+
+  .quality{margin-top:18px;border-top:1px solid var(--rule-2);padding-top:12px}
+  .quality dl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0}
+  .quality dl div{padding-right:14px;border-right:1px solid var(--rule)}
+  .quality dl div:last-child{border-right:0}
+  .quality dt{font:9.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  .quality dd{margin:0;font:600 20px var(--mono);font-variant-numeric:tabular-nums}
+  .quality dd small{display:block;font:11px var(--mono);font-weight:400;color:var(--dim);margin-top:3px}
+
+  footer{display:flex;align-items:center;gap:18px;padding:0 22px;border-top:1px solid var(--rule-2);background:var(--panel)}
+  .flag{display:flex;align-items:center;gap:9px;font-size:13.5px}
+  .flag i{width:10px;height:10px;background:var(--red);flex:none}
+  .flag b{font-family:var(--mono)}
+  .spacer{flex:1}
+  button{background:transparent;border:1px solid var(--rule-2);color:var(--text);font:12px var(--mono);
+    letter-spacing:.1em;text-transform:uppercase;padding:9px 15px;cursor:pointer;border-radius:2px}
+  button:hover{border-color:var(--text)}
+  @media (prefers-reduced-motion:no-preference){button{transition:border-color .12s}}
+</style></head><body>
+
+<div class="bar">
+  <div class="brand">PULSE<em>·</em>0G</div>
+  <div class="tag">consola de vuelo</div>
+  <div class="tag">ASTRO-01 · SCN-MARS-180</div>
+  <div class="grow"></div>
+  <nav class="clock" aria-label="Reloj de misión">
+    <a href="#">FD0</a><a href="#">FD30</a><a href="#">FD90</a><a href="#">FD120</a>
+    <a href="#" aria-current="page">FD180</a><a href="#">R+29</a>
+  </nav>
+  <div class="dose">dosis <b>76 / 600 mSv</b><span class="track"><i></i></span></div>
+</div>
+
+<main>
+  <section class="schem" aria-labelledby="schem-h">
+    <h2 id="schem-h">Estado por zona</h2>
+    <svg viewBox="0 0 200 400" role="img" aria-label="Silueta con cabeza en acción, tórax y brazos en rango, piernas y ojos sin medición">
+      <g fill="none" stroke="#3a3a3f" stroke-width="1.4">
+        <rect x="82" y="165" width="36" height="30" rx="2"/>
+        <rect x="82" y="191" width="16" height="178" rx="2" stroke-dasharray="4 3"/>
+        <rect x="102" y="191" width="16" height="178" rx="2" stroke-dasharray="4 3"/>
+        <rect x="72" y="367" width="24" height="11" rx="2" stroke-dasharray="4 3"/>
+        <rect x="104" y="367" width="24" height="11" rx="2" stroke-dasharray="4 3"/>
+        <path d="M70 104c0-10 9-16 20-16h20c11 0 20 6 20 16l-2 42c0 12-6 19-14 21H86c-8-2-14-9-14-21z"/>
+        <rect x="131" y="96" width="13" height="112" rx="2" transform="rotate(7 137.5 96)"/>
+        <rect x="56" y="96" width="13" height="112" rx="2" transform="rotate(-7 62.5 96)"/>
+        <rect x="92" y="76" width="16" height="14" rx="2"/>
+      </g>
+      <circle cx="100" cy="54" r="24" fill="#ff5347" fill-opacity=".18" stroke="#ff5347" stroke-width="1.8"/>
+      <ellipse cx="92" cy="50" rx="3" ry="2" fill="#3a3a3f"/>
+      <ellipse cx="108" cy="50" rx="3" ry="2" fill="#3a3a3f"/>
+    </svg>
+    <div class="legend">
+      <span><i class="swatch" style="background:#ff5347"></i> cabeza · requiere acción</span>
+      <span><i class="swatch" style="background:transparent;border-color:#ede9e2"></i> tórax y brazos · en rango</span>
+      <span><i class="swatch" style="background:transparent;border:1px dashed #55514a"></i> piernas y ojos · sin medición</span>
+    </div>
+    <p class="note">Indicadores medidos por zona. No es un diagnóstico por órgano. Escenario sintético; los datos reales de OSD-575 viven en otra vista.</p>
+  </section>
+
+  <section class="tableWrap" aria-labelledby="tbl-h">
+    <h2 id="tbl-h">Indicadores · FD180 · 14 jul 2026</h2>
+    <table>
+      <thead><tr>
+        <th>Indicador</th><th class="n">Valor</th><th class="n">Base</th><th class="n">Δ</th><th>Banda</th>
+      </tr></thead>
+      <tbody>
+        <tr class="sel">
+          <td>Horas de sueño<span class="why">4 muestras sin valor · sensor no usado</span></td>
+          <td class="n">2.9 h</td><td class="n">7.3 h</td><td class="n">−60 %</td>
+          <td><span class="band act">acción</span></td>
+        </tr>
+        <tr>
+          <td>Estado de ánimo<span class="why">escala 0–10 · autoregistro</span></td>
+          <td class="n">4.3</td><td class="n">7.4</td><td class="n">−42 %</td>
+          <td><span class="band att">atención</span></td>
+        </tr>
+        <tr>
+          <td>Presión sistólica<span class="why">rango del escenario 95–130</span></td>
+          <td class="n">121.9</td><td class="n">110.6</td><td class="n">+10 %</td>
+          <td><span class="band ok">en rango</span></td>
+        </tr>
+        <tr>
+          <td>Presión diastólica</td>
+          <td class="n">78.7</td><td class="n">71.5</td><td class="n">+10 %</td>
+          <td><span class="band ok">en rango</span></td>
+        </tr>
+        <tr>
+          <td>Frecuencia en reposo</td>
+          <td class="n">69.2</td><td class="n">58.1</td><td class="n">+19 %</td>
+          <td><span class="band ok">en rango</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="act">
+      <span class="k">Acción</span>
+      <span class="v">Revisar el ciclo de sueño con el flight surgeon y el control de iluminación.</span>
+    </div>
+
+    <div class="quality">
+      <h2>Calidad de datos</h2>
+      <dl>
+        <div><dt>Sueño sin valor</dt><dd>4<small>FD61 a FD64</small></dd></div>
+        <div><dt>OSD-575 sin valor</dt><dd>23<small>N/A, NA y vacío</small></dd></div>
+        <div><dt>Sin rango en archivo</dt><dd>1<small>ratio BUN/creatinina</small></dd></div>
+        <div><dt>Discrepancia</dt><dd>R+194<small>fuera de la narrativa</small></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="flag"><i></i> <b>2</b> indicadores fuera de banda · <b>4</b> datos faltantes</span>
+  <span class="spacer"></span>
+  <button type="button">Generar paquete de caso</button>
+</footer>
+</body></html>

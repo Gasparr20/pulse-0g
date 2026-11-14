@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Pulse-0G · Manual de identidad</title>
+<style>
+  :root{
+    --paper:#ffffff; --ink:#0a0a0a; --ink-2:#6b6b6b; --red:#e4002b; --rule:#d8d8d8;
+    --sans:"Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,sans-serif;
+    --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);height:900px;
+    font:16px/1.5 var(--sans);display:grid;grid-template-rows:44px 1fr 6px 46px}
+  .top{display:flex;align-items:center;gap:20px;padding:0 40px;border-bottom:1px solid var(--ink)}
+  .mark{font:500 17px/1 var(--sans);letter-spacing:-.02em}
+  .mark b{font-weight:700}
+  .top .sep{width:1px;height:18px;background:var(--rule)}
+  .top .k{font:9.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+  .top .grow{flex:1}
+  .top .rule-note{font:9.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+
+  main{display:grid;grid-template-columns:1fr 372px;min-height:0}
+  .lead{padding:38px 40px 0;display:flex;flex-direction:column;border-right:1px solid var(--rule)}
+  .eyebrow{font:10px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+  .eyebrow b{color:var(--red);font-weight:600}
+  .hero{display:flex;align-items:baseline;gap:14px;margin:2px 0 0}
+  .hero .num{font-size:238px;line-height:.84;font-weight:500;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+  .hero .unit{font-size:64px;font-weight:400;letter-spacing:-.02em;color:var(--ink-2)}
+  .hero .band{margin-left:auto;align-self:flex-start;margin-top:18px;
+    font:10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--red);
+    border-top:3px solid var(--red);padding-top:6px}
+  .action{font-size:23px;line-height:1.35;max-width:700px;margin:26px 0 0;letter-spacing:-.01em}
+  .action span{color:var(--ink-2)}
+  .series{margin:14px 0 0;border-top:1px solid var(--ink);padding-top:10px}
+  .series .hd{display:flex;justify-content:space-between;align-items:baseline;
+    font:9.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+  .series .hd b{color:var(--red)}
+  .series svg{display:block;width:100%;height:190px;margin-top:6px}
+
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:auto;border-top:1px solid var(--ink)}
+  .strip div{padding:16px 0 20px;border-right:1px solid var(--rule)}
+  .strip div:last-child{border-right:0}
+  .strip dt{font:9.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin:0 0 5px}
+  .strip dd{margin:0;font:500 26px/1 var(--sans);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .strip dd small{font:11px var(--sans);color:var(--ink-2);letter-spacing:0;display:block;margin-top:5px;letter-spacing:.02em}
+
+  .rail{padding:38px 32px 0;display:flex;flex-direction:column;gap:22px;background:#fafafa}
+  .rail h2{font:9.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px;font-weight:500}
+  .clock{display:grid;gap:0}
+  .clock a{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;
+    font:11px var(--mono);letter-spacing:.06em;color:var(--ink-2);text-decoration:none;
+    border-bottom:1px solid var(--rule)}
+  .clock a[aria-current]{background:var(--ink);color:var(--paper);font-weight:700}
+  .clock a span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+  .clock a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+  .dose{display:flex;align-items:center;gap:10px;font:11px var(--mono);color:var(--ink-2)}
+  .dose b{color:var(--ink);font-weight:700}
+  .track{flex:1;height:6px;background:#e8e8e8;position:relative}
+  .track i{position:absolute;inset:0 auto 0 0;width:12.7%;background:var(--ink)}
+  .target{display:flex;align-items:center;gap:14px}
+  .target p{margin:0;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+  .target b{color:var(--ink)}
+  .why{margin-top:auto;border-top:1px solid var(--ink);padding:12px 0 18px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+  .why b{color:var(--ink);display:block;font:9.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
+  button{align-self:flex-start;margin:0 0 22px;background:var(--ink);color:var(--paper);border:0;
+    font:10px var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:12px 18px;cursor:pointer}
+  .redbar{background:var(--red)}
+  footer{display:flex;align-items:center;gap:18px;padding:0 40px;border-top:1px solid var(--rule);
+    font:9.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+  footer .grow{flex:1}
+</style></head><body>
+
+<div class="top">
+  <div class="mark">PULSE<b>·</b>0G</div>
+  <div class="sep"></div>
+  <div class="k">Autoevaluación con evidencia</div>
+  <div class="grow"></div>
+  <div class="k">ASTRO-01 · FD180</div>
+  <div class="sep"></div>
+  <div class="rule-note">Sin diagnóstico</div>
+</div>
+
+<main>
+  <section class="lead">
+    <div class="eyebrow">Indicador <b>01</b> · sueño · viernes 14 jul 2026, 06:40</div>
+    <div class="hero">
+      <span class="num">2.9</span><span class="unit">h</span>
+      <span class="band">Acción<br>−60 % vs tu base</span>
+    </div>
+
+    <p class="action">Revisar el ciclo de sueño con el flight surgeon y el control de iluminación. <span>La base propia es 7.3 h; el límite del escenario, 5 h.</span></p>
+
+    <figure class="series">
+      <figcaption class="hd"><span>Serie de sueño · 180 días de vuelo</span><b>hueco registrado FD61–FD64</b></figcaption>
+      <svg viewBox="0 0 900 190" role="img" aria-label="Serie de horas de sueño descendiendo de 7.4 a 2.9 horas con un hueco entre FD61 y FD64">
+        <line x1="0" y1="24" x2="900" y2="24" stroke="#d8d8d8"/>
+        <line x1="0" y1="166" x2="900" y2="166" stroke="#d8d8d8"/>
+        <text x="0" y="18" font-family="ui-monospace,monospace" font-size="10" fill="#6b6b6b">9 h</text>
+        <text x="0" y="182" font-family="ui-monospace,monospace" font-size="10" fill="#6b6b6b">1.5 h</text>
+        <path d="M0 92 L34 74 L68 88 L102 66 L136 80 L170 60 L204 78 L238 58 L272 82 L306 70
+                 L340 86 L374 64 L408 80 L442 68 L476 84 L500 76" fill="none" stroke="#0a0a0a" stroke-width="1.6"/>
+        <path d="M531 88 L565 70 L599 84 L633 62 L667 80 L701 54 L735 74 L769 60 L803 84
+                 L837 72 L871 96 L900 104" fill="none" stroke="#e4002b" stroke-width="1.8"/>
+        <g stroke="#e4002b" stroke-width="1.4" stroke-dasharray="3 3">
+          <line x1="500" y1="10" x2="500" y2="180"/><line x1="531" y1="10" x2="531" y2="180"/>
+        </g>
+        <text x="498" y="182" font-family="ui-monospace,monospace" font-size="9" fill="#e4002b" text-anchor="middle">FD61</text>
+        <circle cx="900" cy="104" r="4" fill="#e4002b"/>
+        <text x="896" y="140" font-family="ui-monospace,monospace" font-size="11" fill="#0a0a0a" text-anchor="end">2.9 h · FD180</text>
+      </svg>
+    </figure>
+
+    <dl class="strip">
+      <div><dt>Base propia</dt><dd>7.3<small>mediana pre-vuelo</small></dd></div>
+      <div><dt>Desvío</dt><dd>−4.4<small>−60 %</small></dd></div>
+      <div><dt>Muestras</dt><dd>4<small>sin valor</small></dd></div>
+      <div><dt>Ánimo</dt><dd>4.3<small>atención · −42 %</small></dd></div>
+    </dl>
+  </section>
+
+  <aside class="rail">
+    <div>
+      <h2>Reloj de misión</h2>
+      <nav class="clock" aria-label="Reloj de misión">
+        <a href="#">FD30 <span>sin alertas</span></a>
+        <a href="#">FD90 <span>atención</span></a>
+        <a href="#">FD120 <span>atención</span></a>
+        <a href="#" aria-current="page">FD180 <span>acción</span></a>
+        <a href="#">R+29 <span>post-vuelo</span></a>
+      </nav>
+    </div>
+
+    <div>
+      <h2>Radiación acumulada</h2>
+      <div class="dose"><b>76</b>/ 600 mSv<span class="track"><i></i></span></div>
+    </div>
+
+    <div class="target">
+      <svg width="72" height="72" viewBox="0 0 72 72" role="img" aria-label="Cabeza señalada">
+        <circle cx="36" cy="36" r="30" fill="none" stroke="#d8d8d8" stroke-width="1"/>
+        <circle cx="36" cy="36" r="18" fill="none" stroke="#0a0a0a" stroke-width="1"/>
+        <circle cx="36" cy="36" r="4" fill="#e4002b"/>
+        <path d="M36 2v10M36 60v10M2 36h10M60 36h10" stroke="#0a0a0a" stroke-width="1"/>
+      </svg>
+      <p><b>Cabeza · requiere acción.</b> Cuatro zonas medidas, dos sin instrumento a bordo.</p>
+    </div>
+
+    <div class="why">
+      <b>Por qué esta banda</b>
+      2.9 ≤ 5 según el umbral del escenario. Provisional: todavía sin tarjeta de evidencia verificada.
+    </div>
+
+    <button type="button">Generar paquete de caso</button>
+  </aside>
+</main>
+
+<div class="redbar"></div>
+
+<footer>
+  <span>Escenario sintético · SCN-MARS-180</span>
+  <span class="grow"></span>
+  <span>Datos reales OSD-575 · 4 tripulantes · 7 muestras · CC0</span>
+</footer>
+</body></html>

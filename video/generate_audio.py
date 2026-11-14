@@ -1,11 +1,13 @@
-"""Synthesize a clean, understated instrument-grade audio bed for Pulse-0G.
+"""Synthesize a clean, understated instrument-grade 28.0s audio bed for Pulse-0G V2.
 
 All sounds are generated procedurally via NumPy (zero external samples,
-zero copyright issues). Designed to sit subtly behind the 23.0s 30fps video:
-- Low instrument pulse (65 Hz / 130 Hz)
-- Crisp terminal key ticks during typewriter beats
-- Subtle telemetry lock chimes on section cuts
-- Low muffled thud + warning click on the red Claim Verifier strike-out
+zero copyright issues). Synchronized to the 6-block V2 Spanish cut:
+- 0.00 - 3.00: Problem statement (dark silence + subtle low pulse)
+- 3.00 - 8.00: Body map + tap/punch-in on head (red)
+- 8.00 - 13.00: Sleep card zoom (2.9 h vs 7.3 h baseline, -60%, missing gaps)
+- 13.00 - 19.00: Claim verifier + dramatic red strike-out
+- 19.00 - 25.00: Case package export
+- 25.00 - 28.00: Single Pulse-0G lockup
 """
 
 from __future__ import annotations
@@ -15,7 +17,7 @@ import wave
 import numpy as np
 
 SR = 48000
-DURATION = 23.0
+DURATION = 28.0
 N_SAMPLES = int(SR * DURATION)
 
 
@@ -24,11 +26,9 @@ def add_sine_blip(
     t0: float,
     freq: float,
     dur: float,
-    amp: float = 0.08,
+    amp: float = 0.075,
     freq_end: float | None = None,
-    pan: float = 0.0,
 ) -> None:
-    """Add an exponentially decaying sine tone with optional pitch glide."""
     i0 = max(0, int(t0 * SR))
     n = min(int(dur * SR), N_SAMPLES - i0)
     if n <= 0:
@@ -41,17 +41,13 @@ def add_sine_blip(
         phase = 2.0 * np.pi * freq * t
     env = np.minimum(t / 0.004, 1.0) * np.exp(-t / max(dur * 0.28, 0.01))
     sig = amp * env * np.sin(phase)
-    lg = np.cos((pan + 1.0) * np.pi / 4.0)
-    rg = np.sin((pan + 1.0) * np.pi / 4.0)
-    buf[i0 : i0 + n, 0] += sig * lg
-    buf[i0 : i0 + n, 1] += sig * rg
+    buf[i0 : i0 + n, 0] += sig
+    buf[i0 : i0 + n, 1] += sig
 
 
-def add_click(buf: np.ndarray, t0: float, amp: float = 0.05, bright: float = 2800.0) -> None:
-    """Add a short dry instrument/key click."""
+def add_click(buf: np.ndarray, t0: float, amp: float = 0.045, bright: float = 2400.0) -> None:
     i0 = max(0, int(t0 * SR))
-    dur = 0.018
-    n = min(int(dur * SR), N_SAMPLES - i0)
+    n = min(int(0.018 * SR), N_SAMPLES - i0)
     if n <= 0:
         return
     t = np.arange(n, dtype=np.float64) / SR
@@ -61,20 +57,18 @@ def add_click(buf: np.ndarray, t0: float, amp: float = 0.05, bright: float = 280
     buf[i0 : i0 + n, 1] += sig
 
 
-def add_whoosh(buf: np.ndarray, t0: float, dur: float = 0.35, amp: float = 0.045) -> None:
-    """Add a soft filtered air-sweep transition."""
+def add_whoosh(buf: np.ndarray, t0: float, dur: float = 0.32, amp: float = 0.04) -> None:
     i0 = max(0, int(t0 * SR))
     n = min(int(dur * SR), N_SAMPLES - i0)
     if n <= 0:
         return
-    rng = np.random.default_rng(int(t0 * 1000) + 7)
+    rng = np.random.default_rng(int(t0 * 1000) + 19)
     noise = rng.standard_normal(n)
-    # Simple moving-average low-pass for smooth air texture
     kernel = np.ones(45) / 45.0
     smooth = np.convolve(noise, kernel, mode="same")
     t = np.arange(n, dtype=np.float64) / SR
     env = np.sin(np.pi * t / dur) ** 1.6
-    sig = amp * env * smooth * 3.0
+    sig = amp * env * smooth * 2.8
     buf[i0 : i0 + n, 0] += sig
     buf[i0 : i0 + n, 1] += sig
 
@@ -82,69 +76,51 @@ def add_whoosh(buf: np.ndarray, t0: float, dur: float = 0.35, amp: float = 0.045
 def build_audio(out_path: str) -> None:
     buf = np.zeros((N_SAMPLES, 2), dtype=np.float64)
 
-    # 1. Subtle low instrument drone / heartbeat pulse (0.0s -> 22.8s)
+    # Low subtle instrument drone (0.0s -> 28.0s)
     t = np.arange(N_SAMPLES, dtype=np.float64) / SR
-    fade_in = np.clip(t / 1.2, 0.0, 1.0)
-    fade_out = np.clip((DURATION - t) / 1.5, 0.0, 1.0)
+    fade_in = np.clip(t / 1.4, 0.0, 1.0)
+    fade_out = np.clip((DURATION - t) / 1.8, 0.0, 1.0)
     pad = (
-        0.030 * np.sin(2.0 * np.pi * 65.41 * t)
-        + 0.015 * np.sin(2.0 * np.pi * 98.00 * t)
-        + 0.008 * np.sin(2.0 * np.pi * 130.81 * t)
+        0.026 * np.sin(2.0 * np.pi * 65.41 * t)
+        + 0.012 * np.sin(2.0 * np.pi * 98.00 * t)
     ) * fade_in * fade_out
     buf[:, 0] += pad
     buf[:, 1] += pad
 
-    # Subtle 1 Hz telemetry pulse ticks during active data blocks
-    for sec in np.arange(1.0, 21.0, 0.5):
-        if 18.7 <= sec <= 20.6:
-            continue
-        add_sine_blip(buf, float(sec), freq=110.0, dur=0.06, amp=0.022, freq_end=78.0)
+    # Block 1 (0.0 - 3.0): Problem reveal
+    add_sine_blip(buf, 0.15, freq=220.0, dur=0.30, amp=0.045)
+    add_sine_blip(buf, 1.35, freq=164.8, dur=0.35, amp=0.055, freq_end=130.8)
 
-    # 2. Boot typewriter clicks (0.05s - 0.72s)
-    for k in range(12):
-        add_click(buf, 0.06 + k * 0.055, amp=0.045, bright=2400.0 + k * 45)
+    # Block 2 (3.0 - 8.0): Body map + tap on head at 4.8s
+    add_whoosh(buf, 2.95, dur=0.30, amp=0.035)
+    add_sine_blip(buf, 3.05, freq=329.6, dur=0.20, amp=0.045)
+    add_click(buf, 4.75, amp=0.065, bright=2800.0)
+    add_sine_blip(buf, 4.80, freq=440.0, dur=0.22, amp=0.055)
 
-    # 3. Parentheses lockup + portal zoom
-    add_sine_blip(buf, 1.00, freq=520.0, dur=0.18, amp=0.055)
-    add_sine_blip(buf, 2.00, freq=392.0, dur=0.22, amp=0.060)
-    add_whoosh(buf, 2.85, dur=0.45, amp=0.065)
+    # Block 3 (8.0 - 13.0): Sleep card zoom & sparkline gaps
+    add_whoosh(buf, 7.95, dur=0.32, amp=0.04)
+    add_sine_blip(buf, 8.05, freq=392.0, dur=0.22, amp=0.05)
+    for k in range(8):
+        add_click(buf, 8.40 + k * 0.10, amp=0.024, bright=1700.0 + k * 80)
 
-    # 4. Halftone baseline wipe + counter ticks
-    add_sine_blip(buf, 3.30, freq=261.6, dur=0.25, amp=0.055)
-    add_click(buf, 3.85, amp=0.055, bright=1900.0)
-    for k in range(14):
-        add_click(buf, 5.45 + k * 0.09, amp=0.032, bright=1600.0 + (k % 4) * 200)
-    add_sine_blip(buf, 6.72, freq=440.0, dur=0.20, amp=0.055)
+    # Block 4 (13.0 - 19.0): Claim verifier + dramatic strike-out at 15.20s
+    add_whoosh(buf, 12.95, dur=0.30, amp=0.04)
+    add_sine_blip(buf, 13.55, freq=587.3, dur=0.18, amp=0.05)
+    add_sine_blip(buf, 15.20, freq=180.0, dur=0.38, amp=0.10, freq_end=68.0)
+    add_sine_blip(buf, 15.20, freq=311.1, dur=0.18, amp=0.05, freq_end=220.0)
+    add_click(buf, 15.60, amp=0.05, bright=1400.0)
 
-    # 5. Stat 1 -> Slide -> Stat 2
-    add_sine_blip(buf, 7.30, freq=330.0, dur=0.24, amp=0.055)
-    add_whoosh(buf, 9.30, dur=0.40, amp=0.055)
-    add_sine_blip(buf, 9.70, freq=392.0, dur=0.24, amp=0.055)
+    # Block 5 (19.0 - 25.0): Case package export
+    add_whoosh(buf, 18.95, dur=0.30, amp=0.04)
+    add_sine_blip(buf, 19.10, freq=440.0, dur=0.22, amp=0.05)
+    for k in range(6):
+        add_click(buf, 19.65 + k * 0.22, amp=0.025, bright=2100.0)
 
-    # 6. Stacked cards -> Verifier focus -> Strike-out
-    add_whoosh(buf, 12.05, dur=0.32, amp=0.045)
-    for k in range(10):
-        add_click(buf, 13.75 + k * 0.06, amp=0.028, bright=2200.0)
-    # Row 1 anchored ping
-    add_sine_blip(buf, 14.15, freq=587.3, dur=0.18, amp=0.05)
-    # Row 2 strike-out impact (15.05s): crisp warning drop + red strike sweep
-    add_sine_blip(buf, 15.05, freq=180.0, dur=0.35, amp=0.11, freq_end=68.0)
-    add_sine_blip(buf, 15.05, freq=311.1, dur=0.16, amp=0.055, freq_end=220.0)
-    add_click(buf, 15.45, amp=0.055, bright=1400.0)
+    # Block 6 (25.0 - 28.0): Single Pulse-0G lockup
+    add_whoosh(buf, 24.92, dur=0.32, amp=0.035)
+    add_sine_blip(buf, 25.05, freq=261.6, dur=0.65, amp=0.06)
+    add_sine_blip(buf, 25.25, freq=392.0, dur=0.55, amp=0.045)
 
-    # 7. Side 3-word reveal ticks (16.45, 16.72, 16.99)
-    add_whoosh(buf, 16.25, dur=0.35, amp=0.045)
-    add_sine_blip(buf, 16.55, freq=440.0, dur=0.14, amp=0.05)
-    add_sine_blip(buf, 16.82, freq=523.25, dur=0.14, amp=0.05)
-    add_sine_blip(buf, 17.09, freq=659.25, dur=0.18, amp=0.055)
-
-    # 8. Wordmark + Endcard
-    add_sine_blip(buf, 18.80, freq=261.6, dur=0.60, amp=0.065)
-    add_sine_blip(buf, 20.60, freq=392.0, dur=0.55, amp=0.050)
-    for k in range(12):
-        add_click(buf, 21.00 + k * 0.065, amp=0.022, bright=2100.0)
-
-    # Soft limiter & 16-bit PCM WAV export
     peak = np.max(np.abs(buf))
     if peak > 0.85:
         buf = buf * (0.85 / peak)
@@ -161,4 +137,4 @@ def build_audio(out_path: str) -> None:
 
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    build_audio(os.path.join(base_dir, "pulse_0g_audio.wav"))
+    build_audio(os.path.join(base_dir, "pulse_0g_audio_v2.wav"))

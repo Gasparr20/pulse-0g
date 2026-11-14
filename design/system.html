@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Pulse-0G · sistema actual</title>
+<style>
+  :root{--bg:#0a0e13;--surface:#121821;--surface-2:#182130;--hair:#1f2937;--text:#e5e7eb;--text-2:#94a3b8;
+  --green:#34d399;--amber:#fbbf24;--red:#f87171;--nodata:#4b5563;--teal:#2dd4bf;--violet:#a78bfa;
+  --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,"IBM Plex Sans",system-ui,sans-serif;padding:32px}
+  h1{font-size:18px;margin:0 0 4px} p.sub{color:var(--text-2);font-size:12.5px;margin:0 0 24px}
+  h2{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-2);font-weight:500;margin:28px 0 10px}
+  .sw{display:flex;flex-wrap:wrap;gap:8px}
+  .sw div{width:132px;border:1px solid var(--hair);border-radius:6px;overflow:hidden}
+  .sw i{display:block;height:44px} .sw b{display:block;font:11px var(--mono);padding:6px 8px 2px}
+  .sw span{display:block;font:10px var(--mono);color:var(--text-2);padding:0 8px 7px}
+  .type div{margin-bottom:8px} .big{font:600 26px var(--mono)} .label{font:11px var(--mono);color:var(--text-2)}
+  .card{border:1px solid var(--hair);border-radius:8px;background:var(--surface);padding:14px 16px;max-width:420px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px}
+  .pill{font:10px var(--mono);text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--hair);border-radius:3px;padding:2px 6px;color:var(--text-2)}
+  .clock{display:flex;gap:4px} .clock a{font:11px var(--mono);padding:3px 8px;border:1px solid var(--hair);border-radius:4px;color:var(--text-2);text-decoration:none}
+  .clock a[aria-current]{background:var(--teal);color:var(--bg);font-weight:600;border-color:var(--teal)}
+  .rad{height:6px;background:var(--surface-2);border-radius:3px;width:120px;overflow:hidden}
+  .rad i{display:block;height:100%;width:13%;background:var(--teal)}
+  button{background:var(--surface-2);border:1px solid var(--hair);border-radius:6px;color:var(--text);font:inherit;font-size:13px;padding:8px 14px;cursor:pointer}
+  button:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+</style></head><body>
+<h1>Pulse-0G — sistema actual</h1>
+<p class="sub">Tokens y componentes leídos de <code>app/globals.css</code>. Sincronizado, no propuesto.</p>
+
+<h2>Color</h2>
+<div class="sw">
+  <div><i style="background:#0a0e13"></i><b>--bg</b><span>#0a0e13</span></div>
+  <div><i style="background:#121821"></i><b>--surface</b><span>#121821</span></div>
+  <div><i style="background:#182130"></i><b>--surface-2</b><span>#182130</span></div>
+  <div><i style="background:#1f2937"></i><b>--hair</b><span>#1f2937</span></div>
+  <div><i style="background:#34d399"></i><b>--green</b><span>#34d399</span></div>
+  <div><i style="background:#fbbf24"></i><b>--amber</b><span>#fbbf24</span></div>
+  <div><i style="background:#f87171"></i><b>--red</b><span>#f87171</span></div>
+  <div><i style="background:#4b5563"></i><b>--nodata</b><span>#4b5563</span></div>
+  <div><i style="background:#2dd4bf"></i><b>--teal</b><span>#2dd4bf</span></div>
+  <div><i style="background:#a78bfa"></i><b>--violet</b><span>#a78bfa</span></div>
+</div>
+
+<h2>Tipografía</h2>
+<div class="type">
+  <div class="big">2.9 h</div>
+  <div class="label">FD180 · 14 jul 2026 · 06:40</div>
+  <div style="margin-top:10px">Texto de cuerpo a 15 px con interlineado 1.5 para lectura sostenida.</div>
+</div>
+
+<h2>Componentes</h2>
+<div class="card">
+  <div style="margin-bottom:6px"><span class="dot" style="background:var(--red)"></span>Horas de sueño
+    <span class="pill" style="margin-left:6px">sintético</span></div>
+  <div class="big">2.9 h</div>
+  <div class="label">base 7.3 · −4.4 (−60 %) · rango 6–9</div>
+</div>
+<div style="display:flex;gap:16px;align-items:center;margin-top:16px;flex-wrap:wrap">
+  <div class="clock"><a href="#">FD120</a><a href="#" aria-current="true">FD180</a><a href="#">R+29</a></div>
+  <div style="display:flex;align-items:center;gap:8px;font:12px var(--mono);color:var(--text-2)">
+    dosis <span style="color:var(--text)">76 / 600 mSv</span><span class="rad"><i></i></span></div>
+  <button>Generar paquete</button>
+</div>
+</body></html>

@@ -130,3 +130,6 @@ Team: "somos dos, yo soy el mas tecnico y la otra chica es menor y va al secunda
 Chosen: `/home/gaspar_22/dev/crewcheck`, independent git repo, ignored by the enclosing `/home/gaspar_22/dev` repository.
 
 **D1 — open: stack.** `node` is currently unusable on the target machine (`libsimdjson.so.34` missing; installed `simdjson` provides `.so.36`; `nodejs 26.13.0-2` from cachyos, `nodejs-lts-krypton 24.22.3-1` available in extra). Python 3.14.9 works. Decision required before T1: repair node and use a single-process TypeScript stack, or use a Python stack with a build-free frontend.
+
+**L6 — three visual directions for the product shell.**
+`design/pulse-0g-style/` holds three artboards over the same FD180 data: `01-consola-de-vuelo.html` (MOCR instrument console, amber on warm black), `02-plano-tecnico.html` (engineering sheet with numbered callouts and hatched no-data zones), `03-manual-identidad.html` (1975 graphics-standards discipline: one hero number, red accent, white space). They differ in structure, not colour: rows, callouts, and editorial respectively. `design/system.md` syncs the current tokens from `app/globals.css` so each direction departs from it deliberately. No NASA mark is reproduced in any artboard: typography and grid discipline only, because implying endorsement is not available to this project.
