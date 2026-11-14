@@ -43,8 +43,8 @@
     "amber": 6,
     "red": 5,
     "baseline_tolerance_pct": 15,
-    "evidence_card_id": "PENDING",
-    "provisional": true,
+    "evidence_card_id": "EVD-SLEEP-001",
+    "provisional": false,
     "action_amber": "Registrar la rutina previa al descanso y proteger la ventana de sueño.",
     "action_red": "Revisar el ciclo de sueño con el flight surgeon y el control de iluminación."
   },

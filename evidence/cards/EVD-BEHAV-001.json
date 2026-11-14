@@ -1,0 +1,18 @@
+{
+  "id": "EVD-BEHAV-001",
+  "kind": "hazard",
+  "title_es": "Todavía no existe un umbral publicado para salud conductual",
+  "summary_es": "NASA declara que los niveles aceptables para los indicadores de salud y rendimiento conductual en misiones de exploración todavía deben establecerse, y que esos umbrales tendrán que normalizarse contra la población de astronautas. Por eso el indicador de ánimo conserva la marca de umbral provisional: no es una omisión del sistema, es el estado real de la evidencia.",
+  "quote": "In conjunction with this effort, it is necessary to set exploration-class mission acceptable levels (thresholds) for the key behavioral health and performance indicators.",
+  "source_label": "NASA HRP Risks — Risk of Adverse Cognitive or Behavioral Changes and Psychiatric Disorders (i=99), bloque Gaps",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=99",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "mood",
+    "hazard:isolation"
+  ],
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "notes": "Verificada por búsqueda literal el 2026-11-14. El mismo documento complementa: «A threshold represents a level above or below which would indicate a meaningful or reliable change and thus can trigger mitigation action» y «Therefore thresholds will need to be normed to the astronaut population». Consecuencia de diseño: el ánimo se muestra con umbral provisional y su banda no puede presentarse como criterio clínico."
+}

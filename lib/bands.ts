@@ -117,9 +117,9 @@ export function classify(input: BandInput): BandVerdict {
     };
   }
 
-  const over = cfg.direction === "above" ? value >= cfg.amber : value <= cfg.amber;
-  const critical = cfg.direction === "above" ? value >= cfg.red : value <= cfg.red;
-  const cmp = cfg.direction === "above" ? "≥" : "≤";
+  const over = cfg.direction === "above" ? value > cfg.amber : value < cfg.amber;
+  const critical = cfg.direction === "above" ? value > cfg.red : value < cfg.red;
+  const cmp = cfg.direction === "above" ? ">" : "<";
 
   if (critical) {
     return {

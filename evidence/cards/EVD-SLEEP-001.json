@@ -1,0 +1,25 @@
+{
+  "id": "EVD-SLEEP-001",
+  "kind": "threshold",
+  "title_es": "Umbral de restricción de sueño: menos de 6 horas por período de 24",
+  "summary_es": "El programa de investigación humana de NASA define la restricción de sueño, a los efectos de evaluar el riesgo, como un tiempo total de sueño mayor que cero y menor a 6 horas por cada período de 24 horas. Ese es el límite que este sistema usa para marcar atención cuando una noche queda por debajo.",
+  "quote": "This will include the following conditions evaluated individually and in aggregate: i) extended wake duration between 16 hours; ii) sleep restriction defined as total sleep time >0 and <6 hours per 24-hour period; and iii) circadian perturbation associated with night work and slam shifting.",
+  "source_label": "NASA HRP Risks — Risk of Performance Decrements and Adverse Health Outcomes Resulting from Sleep Loss, Circadian Desynchronization, and Work Overload (i=100), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=100",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "sleep_hours",
+    "hazard:isolation"
+  ],
+  "thresholds": {
+    "variable": "sleep_hours",
+    "phase": "inflight",
+    "operator": "<",
+    "value": 6,
+    "unit": "h"
+  },
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "notes": "Verificada por búsqueda literal en la página el 2026-11-14. La cita conserva dos erratas del original publicado: «between 16 hours» y «slam shifting». Contexto del mismo bloque: «There is evidence of sleep deficiency inflight as crews sleep 6 h/night and increase their sleep and circadian misalignment.» Es decir, la tripulación típicamente duerme ya en el borde de la definición de restricción. El motor evalúa el límite de forma estricta, igual que la fuente: 5,9 h marca, 6,0 h no. El segundo nivel (5 h) sigue siendo un parámetro del escenario y no está cubierto por esta tarjeta."
+}

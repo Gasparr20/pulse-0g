@@ -124,12 +124,20 @@ function buildIndicator(rows: MeasurementRow[]): IndicatorView {
     config: cfg,
   });
 
-  // A threshold card turns a provisional rule into a cited one. The chip on
-  // screen is driven by this, so dropping a JSON file changes the interface.
+  // A threshold card cites ONE boundary, and a rule has two. The chip may only
+  // disappear when the boundary that actually fired is the cited one: citing the
+  // 6 h line does not license the 5 h line. Showing otherwise would be the exact
+  // overstatement this product exists to avoid.
   const cited = verdict.provisional ? citationFor(last.variable) : null;
   if (cited) {
-    verdict.provisional = false;
-    verdict.evidenceCardId = cited.id;
+    const citedValue = cited.thresholds?.value;
+    const firedUncited =
+      (verdict.band === "red" && citedValue !== cfg?.red) ||
+      (verdict.band === "amber" && citedValue !== cfg?.amber);
+    if (!firedUncited) {
+      verdict.provisional = false;
+      verdict.evidenceCardId = cited.id;
+    }
   }
   const series: SeriesPoint[] = ordered.map((r) => ({
     label: r.time_label,
