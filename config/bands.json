@@ -48,6 +48,19 @@
     "action_amber": "Registrar la rutina previa al descanso y proteger la ventana de sueño.",
     "action_red": "Revisar el ciclo de sueño con el flight surgeon y el control de iluminación."
   },
+  "temperature": {
+    "label": "Temperatura corporal",
+    "unit": "degC",
+    "direction": "above",
+    "amber": 38.0,
+    "red": 39.0,
+    "baseline_tolerance_pct": 2,
+    "evidence_card_id": "EVD-THERMO-001",
+    "provisional": false,
+    "action_amber": "Repetir la medición en reposo y comparar contra la base en vuelo antes de concluir nada.",
+    "action_red": "Notificar al flight surgeon y repetir con el sensor verificado."
+  },
+
   "mood": {
     "label": "Estado de ánimo",
     "unit": "score_0_10",

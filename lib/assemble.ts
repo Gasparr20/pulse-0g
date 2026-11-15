@@ -44,8 +44,8 @@ const ZONES: Array<{
   {
     id: "thorax",
     label: "Cardiovascular",
-    sublabel: "Presión y frecuencia en reposo",
-    variables: ["systolic", "diastolic", "resting_hr"],
+    sublabel: "Presión, frecuencia y temperatura en reposo",
+    variables: ["systolic", "diastolic", "resting_hr", "temperature"],
     state: "measured",
   },
   {

@@ -1,0 +1,25 @@
+{
+  "id": "EVD-THERMO-001",
+  "kind": "threshold",
+  "title_es": "Temperatura central en vuelo: el rango terrestre deja de servir",
+  "summary_es": "La temperatura corporal central en reposo aumentó alrededor de 1,01 °C en la Estación Espacial Internacional respecto de la medición previa al vuelo. El mismo trabajo recuerda la recomendación de que la temperatura central no supere los 38,0 °C en exposición prolongada. Con 1,01 °C de corrimiento, casi cualquier tripulante quedaría por encima de un umbral poblacional: por eso el sistema compara contra la base propia y usa 38,0 °C solo como techo absoluto.",
+  "quote": "At rest CBT was increased by about 1.01 °C on the ISS compared to baseline (F (9,81) = 5.59, p < 0.001 for main effect). […] it is recommended that CBT should not exceed 38.0 °C for an average worker in prolonged daily exposure to heavy work.",
+  "source_label": "Stahn AC, Werner A, Opatz O, Maggioni MA, Steinach M, von Ahlefeld VW, Moore AD, Crucian BE, Smith SM, Zwart SR, Gunga HC. Scientific Reports 7:16180 (2017), Results y Discussion",
+  "url": "https://doi.org/10.1038/s41598-017-15560-w",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "applies_to": [
+    "temperature",
+    "hazard:gravity"
+  ],
+  "thresholds": {
+    "variable": "temperature",
+    "phase": "inflight",
+    "operator": ">",
+    "value": 38.0,
+    "unit": "degC"
+  },
+  "license": "attribution_required",
+  "verified_by": "Pulse-0G",
+  "notes": "Pasaje verificado por búsqueda literal en el texto completo el 2026-11-14. La segunda frase es una recomendación ocupacional terrestre citada por los autores, no un límite de NASA; por eso el techo de 38,0 °C se usa como referencia y no como criterio de vuelo. El mismo artículo reporta que la temperatura central máxima durante ejercicio aumentó en promedio 1,39 °C en el espacio y superó los 40 °C en algunos individuos, y que la tasa de aumento durante el ejercicio pasó de 0,1 a 0,15 °C por minuto. Consecuencia de diseño: el techo de 38,0 °C está citado, pero es la capa de desvío contra la base propio la que hace el trabajo real. PMID correcto: 29170507 (el 29170585 que circula en algunas listas corresponde a otro artículo)."
+}
