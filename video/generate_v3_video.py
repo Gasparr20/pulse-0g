@@ -666,7 +666,14 @@ def render_block_problem(ctx: cairo.Context, W: int, H: int, band_h: int, u: flo
         x1 = W / 2.0 - cw - gap / 2.0
         x2 = W / 2.0 + gap / 2.0
         draw_console_card(ctx, x1, cy_card, cw, ch, border_color=RED, border_alpha=0.85 * p_tags, fill_alpha=p_tags, shadow=True)
-        draw_text(ctx, "■ SIN MÉDICO A BORDO", x1 + cw / 2.0, cy_card + ch / 2.0, "sans_bold", 25, BONE, alpha=p_tags, anchor="cc")
+        tw_med = get_font("sans_bold", 25).getlength("SIN MÉDICO A BORDO")
+        med_start = x1 + (cw - (tw_med + 26)) / 2.0
+        ctx.save()
+        ctx.set_source_rgba(RED[0], RED[1], RED[2], p_tags)
+        ctx.rectangle(med_start, cy_card + ch / 2.0 - 6, 12, 12)
+        ctx.fill()
+        ctx.restore()
+        draw_text(ctx, "SIN MÉDICO A BORDO", med_start + 26, cy_card + ch / 2.0, "sans_bold", 25, BONE, alpha=p_tags, anchor="cl")
 
         draw_console_card(ctx, x2, cy_card, cw, ch, border_color=HAIR2, border_alpha=p_tags, fill_alpha=p_tags)
         draw_text(ctx, "Un número suelto no alcanza", x2 + cw / 2.0, cy_card + ch / 2.0, "sans_semibold", 24, BONE2, alpha=p_tags, anchor="cc")
@@ -674,7 +681,14 @@ def render_block_problem(ctx: cairo.Context, W: int, H: int, band_h: int, u: flo
         cw, ch = W - 128, 96
         x1 = 64
         draw_console_card(ctx, x1, cy_card, cw, ch, border_color=RED, border_alpha=0.85 * p_tags, fill_alpha=p_tags, shadow=True)
-        draw_text(ctx, "■ SIN MÉDICO A BORDO", W / 2.0, cy_card + ch / 2.0, "sans_bold", 27, BONE, alpha=p_tags, anchor="cc")
+        tw_med = get_font("sans_bold", 27).getlength("SIN MÉDICO A BORDO")
+        med_start = W / 2.0 - (tw_med + 26) / 2.0
+        ctx.save()
+        ctx.set_source_rgba(RED[0], RED[1], RED[2], p_tags)
+        ctx.rectangle(med_start, cy_card + ch / 2.0 - 6, 12, 12)
+        ctx.fill()
+        ctx.restore()
+        draw_text(ctx, "SIN MÉDICO A BORDO", med_start + 26, cy_card + ch / 2.0, "sans_bold", 27, BONE, alpha=p_tags, anchor="cl")
         draw_console_card(ctx, x1, cy_card + ch + 24, cw, ch, border_color=HAIR2, border_alpha=p_tags, fill_alpha=p_tags)
         draw_text(ctx, "Un número suelto no alcanza", W / 2.0, cy_card + ch + 24 + ch / 2.0, "sans_semibold", 25, BONE2, alpha=p_tags, anchor="cc")
 
@@ -688,8 +702,8 @@ def render_block_solution(ctx: cairo.Context, W: int, H: int, band_h: int, u: fl
     draw_crosshair_grid(ctx, W, stage_h, alpha=0.40)
 
     p_in = ease_out_cubic(progress(u, 0.0, 0.22))
-    alert_p = ease_in_out_cubic(progress(u, 0.28, 0.54))
-    p_action = ease_out_cubic(progress(u, 0.52, 0.76))
+    alert_p = ease_in_out_cubic(progress(u, 0.25, 0.48))
+    p_action = ease_out_cubic(progress(u, 0.42, 0.64))
 
     top_h = draw_header_bar(
         ctx,
@@ -803,10 +817,10 @@ def render_block_how(ctx: cairo.Context, W: int, H: int, band_h: int, u: float) 
     is_vert = H > W
     draw_crosshair_grid(ctx, W, stage_h, alpha=0.40)
 
-    p_top = ease_out_cubic(progress(u, 0.0, 0.22))
-    p_gap = ease_out_cubic(progress(u, 0.12, 0.45))
-    p_verif = ease_out_cubic(progress(u, 0.40, 0.60))
-    strike_p = ease_in_out_cubic(progress(u, 0.65, 0.83))
+    p_top = ease_out_cubic(progress(u, 0.0, 0.20))
+    p_gap = ease_out_cubic(progress(u, 0.10, 0.40))
+    p_verif = ease_out_cubic(progress(u, 0.34, 0.52))
+    strike_p = ease_out_cubic(progress(u, 0.58, 0.76))
 
     pad_x = 64 if is_vert else 96
     top_h = draw_header_bar(
@@ -949,9 +963,9 @@ def render_block_how(ctx: cairo.Context, W: int, H: int, band_h: int, u: float) 
     if strike_p > 0.02:
         ctx.save()
         ctx.set_source_rgba(RED[0], RED[1], RED[2], 0.98)
-        ctx.set_line_width(4.5)
-        ctx.move_to(pad_x + 56, r2y)
-        ctx.line_to(pad_x + 68 + tw * strike_p, r2y)
+        ctx.set_line_width(3.8)
+        ctx.move_to(pad_x + 56, r2y + 2)
+        ctx.line_to(pad_x + 64 + tw * strike_p, r2y + 2)
         ctx.stroke()
         ctx.restore()
     draw_chip(
@@ -961,7 +975,7 @@ def render_block_how(ctx: cairo.Context, W: int, H: int, band_h: int, u: float) 
         "× TACHADA EN PANTALLA",
         border_color=RED,
         text_color=RED,
-        alpha=max(0.15, strike_p),
+        alpha=max(0.25, strike_p),
         anchor="cr" if not is_vert else "tr",
         font_size=15,
     )
@@ -973,7 +987,7 @@ def render_block_how(ctx: cairo.Context, W: int, H: int, band_h: int, u: float) 
         r2y + 42,
         "mono_italic",
         19 if not is_vert else 18,
-        RED,
+        (0.95, 0.56, 0.52),
         alpha=strike_p,
         anchor="cl",
     )

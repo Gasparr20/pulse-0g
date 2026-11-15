@@ -261,8 +261,8 @@ export default function AskPanel({
           {result.narrated && (
             <div className="narration" data-ok={result.narrated.ok}>
               <p className="k">
-                Reescrito por {result.narrated.model}
-                {result.narrated.ok ? " · verificado" : " · descartado"}
+                Explicación generada por {result.narrated.model}
+                {result.narrated.ok ? " · solo las cifras verificadas" : " · descartado"}
               </p>
               <p
                 className={result.narrated.ok ? "v" : "v claim-struck"}
@@ -275,10 +275,12 @@ export default function AskPanel({
               </p>
               <p className="why2">
                 {result.narrated.ok
-                  ? "Todas las cifras coinciden con los datos citados abajo."
+                  ? "El sistema comprobó que no agregue ninguna cifra. Sus afirmaciones no se pueden verificar una por una."
                   : result.narrated.reason}
               </p>
-              <p className="why2">Abajo queda la versión del motor, que es la que manda.</p>
+              <p className="why2">
+                Abajo queda la versión del motor, anclada frase por frase. Esa es la que manda.
+              </p>
             </div>
           )}
 

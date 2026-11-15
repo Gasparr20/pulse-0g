@@ -338,13 +338,13 @@ def build_music_bed(
                 place_stereo(kal_bus, clip, t_res + k_i * 0.06, gain_db=-10.0 - k_i * 0.4, pan=pan)
             continue
 
-        # Soft melodic stereo kalimba pattern across block
+        # Soft melodic stereo kalimba pattern across block (wide stereo L/R)
         t_cur = s + 0.22
         step_idx = 0
         while t_cur < e - 0.20:
             note = arp[step_idx % len(arp)]
             clip = read_mono(sfx_bank[f"kal_{note}"])
-            pan = 0.36 if (step_idx % 2 == 0) else -0.34
+            pan = 0.68 if (step_idx % 2 == 0) else -0.66
             vel_db = -12.5 if (step_idx % 4 == 0) else -15.5
             place_stereo(kal_bus, clip, t_cur, gain_db=vel_db, pan=pan)
             t_cur += beat * (0.75 if step_idx % 3 == 1 else 1.0)
@@ -377,10 +377,14 @@ def build_music_bed(
     ])
     sub_track = read_stereo(sub_lp)[:n_samples]
 
-    # Mild Haas stereo spread on kalimba (+16 ms @ 25% cross-blend) for spacious width
-    haas_shift = int(0.016 * SR)
+    # Haas stereo spread + M/S width polish on kalimba for warm wrap-around background bed
+    haas_shift = int(0.019 * SR)
     kal_wide = kal_track.copy()
-    kal_wide[haas_shift:, 1] = 0.80 * kal_track[haas_shift:, 1] + 0.25 * kal_track[:-haas_shift, 0]
+    kal_wide[haas_shift:, 1] = 0.72 * kal_track[haas_shift:, 1] + 0.35 * kal_track[:-haas_shift, 0]
+    mid_k = 0.5 * (kal_wide[:, 0] + kal_wide[:, 1])
+    side_k = 0.5 * (kal_wide[:, 0] - kal_wide[:, 1]) * 1.45
+    kal_wide[:, 0] = mid_k + side_k
+    kal_wide[:, 1] = mid_k - side_k
 
     bed = (kal_wide * 0.78) + (sub_track * 0.65)
 

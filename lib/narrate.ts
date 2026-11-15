@@ -41,15 +41,23 @@ export async function modelAvailable(): Promise<boolean> {
   }
 }
 
-const INSTRUCTIONS = `Sos un redactor. Recibís frases que ya están respaldadas por datos y las reescribís en castellano rioplatense claro y natural, en dos o tres oraciones.
+const INSTRUCTIONS = `Sos un asistente de salud de misión. Recibís hechos ya verificados sobre un tripulante y la pregunta que hizo. Escribí tres oraciones en castellano rioplatense que expliquen qué significan esos hechos para esa persona, como se lo explicarías a alguien sin formación médica.
 
 Reglas estrictas:
-- No agregues ningún número que no esté en el texto original.
-- No agregues afirmaciones nuevas: no interpretes, no diagnostiques, no recomiendes.
-- Mantené todos los números y las unidades exactamente como aparecen.
-- Devolvé solamente el texto reescrito, sin comentarios, sin comillas y sin listas.`;
+- Usá solamente los hechos del bloque DATOS. No agregues nada que no esté ahí.
+- No agregues ningún número que no aparezca en DATOS.
+- No diagnostiques, no nombres enfermedades y no inventes causas.
+- No expliques el por qué ni el para qué: prohibido "esto indica", "esto significa", "esto sugiere", "debido a", "por eso".
+- Describí solo lo que los datos dicen, con palabras simples. Nada de adjetivos sobre el estado de la persona.
+- Si los datos no alcanzan para responder la pregunta, decí exactamente qué falta.
+- Devolvé solamente las tres oraciones, sin títulos, sin listas y sin comillas.`;
 
-export async function narrate(sentences: string[]): Promise<NarrateResult> {
+// The model must not slide into diagnosis. A number check does not catch that.
+const FORBIDDEN = /\b(diagn[oó]stic|padec|enfermedad|infecci[oó]n|ten[eé]s|sufr[ií]s|deshidratad)/i;
+// Causal claims are the second way a model slips past a number check.
+const CAUSAL = /\b(esto indica|esto significa|esto sugiere|debido a|por eso|a causa de|lo que indica|lo que muestra)/i;
+
+export async function narrate(sentences: string[], question = ""): Promise<NarrateResult> {
   const source = sentences.join(" ");
   if (!source.trim()) {
     return { ok: false, text: null, model: MODEL, reason: "no hay texto para reescribir" };
@@ -65,7 +73,7 @@ export async function narrate(sentences: string[]): Promise<NarrateResult> {
       body: JSON.stringify({
         model: MODEL,
         stream: false,
-        prompt: `${INSTRUCTIONS}\n\nTEXTO:\n${source}\n\nREESCRITURA:`,
+        prompt: `${INSTRUCTIONS}\n\nPREGUNTA:\n${question || "(sin pregunta)"}\n\nDATOS:\n${source}\n\nEXPLICACIÓN:`,
         options: { num_predict: 220, temperature: 0.1 },
       }),
     });
@@ -89,8 +97,26 @@ export async function narrate(sentences: string[]): Promise<NarrateResult> {
     return { ok: false, text: null, model: MODEL, reason: "el modelo no pudo reescribir" };
   }
 
-  // The check that matters: a paraphrase may not introduce a number the source did
-  // not carry. Everything else the model does is style, and style is allowed.
+  if (CAUSAL.test(raw)) {
+    return {
+      ok: false,
+      text: raw,
+      model: MODEL,
+      reason: "la IA agregó una interpretación causal que los datos no sostienen",
+    };
+  }
+
+  if (FORBIDDEN.test(raw)) {
+    return {
+      ok: false,
+      text: raw,
+      model: MODEL,
+      reason: "la IA se puso a diagnosticar, y este sistema no diagnostica",
+    };
+  }
+
+  // The check that matters: the explanation may not introduce a number the source
+  // did not carry. Everything else the model does is phrasing, and phrasing is free.
   const allowed = numbers(source);
   const invented = [...numbers(raw)].filter((n) => !allowed.has(n));
   if (invented.length > 0) {

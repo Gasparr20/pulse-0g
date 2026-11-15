@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   // The model only rewrites sentences that are already anchored. If it fails or
   // drifts, the deterministic answer stands and the response says why.
   if (mode === "ai" && !result.refused) {
-    const narration = await narrate(result.sentences.map((s) => s.text));
+    const narration = await narrate(result.sentences.map((s) => s.text), question);
     return NextResponse.json({ ...result, narrated: narration });
   }
 
