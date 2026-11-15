@@ -91,18 +91,21 @@ export default function AskPanel({
   initialQuestion?: string | null;
   clock?: number;
 }) {
+  const [ai, setAi] = useState(false);
+  const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+  const [warming, setWarming] = useState(false);
   const [question, setQuestion] = useState(initialQuestion ?? "");
   const [result, setResult] = useState<Answer | null>(null);
   const [busy, setBusy] = useState(false);
 
-  async function ask(q: string) {
+  async function ask(q: string, modeOverride?: "ai" | "plain") {
     setBusy(true);
     setQuestion(q);
     try {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ q, at: clock }),
+        body: JSON.stringify({ q, at: clock, mode: modeOverride ?? (ai ? "ai" : "plain") }),
       });
       setResult(await res.json());
     } finally {
@@ -110,9 +113,31 @@ export default function AskPanel({
     }
   }
 
+  useEffect(() => {
+    fetch("/api/ai-status")
+      .then((r) => r.json())
+      .then((d) => setAiAvailable(Boolean(d.available)))
+      .catch(() => setAiAvailable(false));
+    if (new URLSearchParams(window.location.search).get("ai") === "1") setAi(true);
+  }, []);
+
+  function toggleAi() {
+    if (!aiAvailable) return;
+    const next = !ai;
+    setAi(next);
+    if (next) {
+      setWarming(true);
+      fetch("/api/ai-status", { method: "POST" })
+        .catch(() => undefined)
+        .finally(() => setWarming(false));
+    }
+  }
+
   // A question can be deep-linked so a demo can jump straight to a prepared answer.
   useEffect(() => {
-    if (initialQuestion) void ask(initialQuestion);
+    if (!initialQuestion) return;
+    const fromUrl = new URLSearchParams(window.location.search).get("ai") === "1";
+    void ask(initialQuestion, fromUrl ? "ai" : "plain");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialQuestion]);
 
@@ -132,6 +157,36 @@ export default function AskPanel({
       <p className="ask-note">
         8 consultas cubiertas · 1 abstención explícita · sin ejecución de código
       </p>
+
+      <div className="aibar">
+        <button
+          type="button"
+          onClick={toggleAi}
+          disabled={!aiAvailable}
+          aria-pressed={ai}
+          className="aitoggle"
+          data-state={!aiAvailable ? "unavailable" : ai ? "on" : "off"}
+          title={
+            !aiAvailable
+              ? "No hay un modelo local disponible en este equipo"
+              : ai
+                ? "El modelo reescribe la respuesta ya calculada. No aporta cifras."
+                : "Las respuestas salen de plantillas fijas. El modelo local está apagado."
+          }
+        >
+          <span className="dot2" />
+          IA local: {!aiAvailable ? "no disponible" : ai ? "activa" : "apagada"}
+        </button>
+        <span className="aihint">
+          {!aiAvailable
+            ? "Se muestran las respuestas determinísticas."
+            : ai
+              ? warming
+                ? "Cargando el modelo…"
+                : "El modelo reescribe lo que ya calculó el motor. Nunca aporta cifras."
+              : "Activá para ver la misma respuesta redactada por un modelo local, y comparar."}
+        </span>
+      </div>
 
       <div className="flags" style={{ marginBottom: 14 }}>
         {SUGGESTED.map((q) => (
@@ -202,6 +257,30 @@ export default function AskPanel({
             <span>{result.title}</span>
             <span className="pill">{result.intent}</span>
           </div>
+
+          {result.narrated && (
+            <div className="narration" data-ok={result.narrated.ok}>
+              <p className="k">
+                Reescrito por {result.narrated.model}
+                {result.narrated.ok ? " · verificado" : " · descartado"}
+              </p>
+              <p
+                className={result.narrated.ok ? "v" : "v claim-struck"}
+                style={{
+                  textDecoration: "none",
+                  color: result.narrated.ok ? "var(--text)" : "var(--dim)",
+                }}
+              >
+                {result.narrated.text}
+              </p>
+              <p className="why2">
+                {result.narrated.ok
+                  ? "Todas las cifras coinciden con los datos citados abajo."
+                  : result.narrated.reason}
+              </p>
+              <p className="why2">Abajo queda la versión del motor, que es la que manda.</p>
+            </div>
+          )}
 
           <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
             {result.sentences.map((s, i) => (

@@ -122,7 +122,9 @@ No podría mejorar la calidad de la evidencia. Un sensor entrega números con in
 
 ## 3. Cómo se conectaría la IA
 
-Hoy **no hay IA generativa en el producto**, y es una decisión, no una carencia. Lo que está diseñado —y no implementado— es una IA con un rol acotado y verificado.
+Hoy hay **un modo opcional con modelo local, apagado por defecto**, y la regla no cambió: el modelo nunca produce un número. Lo que sigue sin existir es cualquier dependencia de él: sin modelo, el producto responde igual.
+
+Está implementado así: al activar el interruptor, la consulta se resuelve primero con el motor determinístico; después el modelo reescribe esas frases ya ancladas; y un control compara **todos los números del texto reescrito contra los del texto original**. Si aparece una cifra que no estaba, el párrafo se descarta, se muestra el motivo y queda la versión del motor. La llamada tiene un tiempo máximo de 25 segundos y cualquier fallo devuelve la respuesta determinística con una nota visible.
 
 ### 3.1 El rol que sí tiene sentido
 

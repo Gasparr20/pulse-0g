@@ -204,6 +204,13 @@ export interface Sentence {
   struckReason?: string;
 }
 
+export interface Narration {
+  ok: boolean;
+  text: string | null;
+  model: string;
+  reason: string | null;
+}
+
 export interface Answer {
   intent: string;
   question: string;
@@ -212,4 +219,5 @@ export interface Answer {
   cards: string[];
   refused: boolean;
   note: string | null;
+  narrated?: Narration;
 }

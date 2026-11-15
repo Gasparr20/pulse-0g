@@ -44,7 +44,7 @@ Todo lo que el sistema puede mostrar como fuente, en un solo lugar y con búsque
 
 ### Consultar
 
-Ocho consultas fijas sobre los datos, más una abstención explícita.
+Ocho consultas fijas sobre los datos, más una abstención explícita, y un interruptor de **IA local** opcional que reescribe la misma respuesta con un modelo que corre en el equipo. Apagado por defecto; si el modelo no está disponible el botón dice por qué y las respuestas determinísticas siguen intactas.
 
 `series` · `alerts` · `baseline` · `missing` · `why` · `radiation` · `provenance` · `clinical_request`
 
@@ -106,7 +106,7 @@ Presión arterial, frecuencia en reposo y estado de ánimo quedan marcados **pro
 - No diagnostica, no predice enfermedades, no receta.
 - No simula fisiología.
 - No transmite nada: el paquete de caso se genera y se descarga, no se envía.
-- No usa inteligencia artificial generativa. Todos los números salen de un motor determinístico.
+- No **depende** de inteligencia artificial: hay un modo opcional con un modelo local que reescribe una respuesta ya calculada, está apagado por defecto, y si el modelo falta o se equivoca el sistema sigue respondiendo igual.
 - No generaliza: los estudios reales tienen cuatro tripulantes y entre seis y siete muestras puntuales.
 
 ## 7. Cómo está construido

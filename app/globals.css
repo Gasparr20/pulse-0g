@@ -489,3 +489,27 @@ footer.console b { font-family: var(--mono); }
 .libsearch input.field { width: 100%; max-width: 560px; }
 .libsearch input.field::placeholder { color: var(--dim); }
 .libsearch .pill[aria-pressed="true"] { font-weight: 800; }
+
+/* ------------------------------------------------- local model narrator */
+.aibar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 16px; }
+.aitoggle {
+  display: inline-flex; align-items: center; gap: 9px;
+  font: 800 12px var(--mono); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 9px 14px; border-radius: 0; cursor: pointer;
+  border: 2px solid var(--hair-2); background: transparent; color: var(--text-2);
+}
+.aitoggle .dot2 { width: 9px; height: 9px; background: currentColor; }
+.aitoggle[data-state="on"] {
+  background: var(--nasa); border-color: var(--nasa-hi); color: var(--text);
+}
+.aitoggle[data-state="on"] .dot2 { background: var(--amber); }
+.aitoggle[data-state="unavailable"] { opacity: 0.55; cursor: not-allowed; border-style: dashed; }
+.aitoggle:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.aihint { font-size: 14px; color: var(--text-2); max-width: 62ch; }
+
+.narration { margin-top: 14px; padding: 12px 14px; border-left: 3px solid var(--hair-2); background: #0e0e10; }
+.narration[data-ok="true"] { border-left-color: var(--nasa-hi); }
+.narration[data-ok="false"] { border-left-color: var(--red); }
+.narration .k { font: 800 11px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2); margin: 0 0 6px; }
+.narration .v { font-size: 16px; line-height: 1.5; margin: 0; }
+.narration .why2 { font: 800 11.5px var(--mono); letter-spacing: 0.06em; color: var(--text-2); margin: 8px 0 0; }
