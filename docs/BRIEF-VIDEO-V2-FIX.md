@@ -8,7 +8,7 @@ Pulse-0G no vende un número. Vende una **decisión**: *este valor está fuera d
 
 El segundo video de referencia (`igexport-DfZ_P5soFaR`, el de MONOLITH) tiene justamente la gramática que falta: **seleccionar una fila, hacer zoom, y seguir esa fila a través de las pantallas**. Eso es lo que hay que combinar: la terminación del primero, la estructura del segundo.
 
-Hay un corte de referencia con la estructura correcta en `docs/deliverables/pulse_0g_v2_storyboard.mp4` (27,9 s). No es motion design final: son capturas reales del producto con push-in lento, más el único bloque del video entregado que ya funciona. **El trabajo es llevar ese orden a la calidad del video original.**
+Hay un corte de referencia con la estructura correcta en the storyboard cut (kept outside the repository) (27,9 s). No es motion design final: son capturas reales del producto con push-in lento, más el único bloque del video entregado que ya funciona. **El trabajo es llevar ese orden a la calidad del video original.**
 
 ## Qué se tira y qué se queda
 
@@ -54,4 +54,4 @@ Por qué se tira el primer tramo:
 
 ## Entregable
 
-Un corte nuevo de ≤30 s, 1920×1080 y 1080×1920, con el bloque del verificador mejorado (más grande, y con la frase tachada visible al menos un segundo). Comparalo contra `docs/deliverables/pulse_0g_v2_storyboard.mp4`: la historia tiene que ser la misma, la terminación mucho mejor.
+Un corte nuevo de ≤30 s, 1920×1080 y 1080×1920, con el bloque del verificador mejorado (más grande, y con la frase tachada visible al menos un segundo). Comparalo contra the storyboard cut (kept outside the repository): la historia tiene que ser la misma, la terminación mucho mejor.
