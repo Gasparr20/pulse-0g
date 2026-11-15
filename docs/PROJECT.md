@@ -44,7 +44,7 @@ Todo lo que el sistema puede mostrar como fuente, en un solo lugar y con búsque
 
 ### Consultar
 
-Ocho consultas fijas sobre los datos, más una abstención explícita, y un interruptor de **IA local** opcional que reescribe la misma respuesta con un modelo que corre en el equipo. Apagado por defecto; si el modelo no está disponible el botón dice por qué y las respuestas determinísticas siguen intactas.
+Ocho consultas fijas sobre los datos, más una abstención explícita, y un interruptor de **IA local** opcional que reescribe la misma respuesta con un modelo de prosa que corre en el equipo (`qwen2.5:7b`, elegido automáticamente entre los instalados). Apagado por defecto; si el modelo no está disponible el botón dice por qué y las respuestas determinísticas siguen intactas.
 
 `series` · `alerts` · `baseline` · `missing` · `why` · `radiation` · `provenance` · `clinical_request`
 

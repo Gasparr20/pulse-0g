@@ -250,7 +250,10 @@ const series: Handler = (dash, q) => {
 
 const baseline: Handler = (dash, q) => {
   if (!/base|baseline|habitual|normal para mi|respecto a mi/.test(q)) return null;
-  const shifted = allIndicators(dash).filter((i) => i.delta !== null);
+  // If the question names an indicator, answer for that one. Listing four when one
+  // was asked is noise, and it is what let the model mix blood pressure with mood.
+  const named = findIndicator(dash, q);
+  const shifted = (named ? [named] : allIndicators(dash)).filter((i) => i.delta !== null);
   if (shifted.length === 0) return null;
   const sentences = shifted.slice(0, 4).map((ind) => {
     const direction = (ind.delta ?? 0) >= 0 ? "por encima" : "por debajo";
@@ -261,7 +264,9 @@ const baseline: Handler = (dash, q) => {
   });
   return {
     intent: "baseline",
-    title: "Desvío respecto de tu propia base",
+    title: named
+      ? `Desvío de ${named.label.toLowerCase()} respecto de tu base`
+      : "Desvío respecto de tu propia base",
     refused: false,
     note: "La base es la mediana de tus registros previos al lanzamiento, no un rango de población.",
     cards: [],

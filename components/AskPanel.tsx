@@ -93,6 +93,7 @@ export default function AskPanel({
 }) {
   const [ai, setAi] = useState(false);
   const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+  const [aiModel, setAiModel] = useState<string | null>(null);
   const [warming, setWarming] = useState(false);
   const [question, setQuestion] = useState(initialQuestion ?? "");
   const [result, setResult] = useState<Answer | null>(null);
@@ -116,7 +117,10 @@ export default function AskPanel({
   useEffect(() => {
     fetch("/api/ai-status")
       .then((r) => r.json())
-      .then((d) => setAiAvailable(Boolean(d.available)))
+      .then((d) => {
+        setAiAvailable(Boolean(d.available));
+        setAiModel(d.model ?? null);
+      })
       .catch(() => setAiAvailable(false));
     if (new URLSearchParams(window.location.search).get("ai") === "1") setAi(true);
   }, []);

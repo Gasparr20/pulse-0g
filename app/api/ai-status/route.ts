@@ -10,5 +10,6 @@ export async function POST() {
 }
 
 export async function GET() {
-  return NextResponse.json({ available: await modelAvailable() });
+  const status = await modelAvailable();
+  return NextResponse.json(status);
 }
