@@ -23,6 +23,12 @@ a Spanish-speaking jury. The documentation is bilingual so anyone can read it.
 | [`PREGUNTAS-IA.md`](PREGUNTAS-IA.md) | Spanish only: the questions that best show the difference between the deterministic and local-model modes, with the real outputs |
 | [`BRIEF-VIDEO-PULSE-0G.md`](BRIEF-VIDEO-PULSE-0G.md) · [`BRIEF-VIDEO-V2-FIX.md`](BRIEF-VIDEO-V2-FIX.md) | Spanish only: briefs handed to the motion-graphics agent |
 
+## Where the video lives
+
+The 30-second video and its render assets are **not in this repository**: they are a
+competition deliverable, not source code, and they were 23 MB of binary media. The
+briefs that produced them are in this folder; the media lives outside the repository.
+
 ## Working documents
 
 These are internal and stay in the language the team works in:
