@@ -365,6 +365,96 @@ function RealPanel({ data }: { data: DashboardData }) {
         </table>
       </div>
       <p className="teaching-note">Las series se dibujan con los huecos reales del archivo. Nada se interpola.</p>
+
+      <h3 className="section">Segundo estudio · {r.extra.id}</h3>
+      <article className="card">
+        <div className="indicator-title">
+          <span className="dot" data-band="amber" />
+          <span>{r.extra.title}</span>
+          <span className="pill real">{r.extra.license}</span>
+          <span className="pill">{r.extra.version}</span>
+        </div>
+
+        <div className="quality" style={{ marginTop: 12, borderTop: 0, paddingTop: 0 }}>
+          <ul>
+            <li>
+              <span className="k">Mediciones ingestadas</span>
+              <b>{r.extra.measurements.toLocaleString("es-AR")}</b>
+              <span className="d">
+                {r.extra.variables} variables × {r.extra.subjects} tripulantes ×{" "}
+                {r.extra.timepoints.length} tiempos.
+              </span>
+            </li>
+            <li>
+              <span className="k">Columnas rechazadas</span>
+              <b>{r.extra.refusedColumns}</b>
+              <span className="d">
+                El archivo tiene dos columnas sin encabezado. No se adivina qué contienen: se
+                rechazan y quedan registradas en el log del importador.
+              </span>
+            </li>
+            <li>
+              <span className="k">Celdas sin valor</span>
+              <b>{r.extra.missingCells}</b>
+              <span className="d">
+                Declaradas como ausencia, igual que en el otro estudio. Ningún faltante se
+                convierte en cero.
+              </span>
+            </li>
+            <li>
+              <span className="k">Tiempos publicados</span>
+              <b>{r.extra.timepoints.length}</b>
+              <span className="d">{r.extra.timepoints.join(" · ")}</span>
+            </li>
+          </ul>
+        </div>
+
+        <p className="teaching-note" style={{ marginTop: 12 }}>{r.extra.unitNote}</p>
+        <p className="teaching-note" style={{ marginTop: 8 }}>{r.extra.caveat}</p>
+        <p className="provenance" style={{ marginTop: 10 }}>
+          <b>fuente</b> {r.extra.sourceUrl}
+          <br />
+          <b>sha256</b> {r.extra.sha256 ?? "—"}
+        </p>
+      </article>
+
+      <h3 className="section">Biblioteca de evidencia · {r.library.length} documentos curados</h3>
+      <p className="teaching-note" style={{ marginBottom: 10 }}>
+        Las fuentes que el sistema puede citar. Cada una se verificó buscando la cita literal
+        en su documento; si el enlace no lleva al pasaje, la tarjeta no entra.
+      </p>
+      <div className="card" style={{ padding: 0 }}>
+        <table className="real">
+          <thead>
+            <tr>
+              <th>Tarjeta</th>
+              <th>Tipo</th>
+              <th>Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.library.map((c) => (
+              <tr key={c.id}>
+                <td>
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "var(--text)", textDecoration: "none", fontWeight: 800 }}
+                  >
+                    {c.id}
+                  </a>
+                  <span className="why">{c.title}</span>
+                </td>
+                <td>
+                  <span className="pill">{c.kind}</span>
+                </td>
+                <td style={{ fontSize: 13, color: "var(--text-2)" }}>{c.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

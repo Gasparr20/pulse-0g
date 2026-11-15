@@ -1,9 +1,10 @@
 import bandsJson from "@/config/bands.json";
 import { all, one } from "./db";
 import { classify, worst, type ThresholdConfig } from "./bands";
-import { citationFor, hazardsFor } from "./cards";
+import { citationFor, hazardsFor, loadCards } from "./cards";
 import type {
   Dashboard,
+  DatasetSummary,
   IndicatorView,
   MeasurementRow,
   OriginType,
@@ -256,6 +257,47 @@ function radiation(at: number | null): Dashboard["hero"]["radiation"] {
   };
 }
 
+/** A second dataset, described rather than charted: its values are normalised
+ *  NPQ units, not clinical concentrations, so plotting them beside the metabolic
+ *  panel would invite a comparison the data does not support. */
+function datasetSummary(id: string): DatasetSummary {
+  const meta = one<{
+    id: string; title: string; license: string; version: string | null;
+    source_url: string; sha256: string | null;
+  }>("SELECT id, title, license, version, source_url, sha256 FROM dataset WHERE id = ?", id);
+
+  const counts = one<{ n: number; v: number; s: number; m: number }>(
+    `SELECT COUNT(*) AS n, COUNT(DISTINCT variable) AS v,
+            COUNT(DISTINCT subject_id) AS s,
+            SUM(CASE WHEN value IS NULL THEN 1 ELSE 0 END) AS m
+     FROM measurement WHERE dataset_id = ?`, id);
+
+  const times = all<{ time_label: string }>(
+    "SELECT DISTINCT time_label, sort_key FROM measurement WHERE dataset_id = ? ORDER BY sort_key", id);
+  const refused =
+    one<{ c: number }>(
+      "SELECT COUNT(*) AS c FROM rejection WHERE dataset_id = ?", id)?.c ?? 0;
+
+  return {
+    id: meta?.id ?? id,
+    title: meta?.title ?? id,
+    license: meta?.license ?? "unknown",
+    version: meta?.version ?? "—",
+    sourceUrl: meta?.source_url ?? "",
+    sha256: meta?.sha256 ?? null,
+    measurements: counts?.n ?? 0,
+    variables: counts?.v ?? 0,
+    subjects: counts?.s ?? 0,
+    timepoints: times.map((t) => t.time_label),
+    missingCells: counts?.m ?? 0,
+    refusedColumns: refused,
+    unitNote:
+      "Los valores son NPQ normalizado en log2, no concentraciones clínicas: sirven para comparar una proteína contra sí misma, no contra un rango de referencia.",
+    caveat:
+      "Este estudio no publica R+194 para los mismos cuatro tripulantes que sí lo tienen en OSD-575. La diferencia entre los dos archivos se conserva, no se armoniza.",
+  };
+}
+
 function realPanel(): RealPanel {
   const dataset = one<{
     id: string;
@@ -328,6 +370,17 @@ function realPanel(): RealPanel {
         return sa - sb;
       }),
     analytes,
+    extra: datasetSummary("OSD-656"),
+    library: loadCards()
+      .sort((a, b) => a.id.localeCompare(b.id))
+      .map((c) => ({
+        id: c.id,
+        kind: c.kind,
+        title: c.title_es,
+        source: c.source_label,
+        url: c.url,
+        verified: c.verified_by || "",
+      })),
     pending,
     mismatch,
     note:

@@ -27,7 +27,9 @@ DB = ROOT / "db" / "crewcheck.sqlite"
 SCHEMA = ROOT / "db" / "schema.sql"
 
 CMP_FILE = "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv"
+URINE_FILE = "LSDS-64_Multiplex_urine.immune.AlamarPanel_TRANSFORMED.csv"
 OSD575_URL = "https://osdr.nasa.gov/osdr/data/osd/files/575"
+OSD656_URL = "https://osdr.nasa.gov/osdr/data/osd/files/656"
 RETRIEVED_AT = "2026-11-14"
 
 # Notional launch instant for the demonstration scenario. It is a scenario
@@ -237,6 +239,88 @@ class Build:
         print(f"OSD-575: {len(rows)} rows read, {inserted} measurements, "
               f"{len(subjects)} subjects, {len(unidentified)} unidentified columns")
 
+    # ------------------------------------------------------------- OSD-656
+    def import_osd656(self) -> None:
+        """Urine inflammation panel. Two of its 407 columns carry no header at all,
+        which is the whole point: an unidentified column is refused, never guessed."""
+        ds_id = "OSD-656"
+        sha = hashlib.sha256((RAW / URINE_FILE).read_bytes()).hexdigest()
+        self.con.execute(
+            "INSERT INTO dataset VALUES (?,?,?,?,?,?,?)",
+            (ds_id,
+             "SpaceX Inspiration4 Urine Inflammation Panel (Multiplex, NULISAseq)",
+             "TRANSFORMED", "CC0-1.0", OSD656_URL, sha, RETRIEVED_AT))
+
+        with (RAW / URINE_FILE).open(newline="", encoding="utf-8-sig") as fh:
+            reader = csv.reader(fh)
+            header = next(reader)
+            rows = list(reader)
+
+        named: list[tuple[int, str]] = []
+        for idx, name in enumerate(header[1:], start=1):
+            if not name.strip():
+                self.reject(ds_id, URINE_FILE, 1, f"column_{idx + 1}", None,
+                            "unidentified_column")
+                self.audit.append((ds_id, URINE_FILE, "unidentified_column",
+                                   f"column_{idx + 1}", 1,
+                                   "header carries no name; the column is refused"))
+                continue
+            named.append((idx, name.strip()))
+
+        subjects: set[str] = set()
+        inserted = 0
+        missing = 0
+        for row_no, row in enumerate(rows, start=2):
+            parts = row[0].strip().split("_")
+            if len(parts) != 3:
+                self.reject(ds_id, URINE_FILE, row_no, "Sample Name", row[0],
+                            "unparsable_sample_id")
+                continue
+            subject_raw, matrix, time_label = parts
+            phase = "preflight" if time_label.startswith("L-") else "postflight"
+            offset = float(time_label.split("-", 1)[1]) if phase == "preflight" \
+                else float(time_label.split("+", 1)[1])
+            if phase == "preflight":
+                offset = -offset
+            subject_id = f"{ds_id}:{subject_raw}"
+            if subject_raw not in subjects:
+                subjects.add(subject_raw)
+                self.con.execute(
+                    "INSERT INTO subject VALUES (?,?,?,?)",
+                    (subject_id, ds_id, subject_raw,
+                     "Inspiration4 crew member; identifier scoped to this dataset only"))
+
+            for idx, name in named:
+                raw = row[idx] if idx < len(row) else ""
+                value, token, flag = self.parse_value(raw)
+                if token is not None:
+                    missing += 1
+                if flag == "malformed:numeric":
+                    self.reject(ds_id, URINE_FILE, row_no, name, raw, "malformed_numeric")
+                    continue
+                self.con.execute(
+                    """INSERT INTO measurement
+                       (dataset_id, subject_id, scenario_id, variable, value, unit,
+                        ref_min, ref_max, ref_source, raw_value, time_label,
+                        recorded_at, recorded_at_source, phase, offset_days,
+                        sort_key, origin_type, hazard, source_file, source_row,
+                        source_column, missing_token, quality_flags)
+                       VALUES (?,?,NULL,?,?,?,NULL,NULL,'absent',?,?,NULL,'absent',
+                               ?,?,?,?,?,?,?,?,?,?)""",
+                    (ds_id, subject_id, name.replace("_concentration_npq", ""),
+                     value, "NPQ", raw, time_label, phase, offset,
+                     self.sort_key(phase, offset), "observed_real",
+                     "hazard:environment", URINE_FILE, row_no, name, token,
+                     json.dumps([f for f in (flag, "unit:not_clinical") if f])))
+                inserted += 1
+
+        self.audit.append((ds_id, URINE_FILE, "missing", "all_columns", missing,
+                           "declared missing tokens in value columns, stored as NULL"))
+        self.audit.append((ds_id, URINE_FILE, "discrepancy", "time_label", 0,
+                           "OSD-575 carries R+194 for the same four subjects; OSD-656 stops at R+82"))
+        print(f"OSD-656: {len(rows)} rows read, {inserted} measurements, "
+              f"{len(subjects)} subjects, {len(header) - 1 - len(named)} unnamed columns refused")
+
     # ------------------------------------------------------------ synthetic
     def build_synthetic(self) -> None:
         scenario_id, subject_id, ds_id = "SCN-MARS-180", "SYNTH:ASTRO-01", "SYNTHETIC-DEMO"
@@ -359,6 +443,7 @@ class Build:
     # ------------------------------------------------------------------ run
     def run(self) -> None:
         self.import_osd575()
+        self.import_osd656()
         self.build_synthetic()
         self.con.executemany(
             "INSERT INTO rejection (dataset_id, source_file, source_row, source_column,"

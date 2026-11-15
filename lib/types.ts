@@ -116,6 +116,32 @@ export interface RealAnalyte {
   outOfRange: number;
 }
 
+export interface DatasetSummary {
+  id: string;
+  title: string;
+  license: string;
+  version: string;
+  sourceUrl: string;
+  sha256: string | null;
+  measurements: number;
+  variables: number;
+  subjects: number;
+  timepoints: string[];
+  missingCells: number;
+  refusedColumns: number;
+  unitNote: string;
+  caveat: string;
+}
+
+export interface LibraryEntry {
+  id: string;
+  kind: string;
+  title: string;
+  source: string;
+  url: string;
+  verified: string;
+}
+
 export interface RealPanel {
   datasetId: string;
   title: string;
@@ -126,6 +152,8 @@ export interface RealPanel {
   subjectId: string | null;
   timepoints: string[];
   analytes: RealAnalyte[];
+  extra: DatasetSummary;
+  library: LibraryEntry[];
   pending: number;
   mismatch: boolean;
   note: string;
