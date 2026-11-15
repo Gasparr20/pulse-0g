@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-009",
+  "title_es": "Riesgo de adaptaciones cardiovasculares que contribuyen a resultados adversos en la salud y el rendimiento",
+  "summary_es": "Dado que la exposición al entorno de los vuelos espaciales puede contribuir al desacondicionamiento, disfunción y remodelación cardiovascular, existe la posibilidad de que las tripulaciones experimenten un deterioro del rendimiento y resultados adversos para la salud cardiovascular que requieran intervención durante y después de los vuelos espaciales y las operaciones planetarias.",
+  "quote": "Given exposure to the spaceflight environment can contribute to cardiovascular deconditioning, dysfunction, and remodeling, there is a possibility that crews will experience impaired performance and adverse cardiovascular health outcomes that necessitate intervention during and after spaceflight and planetary operations.",
+  "source_label": "NASA HRP Risks — Risk of Cardiovascular Adaptations Contributing to Adverse Mission Performance and Health Outcomes (i=179), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=179",
+  "applies_to": [
+    "hazard:gravity",
+    "cardiovascular_adaptations"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: la ingravidez y el desplazamiento de fluidos hacia la cabeza alteran volumen, flujo y presión sanguínea, con cambios estructurales y funcionales (desacondicionamiento, intolerancia ortostática, menor capacidad de ejercicio). La evidencia en órbita baja sugiere recuperación en semanas o meses con reacondicionamiento; se sabe menos tras misiones de más de 1 año y hay mínima experiencia más allá de órbita baja. La evidencia epidemiológica no respalda aumento de muerte cardiovascular a lo largo de la vida, pero las misiones se limitaron en gran medida a 4-6 meses. En tierra, dosis de radiación ionizante ≥500 mGy se asocian a patología cardiovascular tardía; la guía NCRP de 2018 señala que no hay evidencia suficiente de que dosis ≤0,5 Gy al corazón causen enfermedad cardiovascular."
+}

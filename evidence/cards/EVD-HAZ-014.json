@@ -1,0 +1,19 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-014",
+  "title_es": "Riesgo de lesiones con impacto en la misión, rendimiento comprometido y efectos a largo plazo por operaciones extravehiculares (EVA)",
+  "summary_es": "Dadas las altas exigencias fisiológicas y funcionales de operar en un traje autónomo de actividad extravehicular (EVA) o de entrenamiento en diversos campos gravitatorios y entornos de sistemas, existe la posibilidad de que ocurran lesiones en la tripulación y un compromiso en su rendimiento fisiológico y funcional.",
+  "quote": "Given the high-performance physiological and functional demands of operating in a self-contained EVA or training suit in various gravity fields and system environments, there is a possibility that crew injury and compromised physiological and functional performance may occur.",
+  "source_label": "NASA HRP Risks — Risk of Mission Impacting Injury and Compromised Performance and Long-Term Health Effects due to EVA Operations (i=84), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=84",
+  "applies_to": [
+    "hazard:environment",
+    "hazard:gravity",
+    "eva_operations"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: NASA-STD-3001 (Vol. 1 y 2) y el HIDH cubren soporte vital y funcionalidad básica del traje, con tasas metabólicas y factores humanos, pero carecen de guías operativas o de prevención de lesiones inducidas por el traje. Hay datos de lesiones durante el entrenamiento, pero no se comprenden los mecanismos ni los factores de riesgo individuales (sexo, antropometría, condición física). Las exigencias de las EVA planetarias no se comprenden fuera de un número limitado de sitios donde han estado humanos y módulos robóticos."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-012",
+  "title_es": "Riesgo de disminución del rendimiento y la salud conductual por cooperación, coordinación, comunicación y adaptación psicosocial inadecuadas en el equipo",
+  "summary_es": "Dado que las condiciones de las misiones espaciales pueden conducir a un funcionamiento inadecuado dentro de un equipo (cooperación, coordinación, comunicación y/o adaptación psicosocial inadecuadas), lo cual incluye tanto a la tripulación de vuelo como al apoyo en tierra, existe la posibilidad de que se produzcan disminuciones en el rendimiento y en la salud conductual.",
+  "quote": "Given that the conditions of space missions may lead to inadequate functioning within a team (inadequate cooperation, coordination, communication and/or psychosocial adaptation), which includes flight crew and ground support, there is a possibility that performance and behavioral health decrements will occur.",
+  "source_label": "NASA HRP Risks — Risk of In-Mission Performance and Behavioral Health Decrements Due to Inadequate Cooperation, Coordination, Communication, and Psychosocial Adaptation within a Team (i=101), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=101",
+  "applies_to": [
+    "hazard:isolation",
+    "team_dynamics"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: hay evidencia de conflictos ocasionales dentro de las tripulaciones antes y durante el vuelo, tanto dentro de los subgrupos de socios de la ISS como entre ellos. Las tripulaciones informaron inquietudes sobre su preparación para trabajar en equipo ante eventos fuera de lo nominal. Se documentaron impactos en rendimiento individual y grupal, estrés y cohesión por retrasos de comunicación e ineficiencias de coordinación con el MCC. La composición de la tripulación no está basada en datos y el desempeño del equipo no se monitorea sistemáticamente."
+}

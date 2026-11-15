@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-004",
+  "title_es": "Riesgo de efectos adversos en la salud y el rendimiento debido a interacciones huésped-microorganismo",
+  "summary_es": "Dado que la evidencia recopilada durante los vuelos espaciales indica alteraciones en la virulencia microbiana y en la función inmunitaria de los astronautas, existe la posibilidad de que las enfermedades infecciosas tengan una mayor prevalencia y/o sean más graves durante las misiones espaciales.",
+  "quote": "Given that evidence collected during space flight indicates alterations in microbial virulence and astronaut immune function, there is a possibility that infectious disease will have increased prevalence and/or will be more severe during spaceflight missions.",
+  "source_label": "NASA HRP Risks — Risk of Adverse In-Mission and Long-Term Health Effects and Performance Effects Due to Host-Microorganism Interactions (i=80), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=80",
+  "applies_to": [
+    "hazard:environment",
+    "microbial_interactions"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: las estrategias actuales de monitoreo indican la presencia de patógenos oportunistas en las naves espaciales y vías de infección por patógenos obligados. Durante las misiones ocurren eventos de enfermedades infecciosas; las contramedidas actuales mitigan la mayor parte del impacto según la evidencia de misiones previas. Investigaciones anteriores indican alteraciones en el sistema inmunitario y en las características microbianas, incluida la virulencia."
+}

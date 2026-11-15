@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-020",
+  "title_es": "Riesgo de formación de cálculos renales",
+  "summary_es": "Dados los cambios en la bioquímica urinaria durante los vuelos espaciales, existe la posibilidad de que se produzcan cálculos renales sintomáticos, lo que podría causar cólico renal (dolor), náuseas, vómitos, hematuria, infección y/o hidronefrosis.",
+  "quote": "Given changes in urinary biochemistry during spaceflight, there is a possibility that symptomatic renal stones will occur, which could cause renal colic (pain), nausea, vomiting, hematuria, infection, and/or hydronephrosis.",
+  "source_label": "NASA HRP Risks — Risk of Renal Stone Formation (i=81), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=81",
+  "applies_to": [
+    "hazard:gravity",
+    "renal_stones"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: los astronautas corren el riesgo de desarrollar cálculos sintomáticos durante y después del vuelo. Las estrategias de mitigación están bien definidas, aunque no hay capacidad para tratar un cálculo durante misiones de exploración. Los estudios en tierra de reposo en cama e inmovilización indican que el ejercicio reduce el calcio urinario y aumenta la sudoración, por lo que debe considerarse una contramedida válida y actual. Las placas de Randall y la ecografía en vuelo son áreas de investigación."
+}

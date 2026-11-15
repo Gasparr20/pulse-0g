@@ -1,0 +1,19 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-018",
+  "title_es": "Riesgo de disminución del rendimiento y resultados adversos para la salud por pérdida de sueño, desincronización circadiana y sobrecarga de trabajo",
+  "summary_es": "Dado que los astronautas experimentan pérdida de sueño, desincronización circadiana y sobrecarga de trabajo, existe la posibilidad de que se produzcan disminuciones en el rendimiento y resultados adversos para la salud.",
+  "quote": "Given that astronauts experience sleep loss, circadian desynchronization, and work overload, there is a possibility that performance decrements and adverse health outcomes will occur.",
+  "source_label": "NASA HRP Risks — Risk of Performance Decrements and Adverse Health Outcomes Resulting from Sleep Loss, Circadian Desynchronization, and Work Overload (i=100), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=100",
+  "applies_to": [
+    "hazard:environment",
+    "hazard:isolation",
+    "sleep_circadian_workload"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: hay evidencia de deficiencia de sueño durante el vuelo, ya que las tripulaciones duermen unas 6 horas por noche y aumentan su desalineación circadiana; también de sobrecarga de trabajo y problemas de programación. Los estudios en tierra muestran que, pese a la percepción de adaptación, estos factores provocan disminuciones a corto plazo en rendimiento, estado de ánimo y aspectos psicosociales y metabólicos, y se asocian a resultados adversos a largo plazo (Alzheimer, cardiovascular, cáncer hormonodependiente, diabetes). El sistema de iluminación flexible es una contramedida prometedora aún no en uso."
+}

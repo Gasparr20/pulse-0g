@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-013",
+  "title_es": "Riesgo de medicamentos ineficaces o tóxicos durante vuelos espaciales de exploración de larga duración",
+  "summary_es": "Dado que actualmente no existe un método para caracterizar suficientemente el uso de medicamentos, la calidad y el desempeño de los fármacos, los resultados clínicos y el impacto de un entorno espacial hostil sobre la estabilidad y potencia farmacéutica durante misiones de exploración de larga duración, existe la posibilidad de que la provisión de un tratamiento farmacológico seguro y eficaz se vea significativamente limitada, afectando la salud y el rendimiento de la tripulación.",
+  "quote": "Given that there is no current method to sufficiently characterize medication use, drug quality and performance, clinical outcomes, and the impact of a hostile space environment on pharmaceutical stability and potency during long-duration exploration missions, there is a possibility that provision of a safe and effective drug treatment will be significantly limited, impacting crew health and performance.",
+  "source_label": "NASA HRP Risks — Risk of Ineffective or Toxic Medications During Long-Duration Exploration Spaceflight (i=177), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=177",
+  "applies_to": [
+    "hazard:distance",
+    "medications"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: los estándares de la FDA seguidos para órbita baja requieren envíos anuales de carga, lo que será problemático para misiones largas e imposible para las arquitecturas de referencia a Marte. Los efectos del entorno sobre la estabilidad de los medicamentos en espacio profundo no están caracterizados, ni cómo el entorno y las alteraciones fisiológicas afectan la farmacocinética y farmacodinamia. Preocupa también la compatibilidad entre medicamentos y trajes espaciales. El objetivo es un formulario con vida útil ≥3 años con estabilidad y toxicidad de productos de degradación validadas."
+}

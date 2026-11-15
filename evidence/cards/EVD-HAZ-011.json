@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-011",
+  "title_es": "Riesgo de lesiones en misión, disminución del rendimiento y efectos a largo plazo por cargas dinámicas",
+  "summary_es": "Dada la exposición al rango de cargas dinámicas previstas que podrían aplicarse a la tripulación dentro del entorno cerrado hostil de una nave espacial o vehículo de superficie (con o sin traje), podrían producirse lesiones en los tripulantes. Como resultado, existe la posibilidad de que se vea afectado el rendimiento en las tareas de la misión o de que estas no puedan realizarse.",
+  "quote": "Given the exposure to the range of anticipated dynamic loads that might be applied to crew within the hostile closed environment of a spacecraft and/or surface vehicle (suited or unsuited) could result in injury to the crew, resulting in a possibility that mission task performance would be impaired, or tasks could not be performed.",
+  "source_label": "NASA HRP Risks — Risk of In-Mission Injury and Performance Decrements and Long-term Health Effects due to Dynamic Loads (i=167), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=167",
+  "applies_to": [
+    "hazard:environment",
+    "dynamic_loads"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: los estándares y requisitos de diseño de vehículos se basan en entornos y protocolos automotrices y militares, parcialmente adaptados al vuelo espacial, y no mitigan adecuadamente el riesgo. Las herramientas analíticas actuales se usan fuera de sus condiciones de validación y subestimarían lesiones en aterrizajes Soyuz. Las lesiones por permanecer de pie durante fases dinámicas están escasamente documentadas y los valores de referencia no han sido validados."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-015",
+  "title_es": "Riesgo de impactos en la misión y problemas de salud a largo plazo por enfermedad por descompresión",
+  "summary_es": "Dado que la enfermedad por descompresión (DCS) es un riesgo potencial para cada vuelo o misión espacial (por ejemplo, actividades extravehiculares o despresurización de la cabina) y debe mitigarse hasta niveles de riesgo aceptables, las limitaciones en la comprensión cuantitativa de la DCS conducirán a contramedidas conservadoras de mitigación con impactos operativos, de ingeniería y/o secundarios significativos en la salud y el rendimiento.",
+  "quote": "Given that decompression sickness (DCS) is a potential risk for every spaceflight/mission (e.g., EVA or cabin depressurization) and must be mitigated to acceptable risk levels; limitations in quantitative understanding of DCS will lead to conservative DCS risk mitigation countermeasures with significant operational, engineering, and/or secondary health/performance impacts.",
+  "source_label": "NASA HRP Risks — Risk of Mission Impacts and Long-Term Health Issues due to Decompression Sickness (i=168), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=168",
+  "applies_to": [
+    "hazard:environment",
+    "decompression_sickness"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: no se han reportado casos de DCS durante el vuelo, aunque los estudios en tierra con estrés de descompresión similar sí la provocan y se detienen ante los primeros síntomas, por lo que se sabe poco de su progresión. Los efectos de la gravedad fraccionaria sobre el riesgo se desconocen y aumentarán el riesgo respecto de la microgravedad. Los protocolos de pre-respiración están validados solo para microgravedad y requieren horas y apoyo en tierra e intravehicular. Se recomienda y valida un entorno de 8,2 psia / 34 % de O2 con traje de presión variable."
+}

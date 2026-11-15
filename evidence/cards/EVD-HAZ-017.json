@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-017",
+  "title_es": "Riesgo de disminución del rendimiento y enfermedades en la tripulación por alimentación y nutrición inadecuadas",
+  "summary_es": "Dada la capacidad limitada para suministrar alimentos adecuados en las misiones espaciales, existe la posibilidad de que una nutrición inadecuada provoque una disminución del rendimiento, enfermedades en la tripulación y efectos para la salud a largo plazo.",
+  "quote": "Given that there is a constrained ability to supply adequate food in spaceflight missions, there is a possibility that inadequate nutrition will result in performance decrement, crew illness, and long-term health effects.",
+  "source_label": "NASA HRP Risks — Risk of Performance Decrement and Crew Illness Due to Inadequate Food and Nutrition (i=176), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=176",
+  "applies_to": [
+    "hazard:distance",
+    "food_and_nutrition"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: se conoce mucho sobre la nutrición básica necesaria y existen estándares de inocuidad. Los datos en tierra indican que la deshidratación y la pérdida de peso rápida afectan la cognición y el rendimiento. Hay riesgo no caracterizado en misiones orbitales y de superficie lunar por restricciones de recursos y más EVA. La capacidad de proveer alimentos seguros con vida útil de 5 años es una brecha. Posibles impactos: rendimiento, enfermedades (hueso, músculo, inmunidad, cardiovascular, gastrointestinal, deshidratación, endocrino, ocular, psicológico) y efectos a largo plazo."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-006",
+  "title_es": "Riesgo de resultados adversos en la misión por operaciones independientes de la Tierra",
+  "summary_es": "Dada la disminución del apoyo terrestre en tiempo real para ejecutar operaciones críticas y complejas independientes de la Tierra durante futuras misiones de exploración, existe la posibilidad de resultados adversos en el rendimiento. Como consecuencia más relevante, la tripulación podría ser incapaz de responder adecuadamente a fallos críticos imprevistos o de ejecutar procedimientos críticos para la seguridad.",
+  "quote": "Given decreasing real-time ground support for execution of Earth independent critical, complex operations during future exploration missions, there is a possibility of adverse performance outcomes, most consequentially that crew are unable to adequately respond to unanticipated critical malfunctions or execute safety-critical procedures.",
+  "source_label": "NASA HRP Risks — Risk of Adverse Mission Outcomes Due to Earth Independent Human-Systems Operations (i=175), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=175",
+  "applies_to": [
+    "hazard:distance",
+    "earth_independent_operations"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: en la ISS los fallos críticos que requirieron gestión de la tripulación y del MCC ocurrieron a una tasa promedio de 1,7 veces por año, y de 3 a 4 veces por año durante la fase inicial de puesta en marcha; estos promedios no incluyen EVA, que aumentan considerablemente la tasa. Apollo: 10 de 11 misiones tripuladas experimentaron anomalías significativas en las que la tripulación dependió de la experiencia del MCC en tiempo real."
+}

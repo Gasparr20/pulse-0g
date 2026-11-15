@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-008",
+  "title_es": "Riesgo de fractura ósea debido a cambios en el hueso inducidos por el vuelo espacial",
+  "summary_es": "Dados los cambios esqueléticos que ocurren durante el vuelo espacial, existe la posibilidad de que los huesos de los miembros de la tripulación durante y después del vuelo no sean tan fuertes como lo eran antes, y de que ocurra una fractura tras el vuelo ante actividades que de otro modo serían poco probables de provocar una fractura antes del vuelo espacial.",
+  "quote": "Given the skeletal changes that occur during spaceflight, there is a possibility that the bones of crewmembers during and after spaceflight are not as strong as they were before spaceflight and a fracture may occur postflight for activities otherwise unlikely to induce fracture prior to space flight.",
+  "source_label": "NASA HRP Risks — Risk of Bone Fracture due to Spaceflight-induced Changes to Bone (i=77), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=77",
+  "applies_to": [
+    "hazard:gravity",
+    "bone_fracture"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: el riesgo operativo aumenta cuando la probabilidad de cargas aplicadas al hueso supera la resistencia ósea; el riesgo a largo plazo se centra en detectar fragilidad esquelética. El diagnóstico solo por densidad mineral ósea areal (aBMD) es insuficiente, especialmente en hombres menores de 50 años y mujeres premenopáusicas. Los regímenes con ARED/T2 seis días por semana minimizaron los déficits en la aBMD posterior al vuelo, y el límite mínimo de aBMD ya se cumplía antes de implementar ARED/T2."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-007",
+  "title_es": "Riesgo de alteración de la función sensoriomotora y vestibular con impacto en tareas críticas y la salud",
+  "summary_es": "Dado que la gravedad alterada provoca cambios en la función sensoriomotora y vestibular —que se manifiestan como mareo por movimiento, desorientación espacial, disminución del control postural y la locomoción, y déficits en el control motor manual y fino—, existe la posibilidad de que la tripulación experimente disminuciones en el rendimiento del control manual o de vehículos, en actividades extravehiculares y en la salida de la nave durante y después de estas transiciones, así como efectos en la salud a largo plazo.",
+  "quote": "Given that altered gravity leads to changes in sensorimotor/vestibular function that manifest in motion sickness, spatial disorientation, decrements in postural control and locomotion, and manual and fine motor control deficits, there is a possibility that crew will experience performance decrements in manual/vehicle control, extravehicular activities, and egress during and following these transitions and long-term health effects.",
+  "source_label": "NASA HRP Risks — Risk of Altered Sensorimotor/Vestibular Function Impacting Critical Mission Tasks, Human Health, and Long-Term Health (i=88), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=88",
+  "applies_to": [
+    "hazard:gravity",
+    "sensorimotor_vestibular"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: el riesgo de deterioro es mayor durante e inmediatamente después de las transiciones gravitatorias, cuando las disminuciones del rendimiento pueden tener alto impacto operativo (aterrizajes manuales, salida inmediata tras el aterrizaje, EVA tempranas). Relevante para misiones a la Luna y Marte por la exposición prolongada a microgravedad durante el tránsito seguida de tareas de aterrizaje. Contramedidas en estudio: entrenamiento sensoriomotor, rehabilitación autoadministrada, aumento sensorial y entrenamiento de equilibrio en vuelo; la gravedad artificial (centrífuga) prevendría la mayor parte del riesgo."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-005",
+  "title_es": "Riesgo de efectos adversos en la salud y el rendimiento por exposición al polvo celestial",
+  "summary_es": "Dadas las propiedades únicas del polvo lunar y de otros cuerpos celestes, existe la posibilidad de que la exposición provoque efectos graves para la salud (por ejemplo, daños respiratorios, cardiopulmonares, oculares o dérmicos) o impactos en el rendimiento de la tripulación durante las misiones en cuerpos celestes.",
+  "quote": "Given the unique properties of lunar and other celestial bodies' dust, there is a possibility that exposure could lead to serious health effects (e.g., respiratory, cardiopulmonary, ocular or dermal harm) or to crew performance impacts during celestial body missions.",
+  "source_label": "NASA HRP Risks — Risk of Adverse In-Mission Health and Performance Effects and Long-Term Health Effects Due to Celestial Dust Exposure (i=82), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=82",
+  "applies_to": [
+    "hazard:environment",
+    "celestial_dust"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: para seis meses de exposición episódica al polvo lunar, el estándar (NASA-STD-3001 Vol. 2) es de 0,3 mg/m³, adaptable según la duración de la misión. Se basa en estudios de toxicidad por inhalación con muestras reales del Apollo 14 y asume exposición episódica hasta que el ECLSS elimine las partículas (8 horas asumidas). El hielo polar lunar o el regolito subsuperficial puede contener volátiles toxicológicos (mercurio, amoníaco, sulfuro de hidrógeno) cuya contención debe evaluarse si se almacenan muestras en un entorno habitable."
+}

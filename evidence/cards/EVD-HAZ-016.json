@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-016",
+  "title_es": "Riesgo de disminución del rendimiento en la misión y resultados adversos para la salud por reducción de la aptitud cardiorrespiratoria y musculoesquelética",
+  "summary_es": "Dado que la exposición a un entorno de gravedad reducida provoca una disminución de la aptitud cardiorrespiratoria (por ejemplo, el consumo máximo de oxígeno y el umbral ventilatorio) y musculoesquelética (por ejemplo, fuerza, potencia y resistencia), existe el riesgo de que se vea afectado el rendimiento en las tareas de la misión y se produzcan resultados adversos para la salud.",
+  "quote": "Given that exposure to a reduced gravity environment causes cardio-respiratory (e.g., maximal oxygen consumption and ventilatory threshold) and musculoskeletal fitness (e.g., strength, power, and endurance) to decline, there is a risk of impaired mission task performance and adverse health outcomes.",
+  "source_label": "NASA HRP Risks — Risk of Mission Performance Decrements and Adverse Health Outcomes Resulting from Reduced Cardiorespiratory and Musculoskeletal Fitness (i=180), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=180",
+  "applies_to": [
+    "hazard:gravity",
+    "cardiorespiratory_musculoskeletal_fitness"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. Nota administrativa de NASA: este riesgo se gestiona como dos riesgos separados en el HSRB. State of Knowledge: a pesar de las contramedidas de ejercicio en la ISS, la aptitud cardiorrespiratoria y musculoesquelética disminuye durante y después del vuelo, con variabilidad individual no explicada del todo por la adherencia. Algunos astronautas no cumplen los estándares actuales en ingravidez y muchos no cumplirían los de operaciones en superficies celestes; muchos no recuperan sus niveles previos al finalizar el reacondicionamiento estándar de 30 días. Las contramedidas robustas de la ISS probablemente se reduzcan en exploración por límites de masa, volumen y potencia."
+}

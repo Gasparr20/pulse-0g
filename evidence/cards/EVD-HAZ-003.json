@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-003",
+  "title_es": "Riesgo de resultados adversos para la salud y disminución del rendimiento por afecciones médicas en misión y exposiciones a largo plazo",
+  "summary_es": "Dado que durante las misiones de vuelos espaciales tripulados ocurrirán afecciones médicas, existe la posibilidad de que se produzcan resultados adversos para la salud y disminuciones en el rendimiento durante dichas misiones, así como consecuencias para la salud a largo plazo.",
+  "quote": "Given that medical conditions will occur during human spaceflight missions, there is a possibility of adverse health outcomes & decrements in performance during these missions and for long term health.",
+  "source_label": "NASA HRP Risks — Risk of Adverse Health Outcomes and Decrements in Performance Due to Medical Conditions that occur in Mission, as well as Long Term Health Outcomes Due to Mission Exposures (i=95), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=95",
+  "applies_to": [
+    "hazard:distance",
+    "medical_conditions"
+  ],
+  "notes": "Cita verificada por búsqueda literal en la página el 2026-11-14. State of Knowledge: los datos históricos de vuelos espaciales revelaron múltiples afecciones médicas durante y después del vuelo; aunque ninguna provocó la pérdida de vidas, hubo tres afecciones médicas en vuelo fuera del segmento orbital estadounidense (non-USOS) que llevaron a una evacuación o a la finalización anticipada de la misión. El Modelo Médico Integrado (IMM) proporciona estimaciones basadas en evidencia de Evaluación Probabilística de Riesgos (PRA) para el riesgo en misión de 100 afecciones modeladas y se usa oficialmente desde la Transición a Operaciones de 2017. La NASA monitorea los efectos de salud a largo plazo, caracterizados hasta hoy como mínimos."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-019",
+  "title_es": "Riesgo de reducción de la salud y el rendimiento de la tripulación por hipoxia",
+  "summary_es": "Dado que las futuras misiones de exploración humana requieren protocolos sólidos y flexibles de arquitectura para actividades extravehiculares (EVA) que incluyen el uso de una atmósfera de cabina de presión reducida para permitir la desnitrogenación escalonada, existe la posibilidad de que esta atmósfera comprometa la salud y el rendimiento de los tripulantes debido a la exposición a una hipoxia hipobárica leve.",
+  "quote": "Given that future human exploration missions require robust, flexible Extravehicular Activity (EVA) architecture protocols that include the use of a reduced pressure cabin atmosphere enabling staged denitrogenation, there is a possibility that this atmosphere could result in compromised health and performance to the crewmember due to exposure to mild hypobaric hypoxia.",
+  "source_label": "NASA HRP Risks — Risk of Reduced Crew Health and Performance Due to Hypoxia (i=173), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=173",
+  "applies_to": [
+    "hazard:environment",
+    "hypoxia"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. Notas de NASA: además de la hipoxia hipobárica de la desnitrogenación escalonada, otros factores pueden causar exposición hipóxica (despresurización de cabina, fallos del ECLSS, exposición tóxica o enfermedad). State of Knowledge: la atmósfera de exploración (8,2 psia / 34 % de O2) se eligió por riesgo de inflamabilidad aceptable y baja sobrecarga de pre-respiración; el entorno 8,2/34 (PI O2 = 128 mmHg) es fisiológicamente similar al del transbordador y la ISS (10,2 psia / 26,5 %, PI O2 = 127 mmHg), con dosis hipóxica modelada entre 4.000 y 8.300 pies. La descompresión escalonada se usó en 40 misiones del transbordador. El límite original de 7 días se amplió a 30 con monitoreo."
+}

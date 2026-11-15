@@ -1,0 +1,18 @@
+{
+  "kind": "hazard",
+  "retrieved_at": "2026-11-14",
+  "sha256": "webpage",
+  "license": "public_domain",
+  "verified_by": "Pulse-0G",
+  "id": "EVD-HAZ-010",
+  "title_es": "Riesgo de impactos en misión y efectos en la salud por respuesta inmunitaria alterada",
+  "summary_es": "Dado que la exposición al vuelo espacial orbital provoca una desregulación persistente del sistema inmunitario —lo que lleva a la reactivación de herpesvirus latentes y probablemente a una mayor incidencia clínica, incluidas erupciones cutáneas y reacciones de hipersensibilidad—, existe la posibilidad de que los miembros de la tripulación sean susceptibles a ciertas enfermedades durante las misiones de exploración o sufran impactos en la salud a largo plazo.",
+  "quote": "Given that exposure to orbital spaceflight results in persistent dysregulation of the immune system, which leads to reactivation of latent herpesviruses and likely to an increased clinical incidence, including rashes and hypersensitivity reactions, there is a possibility that crewmembers will be susceptible to certain diseases during exploration class missions or long term health impacts.",
+  "source_label": "NASA HRP Risks — Risk of In Mission Impacts, Adverse Health Events or Long-Term Health Impacts due to Altered Immune Response (i=85), bloque Risk Statement",
+  "url": "https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=85",
+  "applies_to": [
+    "hazard:environment",
+    "immune_response"
+  ],
+  "notes": "Cita verificada por búsqueda literal el 2026-11-14. State of Knowledge: se documentó alteración subclínica de la función inmunitaria durante y después del vuelo (cambios en citocinas, distribución celular, inmunidad viral o reactivación de virus latentes), y esos cambios persisten los seis meses de un vuelo orbital. Los problemas clínicos en órbita asociados incluyen mayor incidencia de erupciones, procesos infecciosos y excreción continua de herpesvirus latentes. Se desconocen las alteraciones en misiones de larga duración."
+}
