@@ -27,8 +27,10 @@ instance/
 *.mp4
 !docs/deliverables/*
 # the competition videos are published as material
-!docs/deliverables/pulse_0g_v3_1080p.mp4
-!docs/deliverables/pulse_0g_v3_vertical_1080x1920.mp4*.mp4
+!docs/deliverables/pulse_0g_v4_1080p.mp4
+!docs/deliverables/pulse_0g_v4_vertical_1080x1920.mp4
+!docs/deliverables/pulse-0g-pitch.pdf
+!docs/deliverables/pulse_0g_v4_en.srt*.mp4
 
 # runtime journal: operational state, never evidence
 db/journal.sqlite*
@@ -48,5 +50,7 @@ next-env.d.ts
 video/
 docs/deliverables/*
 # the competition videos are published as material
-!docs/deliverables/pulse_0g_v3_1080p.mp4
-!docs/deliverables/pulse_0g_v3_vertical_1080x1920.mp4
+!docs/deliverables/pulse_0g_v4_1080p.mp4
+!docs/deliverables/pulse_0g_v4_vertical_1080x1920.mp4
+!docs/deliverables/pulse-0g-pitch.pdf
+!docs/deliverables/pulse_0g_v4_en.srt

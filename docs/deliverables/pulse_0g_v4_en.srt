@@ -1,0 +1,19 @@
+1
+00:00:00,120 --> 00:00:04,324
+We're Gaspar and Violetta Barbera Pirani, Team Pulse-0G.
+
+2
+00:00:04,494 --> 00:00:10,189
+Tackling space health: 22 minutes from Earth, astronauts decide alone.
+
+3
+00:00:10,359 --> 00:00:15,392
+Pulse-0G: traceable health decisions, without guessing numbers.
+
+4
+00:00:15,562 --> 00:00:23,591
+Offline, it checks your baseline to guide action, strikes unverified claims, and uses open NASA, ESA, and CSA data.
+
+5
+00:00:23,761 --> 00:00:29,800
+Let's bring this clinical autonomy from Mars and orbit to remote communities on Earth without a doctor.

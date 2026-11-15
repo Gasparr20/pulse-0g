@@ -26,9 +26,10 @@ a Spanish-speaking jury. The documentation is bilingual so anyone can read it.
 
 ## Where the video lives
 
-The 30-second video and its render assets are **not in this repository**: they are a
-competition deliverable, not source code, and they were 23 MB of binary media. The
-briefs that produced them are in this folder; the media lives outside the repository.
+The competition deliverables live in `docs/deliverables/`: the two final cuts of the
+30-second video (16:9 and 9:16) and the presentation deck as PDF. Everything else from
+the render pipeline — intermediate cuts, audio stems, stills, bundled fonts — stays out
+of the repository, because it is production waste and not source.
 
 ## Working documents
 
