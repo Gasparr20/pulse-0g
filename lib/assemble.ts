@@ -380,6 +380,8 @@ function realPanel(): RealPanel {
         source: c.source_label,
         url: c.url,
         verified: c.verified_by || "",
+        summary: c.summary_es,
+        appliesTo: c.applies_to ?? [],
       })),
     pending,
     mismatch,

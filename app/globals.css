@@ -483,3 +483,9 @@ footer.console b { font-family: var(--mono); }
 }
 .ask .pill:hover { background: var(--nasa); border-color: var(--nasa); }
 .ask .probe { margin-top: 18px; border-top: 3px solid var(--nasa-hi); padding-top: 12px; }
+
+/* ------------------------------------------------- library search */
+.libsearch { margin: 0 0 14px; display: grid; gap: 10px; }
+.libsearch input.field { width: 100%; max-width: 560px; }
+.libsearch input.field::placeholder { color: var(--dim); }
+.libsearch .pill[aria-pressed="true"] { font-weight: 800; }

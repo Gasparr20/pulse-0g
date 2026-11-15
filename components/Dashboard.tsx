@@ -295,6 +295,25 @@ function ZoneDetail({
 
 function RealPanel({ data }: { data: DashboardData }) {
   const r = data.real;
+  const [query, setQuery] = useState("");
+  const [kind, setKind] = useState<"all" | "hazard" | "threshold">("all");
+
+  // ?lib=<term> preloads a search, so a demo or a check can land on a result.
+  useEffect(() => {
+    const preset = new URLSearchParams(window.location.search).get("lib");
+    if (preset) setQuery(preset);
+  }, []);
+
+  const needle = query.trim().toLowerCase();
+  const library = r.library.filter((c) => {
+    if (kind !== "all" && c.kind !== kind) return false;
+    if (!needle) return true;
+    const haystack = [c.id, c.kind, c.title, c.source, c.summary, ...c.appliesTo]
+      .join(" ")
+      .toLowerCase();
+    return haystack.includes(needle);
+  });
+
   return (
     <>
       <div className="panel-head">
@@ -423,6 +442,39 @@ function RealPanel({ data }: { data: DashboardData }) {
         Las fuentes que el sistema puede citar. Cada una se verificó buscando la cita literal
         en su documento; si el enlace no lleva al pasaje, la tarjeta no entra.
       </p>
+
+      <div className="libsearch">
+        <input
+          type="search"
+          className="field"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Buscar por riesgo, indicador o palabra…"
+          aria-label="Buscar en la biblioteca de evidencia"
+        />
+        <div className="flags">
+          {(["all", "hazard", "threshold"] as const).map((k) => (
+            <button
+              key={k}
+              className="pill"
+              aria-pressed={kind === k}
+              onClick={() => setKind(k)}
+              style={{
+                cursor: "pointer",
+                background: kind === k ? "var(--nasa)" : "transparent",
+                borderColor: kind === k ? "var(--nasa-hi)" : "var(--hair-2)",
+                color: kind === k ? "var(--text)" : "var(--text-2)",
+                fontFamily: "inherit",
+              }}
+            >
+              {k === "all" ? "todos" : k === "hazard" ? "riesgos" : "umbrales"}
+            </button>
+          ))}
+          <span className="pill" style={{ borderColor: "transparent", color: "var(--text-2)" }}>
+            {library.length} de {r.library.length}
+          </span>
+        </div>
+      </div>
       <div className="card" style={{ padding: 0 }}>
         <table className="real">
           <thead>
@@ -433,7 +485,7 @@ function RealPanel({ data }: { data: DashboardData }) {
             </tr>
           </thead>
           <tbody>
-            {r.library.map((c) => (
+            {library.map((c) => (
               <tr key={c.id}>
                 <td>
                   <a
@@ -455,6 +507,12 @@ function RealPanel({ data }: { data: DashboardData }) {
           </tbody>
         </table>
       </div>
+      {library.length === 0 && (
+        <p className="teaching-note" style={{ marginTop: 10 }}>
+          Ninguna tarjeta coincide con esa búsqueda. El sistema no responde con fuentes que no
+          tiene: se lo dice al usuario en vez de inventar una coincidencia.
+        </p>
+      )}
     </>
   );
 }
@@ -540,7 +598,7 @@ export default function Dashboard({
           Misión
         </button>
         <button role="tab" aria-selected={tab === "real"} onClick={() => setTab("real")}>
-          Datos reales NASA
+          Biblioteca
         </button>
         <button role="tab" aria-selected={tab === "ask"} onClick={() => setTab("ask")}>
           Consultar
@@ -663,10 +721,14 @@ export default function Dashboard({
       ) : tab === "real" ? (
         <main>
           <section className="map">
-            <h2>Procedencia</h2>
+            <h2>Biblioteca</h2>
             <p className="microcopy" style={{ marginTop: 0 }}>
-              Los datos reales viven en una pestaña aparte y nunca comparten eje con el escenario
-              sintético.
+              Todo lo que el sistema puede mostrar como fuente: los estudios publicados por NASA y
+              los documentos que respaldan cada afirmación.
+            </p>
+            <p className="microcopy">
+              Los datos reales nunca comparten eje con el escenario sintético, y no se armonizan
+              entre estudios: cada archivo conserva sus tiempos y sus huecos.
             </p>
           </section>
           <aside className="panel">

@@ -140,6 +140,8 @@ export interface LibraryEntry {
   source: string;
   url: string;
   verified: string;
+  summary: string;
+  appliesTo: string[];
 }
 
 export interface RealPanel {
