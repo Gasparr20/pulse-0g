@@ -25,7 +25,10 @@ instance/
 
 # media drafts
 *.mp4
-!docs/deliverables/*.mp4
+!docs/deliverables/*
+# the competition videos are published as material
+!docs/deliverables/pulse_0g_v3_1080p.mp4
+!docs/deliverables/pulse_0g_v3_vertical_1080x1920.mp4*.mp4
 
 # runtime journal: operational state, never evidence
 db/journal.sqlite*
@@ -43,4 +46,7 @@ tsconfig.tsbuildinfo
 AGENTS.md
 next-env.d.ts
 video/
-docs/deliverables/
+docs/deliverables/*
+# the competition videos are published as material
+!docs/deliverables/pulse_0g_v3_1080p.mp4
+!docs/deliverables/pulse_0g_v3_vertical_1080x1920.mp4

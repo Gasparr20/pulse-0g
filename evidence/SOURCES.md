@@ -8,11 +8,11 @@ Todos verificados hoy. Solo estos alcanzan.
 
 | Sitio | Para qué sirve | Link |
 |---|---|---|
-| **NASA Human Research Program — Evidence Book** | **El documento principal.** Es un PDF enorme con un capítulo por riesgo: cardiovascular, hueso, sueño, conducta, radiación. De acá salen casi todas las citas. | https://humanresearchroadmap.nasa.gov/evidence/reports/Evidence-Book.pdf |
+| **NASA Human Research Program — Evidence Book** | **El documento principal.** Es un PDF enorme con un capítulo por riesgo: cardiovascular, hueso, sueño, conducta, radiación. De acá salen casi todas las citas. | https://humanresearchroadmap.nasa.gov/Evidence/reports/EvidenceBook.pdf |
 | HRP — página de evidencia | Lo mismo que el PDF pero navegable por riesgo, en capítulos. Más fácil para buscar. | https://humanresearchroadmap.nasa.gov/evidence/ |
 | HRP — Risks | La lista oficial de los riesgos de salud en vuelo espacial. Sirve para las tarjetas de contexto. | https://humanresearchroadmap.nasa.gov/risks/ |
 | HRP — Gaps | Preguntas abiertas de investigación. Sirve para el slide de "qué falta". | https://humanresearchroadmap.nasa.gov/gaps/ |
-| NASA OSDR | Los datos reales que ya usa el software (OSD-575, OSD-656). | https://osdr.nasa.gov/bio/repo/ |
+| NASA OSDR | Los datos reales que ya usa el software (OSD-575, OSD-656). | https://osdr.nasa.gov/bio/repo/ · inventario directo: https://osdr.nasa.gov/osdr/data/osd/files/575 |
 | NASA NTRS | Buscador de papers y reportes técnicos de NASA. | https://ntrs.nasa.gov/ |
 
 Extra si hace falta: los estándares de NASA se buscan por número dentro de https://standards.nasa.gov/ (buscá "NASA-STD-3001"). Y para papers revisados por pares: Google Scholar con `spaceflight + <palabra clave>`.
@@ -74,7 +74,7 @@ Estas son las más fáciles: cada una es un párrafo de contexto.
 
 ## Paso 4 — Si no hay PDF
 
-El Evidence Book completo es un PDF: bajalo una vez y corré `sha256sum Evidence-Book.pdf`. Ese hash va en las tarjetas que salgan de ahí.
+El Evidence Book completo es un PDF: bajalo una vez y corré `sha256sum EvidenceBook.pdf`. Ese hash va en las tarjetas que salgan de ahí.
 
 Si la fuente es una página web sin PDF, guardá el HTML con Ctrl+S y calculá el hash de ese archivo. Si no podés guardarlo, poné `"sha256": "webpage"` y dejá la fecha real en `retrieved_at`. No inventes un hash.
 
