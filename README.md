@@ -27,6 +27,14 @@ Three tabs: **Misión** (the synthetic scenario, replayable day by day), **Bibli
 
 Blood pressure, resting heart rate and mood stay marked **provisional**: HRP publishes no numeric threshold for them, and NASA states its behavioural-health thresholds still have to be normed to the astronaut population. That absence is recorded in a card rather than filled with an invented number.
 
+## Documentation
+
+Bilingual. The product interface is in Spanish; the documentation is in both languages.
+
+- [English: complete project description](docs/en/PROJECT.md) · [plain language](docs/en/PLAIN-LANGUAGE.md) · [architecture and growth](docs/en/ARCHITECTURE.md)
+- [Español: descripción completa](docs/PROJECT.md) · [resumen simple](docs/RESUMEN-SIMPLE.md) · [arquitectura y crecimiento](docs/ARQUITECTURA-Y-CRECIMIENTO.md)
+- [Index of all documents](docs/README.md)
+
 ## Non-goals
 
 No diagnosis, no treatment prescriptions, no physiological simulation, no clinical validation. The real datasets cover four subjects at six and seven discrete timepoints; they cannot support generalization and the product never claims it.
