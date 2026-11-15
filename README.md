@@ -33,7 +33,7 @@ Bilingual. The product interface is in Spanish; the documentation is in both lan
 
 - [English: complete project description](docs/en/PROJECT.md) · [plain language](docs/en/PLAIN-LANGUAGE.md) · [architecture and growth](docs/en/ARCHITECTURE.md)
 - [Español: descripción completa](docs/PROJECT.md) · [resumen simple](docs/RESUMEN-SIMPLE.md) · [arquitectura y crecimiento](docs/ARQUITECTURA-Y-CRECIMIENTO.md)
-- [Index of all documents](docs/README.md)
+- [Index of all documents](docs/README.md) · [Sources and resources](docs/RESOURCES.md)
 
 ## Non-goals
 

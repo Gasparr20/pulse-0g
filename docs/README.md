@@ -9,6 +9,7 @@ a Spanish-speaking jury. The documentation is bilingual so anyone can read it.
 | --- | --- |
 | [`en/PROJECT.md`](en/PROJECT.md) | Complete project description: the problem, what it does, the three differentiators, what backs the numbers, what it does not do, how it is built, how it is verified |
 | [`en/PLAIN-LANGUAGE.md`](en/PLAIN-LANGUAGE.md) | The same project for a non-technical reader |
+| [`RESOURCES.md`](RESOURCES.md) | Every external source the project cites, verified, split into NASA and other agencies, plus the ones deliberately excluded because they are dead |
 | [`en/ARCHITECTURE.md`](en/ARCHITECTURE.md) | The path of one datum end to end, how sensors would connect, what an AI would and would not do, and four growth paths |
 
 ## Español

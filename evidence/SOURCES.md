@@ -17,6 +17,8 @@ Todos verificados hoy. Solo estos alcanzan.
 
 Extra si hace falta: los estándares de NASA se buscan por número dentro de https://standards.nasa.gov/ (buscá "NASA-STD-3001"). Y para papers revisados por pares: Google Scholar con `spaceflight + <palabra clave>`.
 
+La lista completa y verificada de recursos —NASA y otras agencias— está en [`docs/RESOURCES.md`](../docs/RESOURCES.md). Ese documento se revisa con `python3 tools/check_links.py`, que falla si un enlace sirve una página de error.
+
 ## Paso 2 — Las 18 tarjetas
 
 La columna **Buscar** son las palabras exactas en inglés para poner en el buscador del documento (Ctrl+F) o en Google Scholar.
