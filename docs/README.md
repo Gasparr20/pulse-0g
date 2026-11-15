@@ -20,6 +20,7 @@ a Spanish-speaking jury. The documentation is bilingual so anyone can read it.
 | [`ARQUITECTURA-Y-CRECIMIENTO.md`](ARQUITECTURA-Y-CRECIMIENTO.md) | El recorrido de un dato, cómo se conectarían sensores, qué haría una IA y los caminos de crecimiento |
 | [`PREGUNTAS-Y-RESPUESTAS.md`](PREGUNTAS-Y-RESPUESTAS.md) | Spanish only: the questions other teams ask, with answers, for the team's own preparation |
 | [`GUION-4-MINUTOS.md`](GUION-4-MINUTOS.md) | Spanish only: the timed script for the four-minute live presentation |
+| [`PREGUNTAS-IA.md`](PREGUNTAS-IA.md) | Spanish only: the questions that best show the difference between the deterministic and local-model modes, with the real outputs |
 | [`BRIEF-VIDEO-PULSE-0G.md`](BRIEF-VIDEO-PULSE-0G.md) · [`BRIEF-VIDEO-V2-FIX.md`](BRIEF-VIDEO-V2-FIX.md) | Spanish only: briefs handed to the motion-graphics agent |
 
 ## Working documents

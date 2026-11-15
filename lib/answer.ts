@@ -190,6 +190,14 @@ const radiation: Handler = (dash, q) => {
         `El límite configurado para este escenario es ${fmt(rad.max, 0)} ${rad.unit}.`,
         [anchor],
       ),
+      ...(rad.max !== null
+        ? [
+            say(
+              `Quedan ${fmt(rad.max - rad.value, 0)} ${rad.unit} hasta ese límite.`,
+              [{ ...anchor, values: [...anchor.values, Math.round(rad.max - rad.value)] }],
+            ),
+          ]
+        : []),
       say(
         "La acumulada no se reinicia: cualquier lectura nueva se suma a la anterior.",
         [anchor],

@@ -26,9 +26,9 @@ ANCHOR_TEXT = (
     "En Marte no hay médico a bordo, y la Tierra tarda veintidós minutos en responder."
 )
 ANCHOR_INSTRUCT = (
-    "Narradora profesional de ciencia y espacio en español latinoamericano neutro. "
-    "Mujer joven de 29 años, voz natural, cálida, ágil y expresiva, articulación clara y luminosa, "
-    "ritmo dinámico y fluido, micrófono de condensador en cabina de estudio seca sin reverberación."
+    "Narrador profesional masculino de documental aeroespacial en español latinoamericano neutro. "
+    "Hombre de 32 años, voz cálida, cercana y segura, dicción nítida y brillante, ritmo ágil y natural, "
+    "micrófono de condensador de estudio cercano sin eco ni reverberación."
 )
 ANCHOR_SEED = 42
 CLONE_SEED = 123
