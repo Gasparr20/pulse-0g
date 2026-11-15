@@ -1,0 +1,19 @@
+1
+00:00:00,250 --> 00:00:05,109
+On Mars, there is no doctor on board — and Earth takes 22 minutes to reply.
+
+2
+00:00:05,239 --> 00:00:11,838
+Pulse-0G doesn't diagnose or dump raw numbers: it compares you to your own baseline and guides action.
+
+3
+00:00:11,968 --> 00:00:19,626
+It runs offline and never guesses. Missing data stays blank; any unverified claim is struck out.
+
+4
+00:00:19,756 --> 00:00:25,463
+Built on open NASA data, ready to plug into European and Canadian space wearables.
+
+5
+00:00:25,593 --> 00:00:29,575
+Pulse-0G: traceable health decisions.
